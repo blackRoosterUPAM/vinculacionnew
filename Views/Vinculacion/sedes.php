@@ -1,12 +1,4 @@
 <?php
-/*session_start();
-$id_user = $_SESSION['id_usuario'];
-echo $id_user;*/
-
-
-// Establecer el tiempo de inactividad (en segundos)
-$tiempoInactividad = 15; // 5 minutos
-
 ?>
 <!DOCTYPE html>
 <!--
@@ -37,16 +29,16 @@ License: For each use you must have a valid license purchased only from above li
     <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="../../assets/media/logos/upam.ico" />
+    <link rel="shortcut icon" href="assets/media/logos/upam.ico" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used for this page only)-->
-    <link href="../../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-    <link href="../../assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="../../assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     <script>
         // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
@@ -139,12 +131,12 @@ License: For each use you must have a valid license purchased only from above li
                                         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                                             <!--begin::Nav item-->
                                             <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="../../demo30/dist/account/statements.php">Listas</a>
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index">Listas</a>
                                             </li>
                                             <!--end::Nav item-->
                                             <!--begin::Nav item-->
                                             <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="../../demo30/dist/account/referrals.php">Sedes</a>
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Sedes</a>
                                             </li>
                                             <!--end::Nav item-->
                                             <!--begin::Nav item-->
@@ -195,7 +187,6 @@ License: For each use you must have a valid license purchased only from above li
                                                             <th class="min-w-125px">Dirección</th>
                                                             <th class="min-w-125px">Correo o Contacto</th>
                                                             <th class="min-w-125px ps-0">Telefono</th>
-                                                            <th class="min-w-125px ps-0">Acción</th>
                                                             <th class="min-w-125px ps-0">Tipo de Sede</th>
                                                         </tr>
                                                     </thead>
@@ -204,20 +195,15 @@ License: For each use you must have a valid license purchased only from above li
                                                     <tbody class="fs-6 fw-semibold text-gray-600">
                                                         <?php
                                                         foreach ($data as $row) {
-															$fullname = $row["NombreA"] . " " . $row["ApellidoP"] . " " . $row["ApellidoM"];
-															echo "<tr>";
-															echo "<td>" . $row["Matricula"] . "</td>";
-															echo "<td>" . $fullname . "</td>";
-															$telefono = $row["Telefono"];
-															$formattedTelefono = substr($telefono, 0, 2) . "-" . substr($telefono, 2, 2) . "-" . substr($telefono, 4, 2) . "-" . substr($telefono, 6, 2) . "-" . substr($telefono, 8, 2);
-															echo "<td>" . $formattedTelefono . "</td>";
-															echo "<td>" . $row["CorreoE"] . "</td>";
-															echo "<td>" . $row["Carrera"] . "</td>";
-															echo "<td>" . $row["Proceso"] . "</td>";
-															
-
-															echo "</tr>";
-														}
+                                                            echo "<tr>";
+                                                            echo "<td class=" . "ps-9" . ">" . $row["IdSede"] . "</td>";
+                                                            echo "<td class=" . "ps-0" . ">" . $row["NombreSede"] . "</td>";
+                                                            echo "<td style=" . "margin-left: 10px;" . ">" . $row["Dirección"] . "</td>";
+                                                            echo "<td style=" . "margin-left: 10px;" . ">" . $row["CorreoContacto"] . "</td>";
+                                                            echo "<td style=" . "margin-left: 10px;" . ">" . $row["Telefono"] . "</td>";
+                                                            echo "<td style=" . "margin-left: 10px;" . ">" . $row["tiposede"] . "</td>";
+                                                            echo "</tr>";
+                                                        }
                                                         ?>
                                                     </tbody>
                                                     <!--end::Tbody-->
@@ -273,7 +259,7 @@ License: For each use you must have a valid license purchased only from above li
                         <!--begin::Content-->
                         <div id="kt_account_settings_profile_details" class="collapse show">
                             <!--begin::Form-->
-                            <form id="kt_account_profile_details_form" class="form" action="../../../../plantilla/demo30/actions/sedes.php" method="post">
+                            <form id="kt_account_profile_details_form" class="form" action="?c=sedes&a=nueva_sede" method="post">
                                 <!--begin::Card body-->
                                 <div class="card-body border-top p-9">
                                     <!--begin::Input group-->
@@ -503,54 +489,30 @@ License: For each use you must have a valid license purchased only from above li
         </div>
     </div>
     <!--end::Modal - Offer A Deal-->
-
-    <script>
-        // Función para redirigir a la página de inicio de sesión
-        function redirigirALogin() {
-            // Destruir la sesión del usuario
-            <?php session_destroy(); ?>
-            window.location.href = "../../../../plantilla/demo30/dist/index.php";
-        }
-
-        // Establecer un temporizador para cerrar la sesión después de un período de inactividad
-        let inactivityTimeout;
-
-        function resetInactivityTimer() {
-            clearTimeout(inactivityTimeout);
-            inactivityTimeout = setTimeout(redirigirALogin, <?php echo $tiempoInactividad * 1000; ?>); // Convierte segundos a milisegundos
-        }
-
-        // Escuchar eventos de actividad del usuario para reiniciar el temporizador
-        document.addEventListener("mousemove", resetInactivityTimer);
-        document.addEventListener("keydown", resetInactivityTimer);
-
-        // Iniciar el temporizador de inactividad
-        resetInactivityTimer();
-    </script>
     <!--begin::Javascript-->
     <script>
-        var hostUrl = "../../assets/";
+        var hostUrl = "assets/";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="../../assets/plugins/global/plugins.bundle.js"></script>
-    <script src="../../assets/js/scripts.bundle.js"></script>
+    <script src="assets/plugins/global/plugins.bundle.js"></script>
+    <script src="assets/js/scripts.bundle.js"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="../../assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="../../assets/js/custom/pages/user-profile/general.js"></script>
-    <script src="../../assets/js/custom/account/referrals/referral-program.js"></script>
-    <script src="../../assets/js/widgets.bundle.js"></script>
-    <script src="../../assets/js/custom/widgets.js"></script>
-    <script src="../../assets/js/custom/apps/chat/chat.js"></script>
-    <script src="../../assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="../../assets/js/custom/utilities/modals/offer-a-deal/type.js"></script>
-    <script src="../../assets/js/custom/utilities/modals/offer-a-deal/details.js"></script>
-    <script src="../../assets/js/custom/utilities/modals/offer-a-deal/finance.js"></script>
-    <script src="../../assets/js/custom/utilities/modals/offer-a-deal/complete.js"></script>
-    <script src="../../assets/js/custom/utilities/modals/offer-a-deal/main.js"></script>
-    <script src="../../assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="assets/js/custom/pages/user-profile/general.js"></script>
+    <script src="assets/js/custom/account/referrals/referral-program.js"></script>
+    <script src="assets/js/widgets.bundle.js"></script>
+    <script src="assets/js/custom/widgets.js"></script>
+    <script src="assets/js/custom/apps/chat/chat.js"></script>
+    <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+    <script src="assets/js/custom/utilities/modals/offer-a-deal/type.js"></script>
+    <script src="assets/js/custom/utilities/modals/offer-a-deal/details.js"></script>
+    <script src="assets/js/custom/utilities/modals/offer-a-deal/finance.js"></script>
+    <script src="assets/js/custom/utilities/modals/offer-a-deal/complete.js"></script>
+    <script src="assets/js/custom/utilities/modals/offer-a-deal/main.js"></script>
+    <script src="assets/js/custom/utilities/modals/users-search.js"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 </body>

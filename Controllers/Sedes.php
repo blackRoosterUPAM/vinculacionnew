@@ -115,9 +115,28 @@
         }
 
         public function show_sede(){
-            $id = 101321;  // Creamos modelo para sede
-            $alumnos = new SedeAlumno();
-            $data = $alumnos->confirmarAlumno($id);
+            $sedes = new Sede();
+			$data = $sedes->get_sedes();
+            require_once "Views/Vinculacion/sedes.php";
+        }
+        
+        public function nueva_sede(){
+            $matricula = $_POST["matricula"];
+            $nombre_sede = $_POST["nombre_sede"];
+            $direccion = $_POST["direccion"];
+            $correo = $_POST["correo"];
+            $telefono = $_POST["telefono"];
+            $tiposede = $_POST["tiposede"];
+            $contraseña = $_POST["contraseña"];
+            $nombre = $_POST["nombre"];
+            $apellidop = $_POST["apellidop"];
+            $apellidom = $_POST["apellidom"];
+
+            $sedes = new Sede();
+			$dato = $sedes->new_sede($matricula, $nombre_sede,$direccion,$correo,$telefono,$tiposede,$contraseña,$nombre,$apellidop,$apellidom);
+
+            $sedes = new Sede();
+			$data = $sedes->get_sedes();
             require_once "Views/Vinculacion/sedes.php";
         }
 

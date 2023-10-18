@@ -46,6 +46,23 @@ class Sede {
 		$stmt->bind_param(':tipo_sede', $tipo_sede);
 		$stmt->execute();
 	}
+
+	public function new_sede($matricula, $nombre_sede,$direccion,$correo,$telefono,$tiposede,$contraseña,$nombre,$apellidop,$apellidom){
+		$query = mysqli_query($this->db, "INSERT INTO sede (IdSede, NombreSede, Dirección, CorreoContacto, Telefono, tiposede) VALUES ( '$matricula','$nombre_sede', '$direccion', '$correo', '$telefono', '$tiposede')");
+        
+        if($query){
+            $query1 = mysqli_query($this->db, "SELECT IdSede FROM sede WHERE CorreoContacto = '$correo'");
+            $sede = mysqli_fetch_array($query1);
+            $id_sede = $sede["IdSede"];
+
+            $con_MD5 = md5($contraseña);
+
+            $query2 = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES ('$id_sede', '$correo', '$con_MD5', 2, '$nombre', '$apellidop', '$apellidom')");
+
+            if($query2){}
+            
+        }
+	}
 	}
 	
 ?>

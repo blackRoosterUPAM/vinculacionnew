@@ -149,7 +149,7 @@ License: For each use you must have a valid license purchased only from above li
 											<!--end::Nav item-->
 											<!--begin::Nav item-->
 											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="../../../f/Views/Vinculacion/sedes.php">Sedes</a>
+												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=sedes&a=show_sede">Sedes</a>
 											</li>
 											<!--end::Nav item-->
 											<!--begin::Nav item-->
@@ -230,7 +230,7 @@ License: For each use you must have a valid license purchased only from above li
 
 												<script>
 													// Cuando se hace clic en el botón "Mostrar Datos", hacer una solicitud AJAX para obtener los datos de los alumnos
-													$('#mostrarDatos012').click(function() {
+													$('#mostrarDatos').click(function() {
 														var selectedCarrera = $('#carrera').val();
 
 														// Verificar si se ha seleccionado una carrera
