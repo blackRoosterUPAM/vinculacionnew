@@ -41,7 +41,7 @@ class UsuariosController
                 header('location:  index.php?c=sedes&a=index');
             }
         } else {
-            // Inicio de sesión fallido, redirigir al login
+            // Inicio de sesión fallido, redirigir al login _
             header('location: index.php');
         }
     }
