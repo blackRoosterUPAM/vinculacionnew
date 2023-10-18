@@ -45,7 +45,7 @@
 		<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
 			<!--begin::Header-->
 			<?php
-			include('sede/header.php');
+			include('header.php');
 			?>
 			<!--end::Header-->
 			<!--begin::Wrapper-->
@@ -123,7 +123,7 @@
 														<button class="btn btn-primary mb-2 me-2" data-bs-toggle="modal" data-bs-target="#projectSettingsModal">Generar Cita</button>
 
 														<!-- Apartado que muestra los datos actuales del número de vacantes -->
-														<a href="#" class="btn btn-info mb-2">Cupo 5/5</a>
+														<a href="#" class="btn btn-info mb-2 rounded-circle">5/5</a>
 													</div>
 												</div>
 
@@ -300,7 +300,7 @@
 									icon: 'success'
 								}).then((result) => {
 									// Recargar la página después de hacer clic en OK en la alerta
-									location.href = "index.php";
+									location.href = "index.php?c=sedes&a=index";
 								});
 							},
 							error: function() {
@@ -350,7 +350,7 @@
 									icon: 'success'
 								}).then((result) => {
 									// Recargar la página después de hacer clic en OK en la alerta
-									location.href = "index.php";
+									location.href = "index.php?c=sedes&a=index";
 								});
 							},
 							error: function() {
@@ -506,7 +506,7 @@
 	<!--end::Javascript-->
 </body>
 <footer>
-	<?php include('sede/footer.php') ?>
+	<?php include('footer.php') ?>
 </footer>
 <!--end::Body-->
 

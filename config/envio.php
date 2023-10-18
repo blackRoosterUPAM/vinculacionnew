@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;
         $mail->Username = 'd.hernandezj@upam.edu.mx';  // Tu dirección de correo
-        $mail->Password = '';        // Tu contraseña
+        $mail->Password = 'DA0402*@';        // Tu contraseña
 
         $mail->setFrom('d.hernandezj@upam.edu.mx', 'SEDE');
         $mail->addAddress($destinatario);

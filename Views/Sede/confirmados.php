@@ -118,17 +118,24 @@
 									<div class="card-body pt-0">
 										<!--begin::Table-->
 										<div class="table-responsive">
-											<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
-												<thead class="bg-primary">
-													<tr class=" text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-														<th class="text-light min-w-25px ">Matricula</th>
-														<th class="text-light min-w-50px">Nombre</th>
-														<th class="text-light min-w-50px">Telefono</th>
-														<th class="text-light min-w-50px">Email</th>
-														<th class="text-light min-w-50px">Carrera</th>
-														<th class="text-light min-w-50px">Modalidad</th>
+											<table class="table align-middle table-row-dashed fs-6 gy-5 " id="kt_customers_table">
+												<thead  class="bg-primary">
+													<tr class=" text-start text-gray-400 fw-bold fs-7  gs-0">
+														<th class="textoTabla min-w-25px ">Matricula</th>
+														<th class="textoTabla min-w-50px">Nombre</th>
+														<th class="textoTabla min-w-50px">Teléfono</th>
+														<th class="textoTabla min-w-50px">Email</th>
+														<th class="textoTabla min-w-50px">Carrera</th>
+														<th class="textoTabla min-w-50px">Modalidad</th>
 													</tr>
 												</thead>
+												<style>
+													.textoTabla{
+														color: white !important;
+														text-align: center;
+
+													}
+												</style>
 												<tbody class="fw-semibold text-gray-600">
 													<?php
 													if (isset($data)) {

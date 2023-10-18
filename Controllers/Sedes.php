@@ -25,7 +25,7 @@
 
             
             $alumno = new SedeAlumno();
-            $alumnos = $alumno->getAlumnos();       
+            $alumnos = $alumno->getAlumnos($id);       
         
             // Verifica si la variable de sesión 'contador' está definida
             if (!isset($_SESSION['contador']) || $_SESSION['contador'] >= count($alumnos)) {

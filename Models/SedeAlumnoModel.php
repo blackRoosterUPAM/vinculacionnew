@@ -20,15 +20,15 @@ class SedeAlumno
     4. En las vistas crear la estrucutra de vista y hacer uso de las rutas para el controller y uso de datos
     */
     //Obtine todos los aulumnos
-    public function getAlumnos()
+    public function getAlumnos($id)
     {
         //Consulta sql para recuperar todos los datos postudados en una sede
         $sql =
             "SELECT a.*, ad.*, al.* 
-        FROM alumnosede AS a
-        INNER JOIN alumnodocs AS ad ON a.Matricula = ad.Matricula
-        INNER JOIN alumnos AS al ON a.Matricula = al.Matricula
-        WHERE a.FechaInicio IS NULL  AND a.Aceptado = 0";
+            FROM alumnosede AS a
+            INNER JOIN alumnodocs AS ad ON a.Matricula = ad.Matricula
+            INNER JOIN alumnos AS al ON a.Matricula = al.Matricula
+            WHERE a.FechaInicio IS NULL  AND a.Aceptado = 0 AND a.IdSede = $id";
         //resultado del query		
         $resultado = $this->db->query($sql);
         //Recorre el arreglo sacando los datos de la consulta
