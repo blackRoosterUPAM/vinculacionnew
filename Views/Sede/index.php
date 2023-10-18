@@ -45,7 +45,7 @@
 		<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
 			<!--begin::Header-->
 			<?php
-			include('header.php');
+			include('sede/header.php');
 			?>
 			<!--end::Header-->
 			<!--begin::Wrapper-->
@@ -506,7 +506,7 @@
 	<!--end::Javascript-->
 </body>
 <footer>
-	<?php include('footer.php') ?>
+	<?php include('sede/footer.php') ?>
 </footer>
 <!--end::Body-->
 
