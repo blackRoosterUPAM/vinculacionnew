@@ -38,7 +38,7 @@ class UsuariosController
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 // Redirigir a la página de vinculación
-                header('location:  index.php?c=sedes&a=index');
+                header('location:  index.php?c=carreras&a=index');
             }
         } else {
             // Inicio de sesión fallido, redirigir al login _
