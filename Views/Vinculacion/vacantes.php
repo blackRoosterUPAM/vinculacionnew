@@ -62,7 +62,6 @@ License: For each use you must have a valid license purchased only from above li
 		// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
 	</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -151,17 +150,17 @@ License: For each use you must have a valid license purchased only from above li
 										<ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
 											<!--begin::Nav item-->
 											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Listas</a>
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index">Listas</a>
 											</li>
 											<!--end::Nav item-->
 											<!--begin::Nav item-->
 											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=sedes&a=show_sede">Sedes</a>
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=sedes&a=show_sede">Sedes</a>
 											</li>
 											<!--end::Nav item-->
 											<!--begin::Nav item-->
 											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=vacantes&a=index_2">Vacantes</a>
+												<a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Vacantes</a>
 											</li>
 											<!--end::Nav item-->
 
@@ -197,8 +196,17 @@ License: For each use you must have a valid license purchased only from above li
 										</div>
 										<!--end::Col-->
 									</div>
+									
+								<div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+									<!--begin::Actions-->
+									<div class="d-flex my-4">
+										<a href="?c=vacantes&a=selec_cupos" class="btn btn-sm btn-primary me-3" style="margin-left: 1040px;">Nuevos Cupos</a>
+									</div>
+									<!--end::Actions-->
 								</div>
-								<br><br><br><br><br>
+								<!--begin::Statements-->
+								</div>
+								<br><br>
 								<!--end::Input group-->
 								<!--begin::Row-->
 								<div class="row g-xxl-9">
@@ -223,11 +231,13 @@ License: For each use you must have a valid license purchased only from above li
 												<table class="table align-middle table-row-bordered table-row-solid gy-4 gs-9">
 													<thead class="border-gray-200 fs-5 fw-semibold bg-lighten">
 														<tr>
-															<th class="min-w-175px ps-9">Matricula</th>
-															<th class="min-w-150px px-0">Nombre del Alumno</th>
-															<th class="min-w-350px">Telefono</th>
-															<th class="min-w-125px">Correo</th>
-															<th class="min-w-125px text-center">Carrera</th>
+															<th class="min-w-175px ps-9">Sede</th>
+															<th class="min-w-150px px-0">Carrera</th>
+															<th class="min-w-350px">Proceso</th>
+															<th class="min-w-125px">Periodo</th>
+															<th class="min-w-125px">Perfil</th>
+															<th class="min-w-125px">Beneficios</th>
+															<th class="min-w-125px">Numero de vacantes</th>
 														</tr>
 													</thead>
 													<tbody id="alumnos" class="fs-6 fw-semibold text-gray-600">
@@ -236,15 +246,15 @@ License: For each use you must have a valid license purchased only from above li
 												</table>
 
 												<script>
-													// Cuando se hace clic en el botón "Mostrar Datos", hacer una solicitud AJAX para obtener los datos de los alumnos
-													$('#mostrarDatos').click(function() {
+														// Cuando se hace clic en el botón "Mostrar Datos", hacer una solicitud AJAX para obtener los datos de los alumnos
+                                                        $('#mostrarDatos').click(function() {
 														var selectedCarrera = $('#carrera').val();
 
 														// Verificar si se ha seleccionado una carrera
 														if (selectedCarrera !== '') {
 															// Realizar una solicitud AJAX al servidor para obtener los datos de los alumnos
 															$.ajax({
-																url: "index.php?c=alumno&a=show_alumonos_carrera", // Reemplaza 'obtener_alumnos.php' con la ruta correcta a tu archivo PHP que obtiene los datos de los alumnos
+																url: "index.php?c=vacantes&a=show_vacantes_carrera", // Reemplaza 'obtener_alumnos.php' con la ruta correcta a tu archivo PHP que obtiene los datos de los alumnos
 																method: 'POST',
 																data: {
 																	carrera: selectedCarrera

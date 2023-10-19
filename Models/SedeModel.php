@@ -35,16 +35,17 @@ class Sede {
 	}
 	
 	
-	public function modificar($id, $nombre, $direccion, $correo_contacto, $telefono, $tipo_sede) {
-		$sql = "UPDATE sede SET nombre_sede=:nombre, direccion=:direccion, correo_contacto=:correo_contacto, telefono=:telefono, tipo_sede=:tipo_sede WHERE idsede=:id";
-		$stmt = $this->db->prepare($sql);
-		$stmt->bind_param(':id', $id);
-		$stmt->bind_param(':nombre', $nombre);
-		$stmt->bind_param(':direccion', $direccion);
-		$stmt->bind_param(':correo_contacto', $correo_contacto);
-		$stmt->bind_param(':telefono', $telefono);
-		$stmt->bind_param(':tipo_sede', $tipo_sede);
-		$stmt->execute();
+	public function modificar($id_sede,$id,$nombresede,$direccion,$correo,$telefono,$tiposede) {
+        // Consulta SQL para actualizar los datos
+        $sql = "UPDATE sede 
+                SET IdSede= $id,
+                    NombreSede='$nombresede', 
+                    Dirección='$direccion', 
+                    CorreoContacto='$correo', 
+                    Telefono='$telefono', 
+                    tiposede='$tiposede' 
+                WHERE IdSede=$id_sede";
+		$resultado = $this->db->query($sql);
 	}
 
 	public function new_sede($matricula, $nombre_sede,$direccion,$correo,$telefono,$tiposede,$contraseña,$nombre,$apellidop,$apellidom){

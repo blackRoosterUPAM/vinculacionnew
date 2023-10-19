@@ -154,7 +154,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <!--end::Nav item-->
                                             <!--begin::Nav item-->
                                             <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Sedes</a>
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=sedes&a=show_sede">Sedes</a>
                                             </li>
                                             <!--end::Nav item-->
                                             <!--begin::Nav item-->
@@ -164,7 +164,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <!--end::Nav item-->
                                             <!--begin::Nav item-->
                                             <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=periodo&a=show_periodos">Periodos</a>
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Periodos</a>
                                             </li>
                                             <!--end::Nav item-->
                                         </ul>
@@ -173,11 +173,6 @@ License: For each use you must have a valid license purchased only from above li
                                 </div>
                                 <!--end::Navbar-->
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
-                                    <!--begin::Actions-->
-                                    <div class="d-flex my-4">
-                                        <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal" style="margin-left: 1070px;">Agregar Sede</a>
-                                    </div>
-                                    <!--end::Actions-->
                                 </div>
                                 <!--begin::Referred users-->
                                 <div class="card">
@@ -200,12 +195,8 @@ License: For each use you must have a valid license purchased only from above li
                                                     <!--begin::Thead-->
                                                     <thead class="border-bottom border-gray-200 fs-6 fw-bold bg-lighten">
                                                         <tr>
-                                                            <th class="min-w-125px ps-9">Num</th>
-                                                            <th class="min-w-125px px-0">Nombre de la sede</th>
-                                                            <th class="min-w-125px">Dirección</th>
-                                                            <th class="min-w-125px">Correo o Contacto</th>
-                                                            <th class="min-w-125px ps-0">Telefono</th>
-                                                            <th class="min-w-125px ps-0">Tipo de Sede</th>
+                                                            <th class="min-w-125px ps-9">Mes</th>
+                                                            <th class="min-w-125px px-0">Año</th>
                                                             <th class="min-w-125px ps-0">Acción</th>
                                                         </tr>
                                                     </thead>
@@ -214,14 +205,13 @@ License: For each use you must have a valid license purchased only from above li
                                                     <tbody class="fs-6 fw-semibold text-gray-600">
                                                         <?php
                                                         foreach ($data as $row) {
+                                                            $id = $row["IdPeriodo"];
+                                                            $meses = $row["Meses"];
+                                                            $año = $row["Año"];
                                                             echo "<tr>";
-                                                            echo "<td class=" . "ps-9" . ">" . $row["IdSede"] . "</td>";
-                                                            echo "<td class=" . "ps-0" . ">" . $row["NombreSede"] . "</td>";
-                                                            echo "<td style=" . "margin-left: 10px;" . ">" . $row["Dirección"] . "</td>";
-                                                            echo "<td style=" . "margin-left: 10px;" . ">" . $row["CorreoContacto"] . "</td>";
-                                                            echo "<td style=" . "margin-left: 10px;" . ">" . $row["Telefono"] . "</td>";
-                                                            echo "<td style=" . "margin-left: 10px;" . ">" . $row["tiposede"] . "</td>";
-                                                            echo "<td style=" . "margin-left: 10px;" . "><a href="."index.php?c=sedes&a=edit_sede&id=".$row["IdSede"].">Editar Sede</a></td>";
+                                                            echo "<td class=" . "ps-9" . ">" . $row["Meses"] . "</td>";
+                                                            echo "<td class=" . "ps-0" . ">" . $año . "</td>";
+                                                            echo "<td style=" . "margin-left: 10px;" . "><a href="."#"." data-bs-toggle="."modal"." data-bs-target="."#kt_modal_offer_a_deal".">Editar Sede</a></td>";
                                                             echo "</tr>";
                                                         }
                                                         ?>
@@ -263,7 +253,7 @@ License: For each use you must have a valid license purchased only from above li
                 <!--begin::Modal header-->
                 <div class="modal-header py-7 d-flex justify-content-between">
                     <!--begin::Modal title-->
-                    <h2>Agrega una nueva sede</h2>
+                    <h2>Edición de Periodos</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
@@ -279,13 +269,13 @@ License: For each use you must have a valid license purchased only from above li
                         <!--begin::Content-->
                         <div id="kt_account_settings_profile_details" class="collapse show">
                             <!--begin::Form-->
-                            <form id="kt_account_profile_details_form" class="form" action="?c=sedes&a=nueva_sede" method="post">
+                            <form id="kt_account_profile_details_form" class="form" action="?c=periodo&a=edit_periodo" method="post">
                                 <!--begin::Card body-->
                                 <div class="card-body border-top p-9">
                                     <!--begin::Input group-->
                                     <div class="row mb-6" style="margin-left:250px;">
                                         <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Identificador</label>
+                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Año</label>
                                         <!--end::Label-->
                                         <!--begin::Col-->
                                         <div class="col-lg-8">
@@ -293,195 +283,9 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="row">
                                                 <!--begin::Col-->
                                                 <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="matricula" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6" style="margin-left:250px;">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nombre de la Sede</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-                                            <!--begin::Row-->
-                                            <div class="row">
-                                                <!--begin::Col-->
-                                                <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="nombre_sede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6" style="margin-left:250px;">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Dirrección</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-                                            <!--begin::Row-->
-                                            <div class="row">
-                                                <!--begin::Col-->
-                                                <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="direccion" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6" style="margin-left:250px;">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Correo o contacto</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-                                            <!--begin::Row-->
-                                            <div class="row">
-                                                <!--begin::Col-->
-                                                <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="correo" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6" style="margin-left:250px;">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Telefono</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-                                            <!--begin::Row-->
-                                            <div class="row">
-                                                <!--begin::Col-->
-                                                <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="telefono" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required maxlength="10" />
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6" style="margin-left:250px;">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tipo de sede</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-                                            <!--begin::Row-->
-                                            <div class="row">
-                                                <!--begin::Col-->
-                                                <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="tiposede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6" style="margin-left:250px;">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Contraseña</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-                                            <!--begin::Row-->
-                                            <div class="row">
-                                                <!--begin::Col-->
-                                                <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6" style="margin-left:250px;">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nombre del encargado de la sede:</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-                                            <!--begin::Row-->
-                                            <div class="row">
-                                                <!--begin::Col-->
-                                                <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="nombre" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6" style="margin-left:250px;">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Apellido paterno:</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-                                            <!--begin::Row-->
-                                            <div class="row">
-                                                <!--begin::Col-->
-                                                <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="apellidop" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-
-                                    <!--begin::Input group-->
-                                    <div class="row mb-6" style="margin-left:250px;">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Apellido materno:</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-8">
-                                            <!--begin::Row-->
-                                            <div class="row">
-                                                <!--begin::Col-->
-                                                <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="apellidom" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                    <input type="hidden" name="id_periodo" value="<?php echo $id ?>">
+                                                    <input type="hidden" name="meses" value="<?php echo $meses ?>">
+                                                    <input type="text" name="año" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $año ?>" required />
                                                 </div>
                                                 <!--end::Col-->
                                             </div>
@@ -494,7 +298,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--end::Card body-->
                                 <!--begin::Actions-->
                                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Guardar</button>
+                                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Guardar Cambios</button>
                                 </div>
                                 <!--end::Actions-->
                             </form>

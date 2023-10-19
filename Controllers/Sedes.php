@@ -153,7 +153,27 @@
 			$data = $sedes->get_sedes();
             require_once "Views/Vinculacion/sedes.php";
         }
+        public function edit_sede($id){
+            $sede = new Sede();
+            $data = $sede->get_sede($id);
+            require_once "Views/Vinculacion/edit_sede.php";
+        }
+        public function sede_editado(){
+            $id_sede = $_POST["id_sede"];
+            $id = $_POST["identificador"];
+            $nombresede = $_POST["nombre_sede"];
+            $direccion = $_POST["direccion"];
+            $correo = $_POST["correo"];
+            $telefono = $_POST["telefono"];
+            $tiposede = $_POST["tiposede"];
 
+            $sedes = new Sede();
+			$data = $sedes->modificar($id_sede,$id,$nombresede,$direccion,$correo,$telefono,$tiposede);
+            
+            $sedes = new Sede();
+			$data = $sedes->get_sedes();
+            require_once "Views/Vinculacion/sedes.php";
+        }
         
 	}
 ?>
