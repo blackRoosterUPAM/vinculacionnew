@@ -23,7 +23,7 @@ require '../vendor/autoload.php';
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;
         $mail->Username = 'd.hernandezj@upam.edu.mx';  // Tu dirección de correo
-        $mail->Password = '';        // Tu contraseña
+        $mail->Password = 'DA0402*@';        // Tu contraseña
 
         $mail->setFrom('d.hernandezj@upam.edu.mx', $sede);
         $mail->addAddress($destinatario);

@@ -64,7 +64,7 @@
 									<!--begin::Title-->
 									<h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Listado General
 										<!--begin::Description-->
-										<span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Alumnos Postulados</span>
+										<span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Alumnos Pendientes</span>
 										<!--end::Description-->
 									</h1>
 									<!--end::Title-->
@@ -214,25 +214,6 @@
 																							</a>
 																							</form>
 
-																							<!--end:Menu link-->
-																						</div>
-																						<!--end:Menu item-->
-																					</div>
-																				</div>
-																				<div class="col-12">
-																					<div class="p-3">
-																						<!--begin:Menu item-->
-																						<div class="menu-item p-0 m-0">
-																							<!--begin:Menu link-->
-																							<a href="?c=sedes&a=curriculum" class="menu-link ">
-																								<span class="menu-custom-icon d-flex flex-center flex-shrink-0 rounded w-40px h-40px me-3">
-																									<i class="bi bi-eye text-success fs-1"></i>
-																								</span>
-
-																								<span class="d-flex flex-column">
-																									<span class="fs-6 fw-bold text-gray-800">Curriculum</span>
-																								</span>
-																							</a>
 																							<!--end:Menu link-->
 																						</div>
 																						<!--end:Menu item-->

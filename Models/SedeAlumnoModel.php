@@ -24,10 +24,11 @@ class SedeAlumno
     {
         //Consulta sql para recuperar todos los datos postudados en una sede
         $sql =
-            "SELECT a.*, ad.*, al.* 
+            "SELECT a.*, ad.*, al.* , c.NombrePE as nombreCarrera
             FROM alumnosede AS a
             INNER JOIN alumnodocs AS ad ON a.Matricula = ad.Matricula
             INNER JOIN alumnos AS al ON a.Matricula = al.Matricula
+            INNER JOIN carrera as c on al.Carrera = c.IdCarrera
             WHERE a.FechaInicio IS NULL  AND a.Aceptado = 0 AND a.IdSede = $id";
         //resultado del query		
         $resultado = $this->db->query($sql);
@@ -108,7 +109,7 @@ class SedeAlumno
     }
 
     //Funcion que indica que se confirmo que el alumno se queda en la sede despues de su entrevista
-    public function confirmarAlumno($matricula)
+    public function confirmarAlumno($matricula, $id)
     {
         // Agregar el ID de la sede para buscar solo en esa
         $sql = "UPDATE alumnosede
@@ -149,7 +150,7 @@ class SedeAlumno
         $stmt = $this->db->prepare($sql);
 
         // Vincula el parámetro de la matrícula
-        $stmt->bind_param("s", $matricula);
+        $stmt->bind_param("s", $id);
 
         // Ejecuta la consulta
         $stmt->execute();
@@ -184,6 +185,13 @@ class SedeAlumno
         } else {
             return false; // Al menos una de las operaciones falló
         }
+    }
+
+    public function getVacantes($id){
+        $sql = "SELECT * FROM vacantes WHERE idSede = $id";
+        $resultado = $this->db->query($sql);
+        $row = $resultado->fetch_assoc();
+        return $row;
     }
     
 }

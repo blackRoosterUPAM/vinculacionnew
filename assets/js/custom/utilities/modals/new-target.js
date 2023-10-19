@@ -1,1 +1,157 @@
-"use strict";var KTModalNewTarget=function(){var t,e,n,a,o,i;return{init:function(){(i=document.querySelector("#kt_modal_new_target"))&&(o=new bootstrap.Modal(i),a=document.querySelector("#kt_modal_new_target_form"),t=document.getElementById("kt_modal_new_target_submit"),e=document.getElementById("kt_modal_new_target_cancel"),new Tagify(a.querySelector('[name="tags"]'),{whitelist:["Important","Urgent","High","Medium","Low"],maxTags:5,dropdown:{maxItems:10,enabled:0,closeOnSelect:!1}}).on("change",(function(){n.revalidateField("tags")})),$(a.querySelector('[name="due_date"]')).flatpickr({enableTime:!0,dateFormat:"d, M Y, H:i"}),$(a.querySelector('[name="team_assign"]')).on("change",(function(){n.revalidateField("team_assign")})),n=FormValidation.formValidation(a,{fields:{target_title:{validators:{notEmpty:{message:"Target title is required"}}},target_assign:{validators:{notEmpty:{message:"Target assign is required"}}},target_due_date:{validators:{notEmpty:{message:"Target due date is required"}}},target_tags:{validators:{notEmpty:{message:"Target tags are required"}}},"targets_notifications[]":{validators:{notEmpty:{message:"Please select at least one communication method"}}}},plugins:{trigger:new FormValidation.plugins.Trigger,bootstrap:new FormValidation.plugins.Bootstrap5({rowSelector:".fv-row",eleInvalidClass:"",eleValidClass:""})}}),t.addEventListener("click",(function(e){e.preventDefault(),n&&n.validate().then((function(e){console.log("validated!"),"Valid"==e?(t.setAttribute("data-kt-indicator","on"),t.disabled=!0,setTimeout((function(){t.removeAttribute("data-kt-indicator"),t.disabled=!1,Swal.fire({text:"Form has been successfully submitted!",icon:"success",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn btn-primary"}}).then((function(t){t.isConfirmed&&o.hide()}))}),2e3)):Swal.fire({text:"Sorry, looks like there are some errors detected, please try again.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn btn-primary"}})}))})),e.addEventListener("click",(function(t){t.preventDefault(),Swal.fire({text:"Are you sure you would like to cancel?",icon:"warning",showCancelButton:!0,buttonsStyling:!1,confirmButtonText:"Yes, cancel it!",cancelButtonText:"No, return",customClass:{confirmButton:"btn btn-primary",cancelButton:"btn btn-active-light"}}).then((function(t){t.value?(a.reset(),o.hide()):"cancel"===t.dismiss&&Swal.fire({text:"Your form has not been cancelled!.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn btn-primary"}})}))})))}}}();KTUtil.onDOMContentLoaded((function(){KTModalNewTarget.init()}));
+"use strict";
+
+var ModalNewTarget = (function () {
+  var modal, cancelButton, submitButton, form, tagifyInstance, validation, SwalModal;
+
+  return {
+    init: function () {
+      // Busca el modal con el ID "kt_modal_new_target" en el documento.
+      modal = document.querySelector("#kt_modal_new_target");
+
+      if (modal) {
+        // Inicializa un modal de Bootstrap.
+        var bootstrapModal = new bootstrap.Modal(modal);
+
+        // Busca el formulario dentro del modal.
+        form = document.querySelector("#kt_modal_new_target_form");
+
+        // Busca los botones de cancelar y enviar dentro del formulario.
+        submitButton = document.getElementById("kt_modal_new_target_submit");
+        cancelButton = document.getElementById("kt_modal_new_target_cancel");
+
+        // Inicializa un Tagify (un plugin para etiquetas) en un campo de "tags" del formulario.
+        tagifyInstance = new Tagify(form.querySelector('[name="tags"]'), {
+          whitelist: ["Important", "Urgent", "High", "Medium", "Low"],
+          maxTags: 5,
+          dropdown: { maxItems: 10, enabled: 0, closeOnSelect: false },
+        });
+
+        tagifyInstance.on("change", function () {
+          validation.revalidateField("tags");
+        });
+
+        // Inicializa Flatpickr (un selector de fechas y horas) en el campo "due_date".
+        $(form.querySelector('[name="due_date"]')).flatpickr({
+          enableTime: true,
+          dateFormat: "d, M Y, H:i",
+        });
+
+        // Agrega un evento de cambio al campo "team_assign" para validar.
+        $(form.querySelector('[name="team_assign"]')).on("change", function () {
+          validation.revalidateField("team_assign");
+        });
+
+        // Configura la validación del formulario utilizando la biblioteca FormValidation.
+        validation = FormValidation.formValidation(form, {
+          fields: {
+            target_title: {
+              validators: { notEmpty: { message: "El título del objetivo es requerido" } },
+            },
+            target_assign: {
+              validators: { notEmpty: { message: "La asignación del objetivo es requerida" } },
+            },
+            target_due_date: {
+              validators: { notEmpty: { message: "La fecha de vencimiento del objetivo es requerida" } },
+            },
+            target_tags: {
+              validators: { notEmpty: { message: "Las etiquetas del objetivo son requeridas" } },
+            },
+            "targets_notifications[]": {
+              validators: {
+                notEmpty: {
+                  message: "Por favor, selecciona al menos un método de comunicación",
+                },
+              },
+            },
+          },
+          plugins: {
+            trigger: new FormValidation.plugins.Trigger(),
+            bootstrap: new FormValidation.plugins.Bootstrap5({
+              rowSelector: ".fv-row",
+              eleInvalidClass: "",
+              eleValidClass: "",
+            }),
+          },
+        });
+
+        // Agrega un evento de clic al botón de envío del formulario.
+        submitButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          if (validation) {
+            // Realiza la validación del formulario.
+            validation.validate().then(function (result) {
+              console.log("Validado");
+              if (result === "Valid") {
+                // Realiza acciones si la validación es exitosa, como mostrar un mensaje de éxito.
+                submitButton.setAttribute("data-kt-indicator", "on");
+                submitButton.disabled = true;
+                setTimeout(function () {
+                  submitButton.removeAttribute("data-kt-indicator");
+                  submitButton.disabled = false;
+                  Swal.fire({
+                    text: "¡El formulario se ha enviado exitosamente!",
+                    icon: "success",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, entendido",
+                    customClass: { confirmButton: "btn btn-primary" },
+                  }).then(function (result) {
+                    if (result.isConfirmed) {
+                      bootstrapModal.hide();
+                    }
+                  });
+                }, 2000);
+              } else {
+                // Muestra un mensaje de error si la validación no es exitosa.
+                Swal.fire({
+                  text: "Lo siento, parece que se han detectado algunos errores. Por favor, inténtalo de nuevo.",
+                  icon: "error",
+                  buttonsStyling: false,
+                  confirmButtonText: "Ok, entendido",
+                  customClass: { confirmButton: "btn btn-primary" },
+                });
+              }
+            });
+          }
+        });
+
+        // Agrega un evento de clic al botón de cancelar.
+        cancelButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          // Muestra un mensaje de confirmación para cancelar el formulario.
+          Swal.fire({
+            text: "¿Estás seguro de que deseas cancelar?",
+            icon: "warning",
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: "Sí, cancelar",
+            cancelButtonText: "No, regresar",
+            customClass: {
+              confirmButton: "btn btn-primary",
+              cancelButton: "btn btn-active-light",
+            },
+          }).then(function (result) {
+            if (result.value) {
+              // Si el usuario confirma, se restablece el formulario y se oculta el modal.
+              form.reset();
+              bootstrapModal.hide();
+            } else if (result.dismiss === "cancel") {
+              // Si el usuario descarta el mensaje de confirmación, muestra un mensaje de error.
+              Swal.fire({
+                text: "¡Tu formulario no ha sido cancelado!",
+                icon: "error",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, entendido",
+                customClass: { confirmButton: "btn btn-primary" },
+              });
+            }
+          });
+        });
+      }
+    },
+  };
+})();
+
+// Inicializa el módulo "ModalNewTarget" cuando se carga el contenido de la página.
+KTUtil.onDOMContentLoaded(function () {
+  ModalNewTarget.init();
+});

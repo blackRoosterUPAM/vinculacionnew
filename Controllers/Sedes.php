@@ -22,10 +22,12 @@
             $Sede = new Sede();
             // Hacemos consulta para recuperar con su ID los datos de la sede en la que se inició sesión            
             $sede = $Sede->get_sede($id);
+            
 
             
             $alumno = new SedeAlumno();
-            $alumnos = $alumno->getAlumnos($id);       
+            $alumnos = $alumno->getAlumnos($id);
+            $vacante = $alumno->getVacantes($id);       
         
             // Verifica si la variable de sesión 'contador' está definida
             if (!isset($_SESSION['contador']) || $_SESSION['contador'] >= count($alumnos)) {
@@ -81,8 +83,11 @@
         }
 
         public function pendientes(){
-            //$id = $_POST['id'];
-            $id = 101321;  // Creamos modelo para sede
+           // Utilizaremos una sesión para que al volver a llamar se actualice y no pierda el contador
+           session_start();
+
+            
+           $id = $_SESSION['id_usuario'];
             $Sede = new Sede();
             // Hacemos consulta para recuperar con su ID los datos de la sede en la que se inició sesión            
             $sede = $Sede->get_sede($id);
@@ -95,8 +100,11 @@
 
         //Alumnos confirmados por la sede
         public function confirmados(){
-            //$id = $_POST['id'];
-            $id = 101321;  // Creamos modelo para sede
+              // Utilizaremos una sesión para que al volver a llamar se actualice y no pierda el contador
+              session_start();
+
+            
+              $id = $_SESSION['id_usuario'];
             $Sede = new Sede();
             // Hacemos consulta para recuperar con su ID los datos de la sede en la que se inició sesión            
             $sede = $Sede->get_sede($id);
@@ -110,9 +118,15 @@
         //Aceptar al alumno una vez que ya se entrevisto
         public function aceptar() {
             $id = $_POST["matricula"];
+             // Utilizaremos una sesión para que al volver a llamar se actualice y no pierda el contador
+             session_start();
+
+            
+             $idSede = $_SESSION['id_usuario'];
             $alumnos = new SedeAlumno();
-            $data = $alumnos->confirmarAlumno($id);
+            $data = $alumnos->confirmarAlumno($id, $idSede);
         }
+        //Brandon
 
         public function show_sede(){
             $sedes = new Sede();

@@ -123,7 +123,7 @@
 														<button class="btn btn-primary mb-2 me-2" data-bs-toggle="modal" data-bs-target="#projectSettingsModal">Generar Cita</button>
 
 														<!-- Apartado que muestra los datos actuales del número de vacantes -->
-														<a href="#" class="btn btn-info mb-2 rounded-circle">5/5</a>
+														<a class="btn btn-info mb-2 rounded-circle"><?=$vacante["NumPostulados"]?>/<?=$vacante["NumVacantes"]?></a>
 													</div>
 												</div>
 
@@ -173,7 +173,7 @@
 																	<p class="p"><strong><i class="fas fa-graduation-cap"></i> Universidad:</strong> Universidad Politécnica de Amozoc</p>
 																</div>
 																<div class="col-md-4">
-																	<p class="p"><strong><i class="fas fa-laptop"></i> <?= $data["alumno"]["Carrera"] ?></strong> </p>
+																	<p class="p"><strong><i class="fas fa-laptop"></i> <?= $data["alumno"]["nombreCarrera"] ?></strong> </p>
 																</div>
 																<?php
 																if ($data["alumno"]["Aceptado"] == 1) { ?>
@@ -218,14 +218,14 @@
 							</div>
 							<!--end::Content wrapper-->
 						<?php } else { ?>
-							<div  class="app-container container-md-12 d-flex justify-content-center align-items-center">
+							<div class="app-container container-md-12 d-flex justify-content-center align-items-center">
 								<div style="box-shadow: 0 3px 10px 1px rgb(255,255,255, 0.5);" id="kt_app_content" class="app-content">
-									<div  class="col-md-12">
+									<div class="col-md-12">
 										<div class="card max-height-100">
 											<div class="card-body">
-											<a  class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">
-											No hay más alumnos postulados por el momento
-														</a>
+												<a class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">
+													No hay más alumnos postulados por el momento
+												</a>
 											</div>
 										</div>
 									</div>
@@ -262,61 +262,74 @@
 
 	<script>
 		$(document).ready(function() {
-			// Agregar un evento al botón "descartar" para que inicie la solicitud AJAX
+			// Agregar un evento al botón "descartar" para mostrar la confirmación
 			$("#descartar").click(function() {
-				// Realizar la solicitud AJAX a index.php?c=sedes&a=descartar
-
-				console.log("<?= $data["alumno"]["Matricula"] ?>");
-				$.ajax({
-					type: "POST",
-					url: "index.php?c=sedes&a=descartar",
-					data: {
-						matricula: <?= $data["alumno"]["Matricula"] ?>
-					},
-					success: function(response) {
-						// Manejar la respuesta de la primera solicitud aquí
-						console.log(response);
-
-						// Obtener el correo y la matrícula desde la respuesta o definirlos
-						var correo = "<?= $data["alumno"]["CorreoE"] ?>";
-						var boton_enviar = true;
-						console.log("<?= $data["alumno"]["CorreoE"] ?>");
-						// Luego, enviar el correo y la matrícula a envio.php
+				Swal.fire({
+					title: '¿Estás seguro de que deseas descartar?',
+					text: 'Esta acción no se puede deshacer.',
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Sí, descartar',
+					cancelButtonText: 'Cancelar'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						// Realizar la solicitud AJAX si el usuario confirmó
+						console.log("<?= $data["alumno"]["Matricula"] ?>");
 						$.ajax({
 							type: "POST",
-							url: "config/envio.php",
+							url: "index.php?c=sedes&a=descartar",
 							data: {
-								destinatario: correo,
-								boton_enviar: boton_enviar
+								matricula: <?= $data["alumno"]["Matricula"] ?>
 							},
 							success: function(response) {
-								// Manejar la respuesta del servidor para el correo y matrícula aquí
+								// Manejar la respuesta de la primera solicitud aquí
 								console.log(response);
 
-								// Mostrar una alerta SweetAlert2
-								Swal.fire({
-									title: 'Éxito',
-									text: '¡Envío exitoso!',
-									icon: 'success'
-								}).then((result) => {
-									// Recargar la página después de hacer clic en OK en la alerta
-									location.href = "index.php?c=sedes&a=index";
+								// Obtener el correo y la matrícula desde la respuesta o definirlos
+								var correo = "<?= $data["alumno"]["CorreoE"] ?>";
+								var sede = "<?= $sede["NombreSede"] ?>";
+								var boton_enviar = true;
+								console.log("<?= $data["alumno"]["CorreoE"] ?>");
+								// Luego, enviar el correo y la matrícula a envio.php
+								$.ajax({
+									type: "POST",
+									url: "config/envio.php",
+									data: {
+										destinatario: correo,
+										boton_enviar: boton_enviar,
+										sede : sede
+									},
+									success: function(response) {
+										// Manejar la respuesta del servidor para el correo y matrícula aquí
+										console.log(response);
+
+										// Mostrar una alerta SweetAlert2
+										Swal.fire({
+											title: 'Éxito',
+											text: '¡Envío exitoso!',
+											icon: 'success'
+										}).then((result) => {
+											// Recargar la página después de hacer clic en OK en la alerta
+											location.href = "index.php?c=sedes&a=index";
+										});
+									},
+									error: function() {
+										// Manejar el error para el correo y matrícula aquí, por ejemplo, mostrar un mensaje de error
+										console.log("Error al enviar el correo y la matrícula.");
+									}
 								});
 							},
 							error: function() {
-								// Manejar el error para el correo y matrícula aquí, por ejemplo, mostrar un mensaje de error
-								console.log("Error al enviar el correo y la matrícula.");
+								// Manejar el error de la primera solicitud aquí, si es necesario
+								console.log("Error en la primera solicitud.");
 							}
 						});
-					},
-					error: function() {
-						// Manejar el error de la primera solicitud aquí, si es necesario
-						console.log("Error en la primera solicitud.");
 					}
 				});
 			});
 		});
 	</script>
+
 
 	<!-- Script que manda correo de cita y modifica que esta por confirmar si es aceptado o nel -->
 	<script>
@@ -324,6 +337,7 @@
 			// Agregar un evento al formulario "generarCita" cuando se envíe
 			$("#generarCita").submit(function(event) {
 				event.preventDefault(); // Prevenir el envío normal del formulario
+				var form = document.querySelector("#generarCita");
 
 				// Realizar la solicitud AJAX a "index.php?c=sedes&a=pendiente"
 				$.ajax({
@@ -343,7 +357,10 @@
 							data: $("#generarCita").serialize(), // Serializar los datos del formulario
 							success: function(response) {
 								// Manejar la respuesta del servidor para el formulario aquí
+								const fechaInput = form.querySelector('[name="fecha"]');
 
+								// Aplica el estilo para ocultar el campo
+								fechaInput.style.display = 'none';
 								Swal.fire({
 									title: 'Éxito',
 									text: '¡Envío exitoso!',
@@ -367,6 +384,26 @@
 			});
 		});
 	</script>
+	<script>
+		$(document).ready(function() {
+			var form = document.querySelector("#generarCita");
+			$(form.querySelector('[name="fecha"]')).flatpickr({
+				enableTime: true,
+				dateFormat: "d, M Y, H:i",
+				"locale": {
+            "firstDayOfWeek": 1, // Lunes como el primer día de la semana (opcional)
+            "weekdays": {
+                "shorthand": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+                "longhand": ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
+            },
+            "months": {
+                "shorthand": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+                "longhand": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+            }
+        }
+			});
+		});
+	</script>
 
 	<!-- Modal correo -->
 	<div class="modal fade" id="projectSettingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -386,9 +423,7 @@
 							<div data-kt-stepper-element="content">
 								<!--begin::Wrapper-->
 								<div class="w-100">
-									<!--end::Input group-->
 									<input type="hidden" class="form-control form-control-solid ps-12" name="destinatario" value="<?php echo $data["alumno"]["CorreoE"]; ?>">
-
 
 									<!--begin::Heading-->
 									<div class="pb-12">
@@ -396,15 +431,16 @@
 										<h1 class="fw-bold text-dark">Agendar cita</h1>
 										<!--end::Title-->
 										<!--begin::Description-->
-										<div class="text-muted fw-semibold fs-4">Este correo se enviara al alumno.
-										</div>
+										<div class="text-muted fw-semibold fs-4">Este correo se enviará al alumno.</div>
 										<!--end::Description-->
 									</div>
 									<!--end::Heading-->
+
+
 									<!--begin::Input group-->
 									<div class="fv-row mb-8">
 										<!--begin::Label-->
-										<label class="required fs-6 fw-semibold mb-2">Hora, día, mes, año</label>
+										<label class="required fs-6 fw-semibold mb-2">Fecha y Hora</label>
 										<!--end::Label-->
 										<!--begin::Wrapper-->
 										<div class="position-relative d-flex align-items-center">
@@ -412,77 +448,76 @@
 											<i class="ki-outline ki-calendar-8 fs-2 position-absolute mx-4"></i>
 											<!--end::Icon-->
 											<!--begin::Input-->
-											<input type="datetime-local" class="form-control form-control-solid ps-12" placeholder="Pick date range" name="fecha" />
+											<input required class="form-control form-control-solid ps-12" placeholder="Eliga Fecha y Hora" name="fecha" />
 											<!--end::Input-->
 										</div>
 										<!--end::Wrapper-->
-
-										<!--end::Input group-->
-										<!--begin::Input group-->
-										<div class="fv-row mb-8">
-											<!--begin::Label-->
-											<label class="required fs-6 fw-semibold mb-2">Asunto</label>
-											<!--end::Label-->
-											<!--begin::Input-->
-											<textarea class="form-control form-control-solid" rows="3" placeholder="Enter Project Description" name="asunto">Eres candidato para nuestra vacante.</textarea>
-											<!--end::Input-->
-										</div>
-										<!--end::Input group-->
-										<!--begin::Input group-->
-										<div class="fv-row mb-8">
-											<!--begin::Label-->
-											<label class="required fs-6 fw-semibold mb-2">Descripción</label>
-											<!--end::Label-->
-											<!--begin::Input-->
-											<textarea class="form-control form-control-solid" rows="3" placeholder="Enter Project Description" name="mensaje">Nos gustaría invitarte a una entrevista para discutir tu trayectoria profesional y cómo podrías encajar en nuestro equipo</textarea>
-											<!--end::Input-->
-										</div>
-										<!--end::Input group-->
-										<!--begin::Input group-->
-										<div class="fv-row mb-8">
-											<!--begin::Label-->
-											<label class="required fs-6 fw-semibold mb-2">Dirección</label>
-											<!--end::Label-->
-											<!--begin::Input-->
-											<textarea class="form-control form-control-solid" rows="3" placeholder="Enter Project Description" name="direccion">Lugar donde sera la cita.</textarea>
-											<!--end::Input-->
-										</div>
-										<!--end::Input group-->
-										<!--begin::Input group-->
-										<div class="d-flex flex-column mb-7 fv-row">
-											<!--begin::Label-->
-											<label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-												<span class="required">Entrevistador</span>
-												<span class="ms-1" data-bs-toggle="tooltip" title="Specify a card holder's name">
-													<i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
-												</span>
-											</label>
-											<!--end::Label-->
-											<input type="text" class="form-control form-control-solid" placeholder="Nombre del entrevistador" name="entrevistador" />
-										</div>
-										<!--end::Input group-->
-
-										<!--begin::Input group-->
-										<div class="d-flex flex-column mb-7 fv-row">
-											<!--begin::Label-->
-											<label class="required fs-6 fw-semibold form-label mb-2">Número de télefono</label>
-											<!--end::Label-->
-											<!--begin::Input wrapper-->
-											<div class="position-relative">
-												<!--begin::Input-->
-												<input type="tel" required class="form-control form-control-solid" placeholder="Telefono del entrevistador" minlength="10" maxlength="10" name="telefono" />
-												<!--end::Input-->
-
-											</div>
-											<!--end::Input wrapper-->
-										</div>
-
 									</div>
+									<!--end::Input group-->
+									<!--begin::Input group-->
+									<div class="fv-row mb-8">
+										<!--begin::Label-->
+										<label class="required fs-6 fw-semibold mb-2">Asunto</label>
+										<!--end::Label-->
+										<!--begin::Input-->
+										<textarea required class="form-control form-control-solid" rows="3" name="asunto">Eres candidato para nuestra vacante#</textarea>
+										<!--end::Input-->
+									</div>
+									<!--end::Input group-->
+									<!--begin::Input group-->
+									<div class="fv-row mb-8">
+										<!--begin::Label-->
+										<label class="required fs-6 fw-semibold mb-2">Descripción</label>
+										<!--end::Label-->
+										<!--begin::Input-->
+										<textarea required class="form-control form-control-solid" rows="3" name="mensaje">Nos gustaría invitarte a una entrevista para discutir tu trayectoria profesional y cómo podrías encajar en nuestro equipo.</textarea>
+										<!--end::Input-->
+									</div>
+									<!--end::Input group-->
+									<!--begin::Input group-->
+									<div class="fv-row mb-8">
+										<!--begin::Label-->
+										<label class="required fs-6 fw-semibold mb-2">Dirección</label>
+										<!--end::Label-->
+										<!--begin::Input-->
+										<textarea required class="form-control form-control-solid" rows="3" name="direccion">Lugar donde será la cita.</textarea>
+										<!--end::Input-->
+									</div>
+									<!--end::Input group-->
+									<!--begin::Input group-->
+									<div class="d-flex flex-column mb-7 fv-row">
+										<!--begin::Label-->
+										<label class="required d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+											<span>Entrevistador</span>
+											<span class="ms-1" data-bs-toggle="tooltip" title="Specify a card holder's name">
+												<i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+											</span>
+										</label>
+										<!--end::Label-->
+										<input type="text" required class="form-control form-control-solid" name="entrevistador" />
+									</div>
+									<!--end::Input group-->
+									<!--begin::Input group-->
+									<div class="d-flex flex-column mb-7 fv-row">
+										<!--begin::Label-->
+										<label class="required fs-6 fw-semibold form-label mb-2">Número de teléfono</label>
+										<!--end::Label-->
+										<!--begin::Input wrapper-->
+										<div class="position-relative">
+											<!--begin::Input-->
+											<input type="tel" required class="form-control form-control-solid" minlength="10" maxlength="10" name="telefono" />
+											<!--end::Input-->
+										</div>
+										<!--end::Input wrapper-->
+									</div>
+									<!--end::Input group-->
 								</div>
+								<input type="hidden" name="sede" value="<?= $sede["NombreSede"]; ?>">
 							</div>
 							<div class="modal-footer">
-								<button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-								<button type="submit" data-bs-dismiss="modal" class="btn btn-primary">Guardar Cambios</button>
+								<button type="button" id="cancelarCita"  data-bs-dismiss="modal" class="btn btn-light me-3">Cancel</button>
+
+								<button id="enviarCita" type="submit" class="btn btn-primary">Guardar Cambios</button>
 							</div>
 						</form>
 					</div>
@@ -490,7 +525,10 @@
 			</div>
 		</div>
 	</div>
-	<!--end::Modals-->
+	<!--begin::Javascript-->
+	<script>
+		var hostUrl = "assets/";
+	</script>
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 	<script src="assets/plugins/global/plugins.bundle.js"></script>
 	<script src="assets/js/scripts.bundle.js"></script>
@@ -499,8 +537,8 @@
 	<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 	<!--end::Vendors Javascript-->
 	<!--begin::Custom Javascript(used for this page only)-->
-	<script src="assets/js/custom/apps/customers/list/list.js"></script>
-	<script src="assets/js/custom/utilities/modals/create-project/settings.js"></script>
+	<script src="assets/js/widgets.bundle.js"></script>
+	<script src="assets/js/custom/widgets.js"></script>
 
 	<!--end::Custom Javascript-->
 	<!--end::Javascript-->
