@@ -29,14 +29,14 @@ class UsuariosController
             $rol = $usuario['idRol'];
 
             // Puedes realizar operaciones adicionales aquí si es necesario
-            if ($rol == 3) {
+            if ($rol == 5) {
                 session_start();
                 $name = "sedes";
                 $_SESSION['name'] = $name;
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 // Redirigir a la página de sedes
                 header('location:  index.php?c=sedes&a=index');
-            } elseif ($rol == 5) {
+            } elseif ($rol == 3) {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 $name = "vinculacion";

@@ -64,7 +64,7 @@
 									<!--begin::Title-->
 									<h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Listado General
 										<!--begin::Description-->
-										<span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Alumnos Confirmados</span>
+										<span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Alumnos Pendientes</span>
 										<!--end::Description-->
 									</h1>
 									<!--end::Title-->
@@ -117,26 +117,20 @@
 									<!--begin::Card body-->
 									<div class="card-body pt-0">
 										<!--begin::Table-->
-										<div class="table-responsive">
-											<table class="table align-middle table-row-dashed fs-6 gy-5 " id="kt_customers_table">
-												<thead  class="bg-primary">
-													<tr class=" text-start text-gray-400 fw-bold fs-7  gs-0">
-														<th class="textoTabla min-w-25px ">Matricula</th>
+										<div class="table-responsive ">
+											<table class="table-responsive table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
+												<thead class="bg-primary">
+													<tr  class=" text-start text-gray-400 fw-bold fs-7  gs-0">
+														<th class="textoTabla min-w-25px">Matricula</th>
 														<th class="textoTabla min-w-50px">Nombre</th>
-														<th class="textoTabla min-w-50px">Teléfono</th>
+														<th class="textoTabla min-w-50px">Telefono</th>
 														<th class="textoTabla min-w-50px">Email</th>
 														<th class="textoTabla min-w-50px">Carrera</th>
 														<th class="textoTabla min-w-50px">Modalidad</th>
 													</tr>
 												</thead>
-												<style>
-													.textoTabla{
-														color: white !important;
-														text-align: center;
-
-													}
-												</style>
-												<tbody class="fw-semibold text-gray-600">
+												
+												<tbody  class="fw-semibold text-gray-600">
 													<?php
 													if (isset($data)) {
 														foreach ($data as $row) {
@@ -148,10 +142,10 @@
 															$formattedTelefono = substr($telefono, 0, 2) . "-" . substr($telefono, 2, 2) . "-" . substr($telefono, 4, 2) . "-" . substr($telefono, 6, 2) . "-" . substr($telefono, 8, 2);
 															echo "<td>" . $formattedTelefono . "</td>";
 															echo "<td>" . $row["CorreoE"] . "</td>";
-															echo "<td>" . $row["Carrera"] . "</td>";
+															echo "<td>" . $row["nombreCarrera"] . "</td>";
 															echo "<td>" . $row["Proceso"] . "</td>";
-															
-
+															echo '<td>';
+												
 															echo "</tr>";
 														}
 													} else {
@@ -194,7 +188,65 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	
+	<script>
+		$(document).ready(function() {
+			$('#aceptarAlumno').click(function() {
+				var matricula = $('#matricula').val(); // Reemplaza '12345' con la matrícula que deseas enviar
+				var destinatario = $('#destinatario').val();
+				var sede = $('#sede').val();
+				var aceptado = $('#aceptado').val();
+				console.log(matricula);
+				$.ajax({
+					type: 'POST',
+					url: '?c=sedes&a=aceptar', // Reemplaza 'primera_solicitud.php' con la URL de la primera solicitud
+					data: {
+						matricula: matricula
+					},
+					success: function(response) {
+						// La primera solicitud AJAX fue exitosa
+						console.log('Respuesta del servidor (Primera solicitud): ' + response);
+						// Realiza acciones adicionales aquí después de una respuesta exitosa
+						// Ahora, realiza la segunda solicitud AJAX
+						$.ajax({
+							type: 'POST',
+							url: 'config/correoAceptacion.php', // Reemplaza 'segunda_solicitud.php' con la URL de la segunda solicitud
+							data: {
+								matricula: matricula,
+								sede: sede,
+								destinatario: destinatario,
+								aceptado: aceptado
+							},
+							success: function(secondResponse) {
+								// La segunda solicitud AJAX fue exitosa
+								console.log('Respuesta del servidor (Segunda solicitud): ' + secondResponse);
+
+								// Muestra una alerta después de la segunda solicitud
+								Swal.fire({
+									icon: 'success',
+									title: 'Solicitud completada con éxito',
+								}).then((result) => {
+									// Recargar la página
+									if (result.isConfirmed) {
+										location.href = "index.php?c=sedes&a=pendientes";
+									}
+								});
+
+								// Realiza acciones adicionales después de la segunda solicitud
+							},
+							error: function(xhr, status, error) {
+								// Ocurrió un error en la segunda solicitud AJAX
+								console.error('Error en la segunda solicitud: ' + error);
+							}
+						});
+					},
+					error: function(xhr, status, error) {
+						// Ocurrió un error en la primera solicitud AJAX
+						console.error('Error en la primera solicitud: ' + error);
+					}
+				});
+			});
+		});
+	</script>
 
 	<!-- Descarta al alumno depues de su cita -->
 	<script>
@@ -227,7 +279,8 @@
 								Swal.fire({
 									title: 'Éxito',
 									text: '¡Envío exitoso!',
-									icon: 'success'
+									icon: 'success',
+									background: 'black'
 								}).then((result) => {
 									// Recargar la página después de hacer clic en OK en la alerta
 									location.href = "index.php?c=sedes&a=pendientes";
@@ -260,8 +313,6 @@
 	<!--begin::Custom Javascript(used for this page only)-->
 	<script src="assets/js/custom/apps/customers/list/list.js"></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 	<!--end::Custom Javascript-->
 	<!--end::Javascript-->

@@ -54,15 +54,17 @@ class SedeAlumno
     }
 
     //Retorna los alumnos a los que se les genero una cita pero aun no confirman si los aceptan
-    public function alumnoPorConfirmar()
+    public function alumnoPorConfirmar($id)
     {
         //Agregar el id de la sede para que solo en esa busque
         $sql =
-            "SELECT a.*, ad.*, al.* 
+            "SELECT a.*, ad.*, al.* ,  c.NombrePE as nombreCarrera
         FROM alumnosede AS a
         INNER JOIN alumnodocs AS ad ON a.Matricula = ad.Matricula
         INNER JOIN alumnos AS al ON a.Matricula = al.Matricula
-        WHERE (a.FechaInicio IS NULL OR a.FechaInicio = '') AND a.Aceptado = 1";
+        
+        INNER JOIN carrera as c on al.Carrera = c.IdCarrera
+        WHERE (a.FechaInicio IS NULL OR a.FechaInicio = '') AND a.Aceptado = 1 AND a.IdSede = $id";
         //1 Significa que esta pendiente por confirmar		
         $resultado = $this->db->query($sql);
         while ($row = $resultado->fetch_assoc()) {
@@ -72,15 +74,16 @@ class SedeAlumno
     }
 
     //Retorna los alumnos confirmados por la sede.
-    public function alumnoConfirmado()
+    public function alumnoConfirmado($id)
     {
         //Agregar el id de la sede para que solo en esa busque
         $sql =
-            "SELECT a.*, ad.*, al.* 
+            "SELECT a.*, ad.*, al.* , c.NombrePE as nombreCarrera
         FROM alumnosede AS a
         INNER JOIN alumnodocs AS ad ON a.Matricula = ad.Matricula
         INNER JOIN alumnos AS al ON a.Matricula = al.Matricula
-        WHERE  a.Aceptado = 2";
+        INNER JOIN carrera as c on al.Carrera = c.IdCarrera
+        WHERE  a.Aceptado = 2 AND a.IdSede = $id";
         //1 Significa que esta pendiente por confirmar		
         $resultado = $this->db->query($sql);
         while ($row = $resultado->fetch_assoc()) {

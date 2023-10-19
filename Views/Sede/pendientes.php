@@ -118,7 +118,7 @@
 									<div class="card-body pt-0">
 										<!--begin::Table-->
 										<div class="table-responsive ">
-											<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
+											<table class="table-responsive table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
 												<thead class="bg-primary">
 													<tr class="text-start text-gray-400 fw-bold fs-7  gs-0">
 														<th class="textoTabla min-w-25px">Matricula</th>
@@ -136,6 +136,9 @@
 														text-align: center;
 
 													}
+													th{
+														text-align: center;
+													}
 												</style>
 												<tbody class="fw-semibold text-gray-600">
 													<?php
@@ -149,7 +152,7 @@
 															$formattedTelefono = substr($telefono, 0, 2) . "-" . substr($telefono, 2, 2) . "-" . substr($telefono, 4, 2) . "-" . substr($telefono, 6, 2) . "-" . substr($telefono, 8, 2);
 															echo "<td>" . $formattedTelefono . "</td>";
 															echo "<td>" . $row["CorreoE"] . "</td>";
-															echo "<td>" . $row["Carrera"] . "</td>";
+															echo "<td>" . $row["nombreCarrera"] . "</td>";
 															echo "<td>" . $row["Proceso"] . "</td>";
 															echo '<td>';
 													?>
@@ -367,7 +370,8 @@
 								Swal.fire({
 									title: 'Éxito',
 									text: '¡Envío exitoso!',
-									icon: 'success'
+									icon: 'success',
+									background: 'black'
 								}).then((result) => {
 									// Recargar la página después de hacer clic en OK en la alerta
 									location.href = "index.php?c=sedes&a=pendientes";
@@ -400,8 +404,6 @@
 	<!--begin::Custom Javascript(used for this page only)-->
 	<script src="assets/js/custom/apps/customers/list/list.js"></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 	<!--end::Custom Javascript-->
 	<!--end::Javascript-->

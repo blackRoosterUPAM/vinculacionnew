@@ -94,7 +94,7 @@
 
             
             $alumnos = new SedeAlumno();
-            $data = $alumnos->alumnoPorConfirmar();
+            $data = $alumnos->alumnoPorConfirmar($id);
             require_once 'views/Sede/pendientes.php';
         }
 
@@ -111,7 +111,7 @@
 
             
             $alumnos = new SedeAlumno();
-           $data = $alumnos->alumnoConfirmado();
+           $data = $alumnos->alumnoConfirmado($id);
             require_once 'views/Sede/confirmados.php';
         }
         
