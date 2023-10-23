@@ -43,6 +43,20 @@ class UsuariosController
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de vinculación
                 header('location:  index.php?c=carreras&a=index');
+            }elseif ($rol == 4) {
+                session_start();
+                $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
+                $name = "alumno";
+                $_SESSION['name'] = $name;
+                // Redirigir a la página de vinculación
+                header('location:  index.php?c=alumno&a=index');
+            }elseif ($rol == 6) {
+                session_start();
+                $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
+                $name = "director";
+                $_SESSION['name'] = $name;
+                // Redirigir a la página de vinculación
+                header('location: director/index.php');
             }else{
                 header('location: index.php');
             }

@@ -4,12 +4,15 @@ class Alumno
 {
 
 	private $db;
-	private $alumno;
+    private $alumno;
+    private $docs;
+    private $procesos;
 
 	public function __construct()
 	{
 		$this->db = Conectar::conexion();
-		$this->alumno = array();
+        $this->alumno = array();
+        $this->docs = array();
 	}
 
 	public function get_alumnos()
@@ -42,12 +45,57 @@ class Alumno
 
 
 	public function get_alumno($id)
-	{
-		$sql = "SELECT a.*, ad.* FROM alumnosede as a  inner JOIN alumnodocs as ad on a.Matricula = ad.Matricula where a.Matricula = $id";
-		$resultado = $this->db->query($sql);
-		$row = $resultado->fetch_assoc();
-		return $row;
-	}
+    {
+        $sql = "SELECT * FROM alumnos as a INNER JOIN carrera as c on a.Carrera = c.IdCarrera WHERE Matricula = $id";
+        $resultado = $this->db->query($sql);
+        $row = $resultado->fetch_assoc();
+        return $row;
+    }
+
+    public function get_alumnodocs($id)
+    {
+        $sql = "SELECT * FROM alumnodocs WHERE Matricula = $id";
+        $resultado = $this->db->query($sql);
+        //$row = $resultado->fetch_assoc();
+        if ($row = $resultado->fetch_object()){
+            //$doc = $row->FechaCreación;
+            $doc = $row;
+        }else{
+            $doc = "";
+        }
+        return $doc;
+    }
+    
+
+    public function get_docsvinculacion($id){
+        $sql = "SELECT * FROM docalumnoperiodo as dap INNER JOIN documentacion as do ON dap.IdDocumento = do.IdDocumento WHERE Matricula = $id";
+        
+        $resultado = $this->db->query($sql);
+		while ($row = $resultado->fetch_assoc()) {
+            
+			$this->docs[] = $row;
+		}
+		return $this->docs;
+    }
+
+    public function get_procesos($id){
+        $sql = "SELECT p.NombrePE as nombrePro, NombreSede, FechaInicio FROM alumnosede as alse INNER JOIN proceso as p on alse.NombrePE = p.IdProceso WHERE Matricula = $id";
+        
+        $resultado = $this->db->query($sql);
+		while ($row = $resultado->fetch_assoc()) {
+            
+			$this->procesos[] = $row;
+		}
+		return $this->procesos;
+    }
+
+    public function get_alumno2($id)
+    {
+        $sql = "SELECT a.*, ad.* FROM alumnosede as a  inner JOIN alumnodocs as ad on a.Matricula = ad.Matricula where a.Matricula = $id";
+        $resultado = $this->db->query($sql);
+        $row = $resultado->fetch_assoc();
+        return $row;
+    }
 
 	public function firstWithPDF()
 	{

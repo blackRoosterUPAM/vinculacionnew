@@ -1,1 +1,0 @@
-Eres una chismosa jajajaja 

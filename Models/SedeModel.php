@@ -64,6 +64,28 @@ class Sede {
             
         }
 	}
+
+	/*Consulta para obtener sedes por carrera y proceso 
+		Utilizada en AlumnosController
+	*/
+	public function get_sedespcp($idProceso, $idCarrera) {
+		$sql = "SELECT * FROM sede as s INNER JOIN vacantes as v on s.IdSede = v.IdSede WHERE IdProceso = $idProceso AND IdCarrera = $idCarrera";
+		$resultado = $this->db->query($sql);
+		while ($row = $resultado->fetch_assoc()) {
+			$this->sede[] = $row;
+		}
+		return $this->sede;
+	}
+	/*Consulta para obtener detalle de sede 
+		Utilizada en AlumnosController
+	*/
+	public function get_sedevac($id)
+    {
+        $sql = "SELECT * FROM sede as s INNER JOIN vacantes as v on s.IdSede = v.IdSede INNER JOIN proceso as p on v.IdProceso = p.IdProceso INNER JOIN periodo as pe on v.IdPeriodo = pe.IdPeriodo WHERE s.IdSede = $id";
+        $resultado = $this->db->query($sql);
+        $row = $resultado->fetch_assoc();
+        return $row;
+    }
 	}
 	
 ?>
