@@ -5,6 +5,7 @@
         //Incuimos los modelos que vamos a utilizar
 		public function __construct(){
 			require_once "Models/CarreraModel.php";
+			require_once "Models/ProcesoModel.php";
 		}
 
         //Funcion principal que retorna los alumnos que se postularon a una emperesa en especifico
@@ -14,5 +15,13 @@
             require_once "views/Vinculacion/listas.php";
         }
         
+		public function registro() {
+			$carrera = new Carrera();
+            $resultCarrera = $carrera->get_carreras();
+
+			$proceso = new Proceso();
+			$resultProcesos = $proceso->get_procesos();
+            require_once "views/Escolares/registro.php";
+        }
 	}
 ?>

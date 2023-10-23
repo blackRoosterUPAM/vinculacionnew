@@ -36,7 +36,11 @@ class UsuariosController
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 // Redirigir a la página de sedes
                 header('location:  index.php?c=sedes&a=index');
-            } elseif ($rol == 3) {
+            }elseif ($rol == 2) {
+                session_start();
+                $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
+                header('location: index.php?c=escolars&a=index');
+            }elseif ($rol == 3) {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 $name = "vinculacion";

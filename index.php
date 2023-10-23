@@ -7,6 +7,9 @@
 	require_once "controllers/Sedes.php";
 	require_once "controllers/Usuarios.php";
 	require_once "controllers/Carrera.php";
+	require_once "controllers/Proceso.php";
+	require_once "controllers/Escolars.php";
+
 	
 	//Mediante la url vamos a saber que controlador se usa
 	//ejemplo index.php?c=sedes
