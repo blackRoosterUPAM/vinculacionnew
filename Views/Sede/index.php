@@ -140,7 +140,7 @@
 														<button class="btn btn-primary mb-2 me-2" data-bs-toggle="modal" data-bs-target="#projectSettingsModal">Generar Cita</button>
 
 														<!-- Apartado que muestra los datos actuales del número de vacantes -->
-														<a class="btn btn-info mb-2 rounded-circle"><?=$vacante["NumPostulados"]?>/<?=$vacante["NumVacantes"]?></a>
+														<a class="btn btn-info mb-2 rounded-circle"><?=$vacante["NumPostulados"]?>/<?=$vacante["totalVacantes"]?></a>
 													</div>
 												</div>
 
@@ -151,7 +151,7 @@
 												<div class="col-md-3 my-0 text-center"> <!-- Añadido text-center para centrar la imagen -->
 													<div class="me-7 mb-2">
 														<div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-															<img src="assets/media/avatars/300-1.jpg" alt="image" />
+															<img src="assets/media/avatars/gallo.jpg" alt="image" />
 															<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
 														</div>
 													</div>

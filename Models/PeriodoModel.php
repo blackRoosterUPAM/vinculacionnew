@@ -18,11 +18,11 @@ class Periodo {
 		return $this->periodo;
 	}
 
-	public function periodo_editado($id,$año) {
-        // Consulta SQL para actualizar los datos
-        $sql = "UPDATE periodo SET Año=$año WHERE IdPeriodo=$id";
-		$resultado = $this->db->query($sql);
+	public function periodo_editado($id) {
+        $query1 = mysqli_query($this->db, "SELECT * FROM periodo WHERE IdPeriodo = $id");
+        $periodo = mysqli_fetch_array($query1);
+        $status = $periodo["estatus"];
+		
 	}
 	}
-	
-?>
+

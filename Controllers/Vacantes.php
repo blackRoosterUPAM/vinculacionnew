@@ -60,4 +60,5 @@ class VacantesController
         $result = $carrera->get_carreras();
         require_once "views/Vinculacion/vacantes.php";
     }
+    
 }

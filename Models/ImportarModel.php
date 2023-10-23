@@ -1,4 +1,7 @@
 <?php
+
+use PhpOffice\PhpSpreadsheet\Reader\Xls\MD5;
+
 require '../vendor/autoload.php'; // Asegúrate de cargar la librería PhpSpreadsheet
 require '../config/database.php';
 require '../config/EmailSender.php'; // Importa la clase EmailSender
@@ -181,7 +184,11 @@ class ImportarModel
     public function insertarAlumnoIndividual($matricula, $nombre, $apellidoP, $apellidoM, $telefono, $correo, $carrera, $proceso)
     {
 
-        $password = bin2hex(random_bytes(8)); // Genera una contraseña aleatoria
+        $password = bin2hex(random_bytes(4));
+        $md5Hash = md5($password);
+        
+        echo "Cadena original: $password\n";
+        echo "MD5: $md5Hash\n";
 
         // IdRol del estudiante
         $idRol = 4;

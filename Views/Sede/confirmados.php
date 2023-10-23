@@ -160,7 +160,7 @@
 															echo "<td>" . $formattedTelefono . "</td>";
 															echo "<td>" . $row["CorreoE"] . "</td>";
 															echo "<td>" . $row["nombreCarrera"] . "</td>";
-															echo "<td>" . $row["Proceso"] . "</td>";
+															echo "<td>" . $row["NombrePE"] . "</td>";
 															echo '<td>';
 												
 															echo "</tr>";

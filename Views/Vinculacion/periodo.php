@@ -211,7 +211,7 @@ License: For each use you must have a valid license purchased only from above li
                                                             echo "<tr>";
                                                             echo "<td class=" . "ps-9" . ">" . $row["Meses"] . "</td>";
                                                             echo "<td class=" . "ps-0" . ">" . $año . "</td>";
-                                                            echo "<td style=" . "margin-left: 10px;" . "><a href="."#"." data-bs-toggle="."modal"." data-bs-target="."#kt_modal_offer_a_deal".">Editar Sede</a></td>";
+                                                            echo "<td style=" . "margin-left: 10px;" . "><a href="."?c=periodo&a=periodo_editado&id=$id".">Eliminar</a></td>";
                                                             echo "</tr>";
                                                         }
                                                         ?>

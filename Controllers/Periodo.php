@@ -24,5 +24,11 @@
 
             require_once "views/Vinculacion/periodo.php";
         }
+
+        public function periodo_editado($id){
+            $periodo = new Periodo();
+            $data = $periodo->get_periodos();
+            //require_once "views/Vinculacion/periodo.php";
+        }
 	}
 ?>
