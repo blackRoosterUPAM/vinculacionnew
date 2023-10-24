@@ -58,7 +58,7 @@ class Sede {
 
             $con_MD5 = md5($contraseña);
 
-            $query2 = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES ('$id_sede', '$correo', '$con_MD5', 2, '$nombre', '$apellidop', '$apellidom')");
+            $query2 = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES ('$id_sede', '$correo', '$con_MD5', 5, '$nombre', '$apellidop', '$apellidom')");
 
             if($query2){}
             

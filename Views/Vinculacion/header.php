@@ -26,7 +26,7 @@
 				</div>
 				<div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
 					<a href="#" class="menu-link px-5">
-						<span class="menu-title position-relative">Mode
+						<span class="menu-title position-relative">Tema
 						</span>
 					</a>
 					<!--begin::Menu-->
@@ -37,7 +37,7 @@
 								<span class="menu-icon" data-kt-element="icon">
 									<i class="ki-outline ki-night-day fs-2"></i>
 								</span>
-								<span class="menu-title">Light</span>
+								<span class="menu-title">Claro</span>
 							</a>
 						</div>
 						<!--end::Menu item-->
@@ -47,7 +47,7 @@
 								<span class="menu-icon" data-kt-element="icon">
 									<i class="ki-outline ki-moon fs-2"></i>
 								</span>
-								<span class="menu-title">Dark</span>
+								<span class="menu-title">Oscuro</span>
 							</a>
 						</div>
 						<!--end::Menu item-->
@@ -68,7 +68,7 @@
 				<!--begin::Menu item-->
 				<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0" class="menu-item menu-lg-down-accordion me-0 me-lg-2"">
 						
-							<a href="index.php?c=usuarios&a=prueba" class=" menu-link">Sign Out</a>
+							<a href="index.php?c=usuarios&a=prueba" class=" menu-link">Cerrar sesión</a>
 
 				</div>
 			</div>

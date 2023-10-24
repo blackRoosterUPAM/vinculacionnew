@@ -4,21 +4,20 @@ session_start(); // Asegúrate de iniciar la sesión en cada vista que utilice s
 // Verifica si la variable de sesión existe antes de mostrarla
 if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
     $idUsuario = $_SESSION['id_usuario'];
-	$name = $_SESSION['name'];
-	if($name == 'vinculacion'){
-		
-	} else {
-		// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-		header('location: index.php');
-		exit; // Detener la ejecución del script
-	}
+    $name = $_SESSION['name'];
+    if ($name == 'vinculacion') {
+    } else {
+        // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
+        header('location: index.php');
+        exit; // Detener la ejecución del script
+    }
 } else {
     // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
     header('location: index.php');
     exit; // Detener la ejecución del script
 }
 ?>
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <!--
 Author: Keenthemes
 Product Name: Metronic
@@ -36,7 +35,7 @@ License: For each use you must have a valid license purchased only from above li
 
 <head>
     <base href="" />
-    <title>Metronic - The World's #1 Selling Bootstrap Admin Template by Keenthemes</title>
+    <title>UPAM - Vinculación</title>
     <meta charset="utf-8" />
     <meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
     <meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
@@ -158,8 +157,8 @@ License: For each use you must have a valid license purchased only from above li
                                             <!--end::Nav item-->
                                             <!--begin::Nav item-->
                                             <li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=sedes&a=show_sede">Sedes</a>
-											</li>
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=sedes&a=show_sede">Sedes</a>
+                                            </li>
                                             <!--end::Nav item-->
                                             <!--begin::Nav item-->
                                             <li class="nav-item mt-2">
@@ -292,7 +291,7 @@ License: For each use you must have a valid license purchased only from above li
                                                             <option value="">Seleccione un periodo...</option>
                                                             <?php
                                                             foreach ($peri as $row) {
-                                                                echo "<option" . " value=" . $row["IdPeriodo"] . ">" . $row["Meses"] . " ". $row["Año"] ."</option>";
+                                                                echo "<option" . " value=" . $row["IdPeriodo"] . ">" . $row["Meses"] . " " . $row["Año"] . "</option>";
                                                             }
                                                             ?>
                                                         </select>

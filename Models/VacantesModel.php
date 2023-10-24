@@ -76,7 +76,7 @@ class Vacantes {
 	}
 
       public function nueva_sede($idSede, $idCarrera,$idProceso,$idPeriodo,$perfil,$beneficios,$vacantes){
-            $query = mysqli_query($this->db, "INSERT INTO vacantes (IdSede, IdCarrera, IdProceso, IdPeriodo, Perfil, Beneficios, NumVacantes, NumPostulados) VALUES ('$idSede', '$idCarrera', '$idProceso', '$idPeriodo', '$perfil', '$beneficios', '$vacantes', '$vacantes')");
+            $query = mysqli_query($this->db, "INSERT INTO vacantes (IdSede, IdCarrera, IdProceso, IdPeriodo, Perfil, Beneficios, NumVacantes, NumPostulados,totalVacantes) VALUES ('$idSede', '$idCarrera', '$idProceso', '$idPeriodo', '$perfil', '$beneficios', '$vacantes', '$vacantes','$vacantes')");
       }
 
 	}

@@ -4,14 +4,13 @@ session_start(); // Asegúrate de iniciar la sesión en cada vista que utilice s
 // Verifica si la variable de sesión existe antes de mostrarla
 if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
     $idUsuario = $_SESSION['id_usuario'];
-	$name = $_SESSION['name'];
-	if($name == 'vinculacion'){
-		
-	} else {
-		// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-		header('location: index.php');
-		exit; // Detener la ejecución del script
-	}
+    $name = $_SESSION['name'];
+    if ($name == 'vinculacion') {
+    } else {
+        // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
+        header('location: index.php');
+        exit; // Detener la ejecución del script
+    }
 } else {
     // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
     header('location: index.php');
@@ -36,7 +35,7 @@ License: For each use you must have a valid license purchased only from above li
 
 <head>
     <base href="" />
-    <title>Metronic - The World's #1 Selling Bootstrap Admin Template by Keenthemes</title>
+    <title>UPAM - Vinculación</title>
     <meta charset="utf-8" />
     <meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
     <meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
@@ -56,7 +55,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/style.bundle_2.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.bundle_3.css" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     <script>
         // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
@@ -173,6 +172,13 @@ License: For each use you must have a valid license purchased only from above li
                                 </div>
                                 <!--end::Navbar-->
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                    <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                        <!--begin::Actions-->
+                                        <div class="d-flex my-4">
+                                            <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal" style="margin-left: 1070px;">Agregar Periodo</a>
+                                        </div>
+                                        <!--end::Actions-->
+                                    </div>
                                 </div>
                                 <!--begin::Referred users-->
                                 <div class="card">
@@ -211,7 +217,7 @@ License: For each use you must have a valid license purchased only from above li
                                                             echo "<tr>";
                                                             echo "<td class=" . "ps-9" . ">" . $row["Meses"] . "</td>";
                                                             echo "<td class=" . "ps-0" . ">" . $año . "</td>";
-                                                            echo "<td style=" . "margin-left: 10px;" . "><a href="."?c=periodo&a=periodo_editado&id=$id".">Eliminar</a></td>";
+                                                            echo "<td style=" . "margin-left: 10px;" . "><a href=" . "?c=periodo&a=periodo_editado&id=$id" . ">Eliminar</a></td>";
                                                             echo "</tr>";
                                                         }
                                                         ?>
@@ -269,9 +275,30 @@ License: For each use you must have a valid license purchased only from above li
                         <!--begin::Content-->
                         <div id="kt_account_settings_profile_details" class="collapse show">
                             <!--begin::Form-->
-                            <form id="kt_account_profile_details_form" class="form" action="?c=periodo&a=edit_periodo" method="post">
+                            <form id="kt_account_profile_details_form" class="form" action="?c=periodo&a=new_periodo" method="post">
                                 <!--begin::Card body-->
                                 <div class="card-body border-top p-9">
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6" style="margin-left:250px;">
+                                        <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                            <span class="required">Periodo</span>
+                                            <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
+                                                <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                            </span>
+                                        </label>
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8 fv-row">
+                                            <select id="periodo" name="periodo" aria-label="Seleccione una periodo" data-control="select2" data-placeholder="Seleccione una periodo..." class="form-select form-select-solid form-select-lg" require>
+                                                <option value="">Seleccione una Periodo...</option>
+                                                <option value="Enero-Abril">Enero-Abril</option>
+                                                <option value="Mayo-Agosto">Mayo-Agosto</option>
+                                                <option value="Septiembre-Diciembre">Septiembre-Diciembre</option>
+                                            </select>
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+
                                     <!--begin::Input group-->
                                     <div class="row mb-6" style="margin-left:250px;">
                                         <!--begin::Label-->
@@ -283,9 +310,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="row">
                                                 <!--begin::Col-->
                                                 <div class="col-lg-6 fv-row">
-                                                    <input type="hidden" name="id_periodo" value="<?php echo $id ?>">
-                                                    <input type="hidden" name="meses" value="<?php echo $meses ?>">
-                                                    <input type="text" name="año" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $año ?>" required />
+                                                    <input type="text" name="año" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
                                                 </div>
                                                 <!--end::Col-->
                                             </div>
@@ -298,7 +323,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--end::Card body-->
                                 <!--begin::Actions-->
                                 <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Guardar Cambios</button>
+                                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Guardar Nuevo Periodo</button>
                                 </div>
                                 <!--end::Actions-->
                             </form>
