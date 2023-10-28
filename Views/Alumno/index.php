@@ -81,8 +81,8 @@ License: For each use you must have a valid license purchased only from above li
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             <!--begin::Header-->
             <?php
-			include('header.php');
-			?>
+            include('header.php');
+            ?>
             <!--end::Header-->
             <!--begin::Wrapper-->
             <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
@@ -206,8 +206,32 @@ License: For each use you must have a valid license purchased only from above li
                                             </li>
                                             <!--end::Nav item-->
                                             <!--begin::Nav item-->
+                                            <script>
+                                                function sinProceso() {
+                                                    //console.log("Estamos en sin proceso");
+                                                    Swal.fire({
+                                                        text: "Aún no tienes un proceso asignado, inténtalo más tarde.",
+                                                        icon: "warning",
+                                                        buttonsStyling: !1,
+                                                        confirmButtonText: "Aceptar",
+                                                        customClass: {
+                                                            confirmButton: "btn btn-primary"
+                                                        },
+                                                    });
+                                                }
+                                            </script>
                                             <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=alumno&a=listasedes">Sedes</a>
+                                                <?php
+                                                if ($procesoAlumno != "" || !empty($procesoAlumno)) {
+                                                ?>
+                                                    <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=alumno&a=listasedes">Sedes</a>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <button class="nav-link text-active-primary ms-0 me-10 py-5" type="button" onclick="sinProceso()">Sedes</button>
+                                                <?php
+                                                }
+                                                ?>
                                             </li>
                                             <!--end::Nav item-->
 
@@ -277,12 +301,12 @@ License: For each use you must have a valid license purchased only from above li
                                                             </div>
                                                             <!--end::Content-->
                                                             <!--begin::Action-->
-                                                            <?php 
-                                                                if($estatusAlumno == 1){
-                                                                    ?>
-                                                                        <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_cv">Añadir</a>
-                                                                    <?php
-                                                                }
+                                                            <?php
+                                                            if ($estatusAlumno == 1) {
+                                                            ?>
+                                                                <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_cv">Añadir</a>
+                                                            <?php
+                                                            }
                                                             ?>
                                                             <!--end::Action-->
                                                         </div>
@@ -424,12 +448,12 @@ License: For each use you must have a valid license purchased only from above li
                                                             </div>
                                                             <!--end::Content-->
                                                             <!--begin::Action-->
-                                                            <?php 
-                                                                if($estatusAlumno == 1){
+                                                            <?php
+                                                            if ($estatusAlumno == 1) {
                                                             ?>
                                                                 <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_rvin">Añadir</a>
                                                             <?php
-                                                                }
+                                                            }
                                                             ?>
                                                             <!--end::Action-->
                                                         </div>
@@ -456,12 +480,12 @@ License: For each use you must have a valid license purchased only from above li
                                                             </div>
                                                             <!--end::Content-->
                                                             <!--begin::Action-->
-                                                            <?php 
-                                                                if($estatusAlumno == 1){
+                                                            <?php
+                                                            if ($estatusAlumno == 1) {
                                                             ?>
                                                                 <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_cartaAceptacion">Añadir</a>
                                                             <?php
-                                                                }
+                                                            }
                                                             ?>
                                                             <!--end::Action-->
                                                         </div>
@@ -487,12 +511,12 @@ License: For each use you must have a valid license purchased only from above li
                                                             </div>
                                                             <!--end::Content-->
                                                             <!--begin::Action-->
-                                                            <?php 
-                                                                if($estatusAlumno == 1){
+                                                            <?php
+                                                            if ($estatusAlumno == 1) {
                                                             ?>
                                                                 <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_evaluacion">Añadir</a>
                                                             <?php
-                                                                }
+                                                            }
                                                             ?>
                                                             <!--end::Action-->
                                                         </div>
@@ -518,12 +542,12 @@ License: For each use you must have a valid license purchased only from above li
                                                             </div>
                                                             <!--end::Content-->
                                                             <!--begin::Action-->
-                                                            <?php 
-                                                                if($estatusAlumno == 1){
+                                                            <?php
+                                                            if ($estatusAlumno == 1) {
                                                             ?>
                                                                 <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_cartaliberacion">Añadir</a>
                                                             <?php
-                                                                }
+                                                            }
                                                             ?>
                                                             <!--end::Action-->
                                                         </div>
@@ -556,39 +580,40 @@ License: For each use you must have a valid license purchased only from above li
                                                     </thead>
                                                     <tbody class="text-gray-600 fw-semibold">
                                                         <?php
-                                                       if(!empty($docs)){
-                                                        foreach ($docs as $d) { ?>
-                                                            <tr>
+                                                        if (!empty($docs)) {
+                                                            foreach ($docs as $d) { ?>
+                                                                <tr>
 
-                                                                <td>
-                                                                    <a href="../../demo30/dist/apps/customers/view.html" class="text-gray-800 text-hover-primary mb-1"><?php echo $d["NombreDoc"]; ?></a>
-                                                                </td>
+                                                                    <td>
+                                                                        <a href="../../demo30/dist/apps/customers/view.html" class="text-gray-800 text-hover-primary mb-1"><?php echo $d["NombreDoc"]; ?></a>
+                                                                    </td>
 
-                                                                <td>
-                                                                    <?php
-                                                                    if ($d["EstatusPtc"] == 0) {
-                                                                    ?><div class="badge badge-light-warning">Validando</div><?php
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d["EstatusPtc"] == 0) {
+                                                                        ?><div class="badge badge-light-warning">Validando</div><?php
                                                                                                                         } else if ($d["EstatusPtc"] == 1) {
                                                                                                                             ?><div class="badge badge-light-success">Validado</div><?php
                                                                                                                                                                                 } else if ($d["EstatusPtc"] == 2) {
                                                                                                                                                                                     ?><div class="badge badge-light-danger">No válido</div><?php
                                                                                                                                                                                                                                         }
                                                                                                                                                                                                                                             ?>
-                                                                </td>
-                                                                <td>
-                                                                    <?php
-                                                                    if ($d["EstatusVinc"] == 0) {
-                                                                    ?><div class="badge badge-light-warning">Validando</div><?php
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($d["EstatusVinc"] == 0) {
+                                                                        ?><div class="badge badge-light-warning">Validando</div><?php
                                                                                                                         } else if ($d["EstatusVinc"] == 1) {
                                                                                                                             ?><div class="badge badge-light-success">Validado</div><?php
                                                                                                                                                                                 } else if ($d["EstatusVinc"] == 2) {
                                                                                                                                                                                     ?><div class="badge badge-light-danger">No válido</div><?php
                                                                                                                                                                                                                                         }
                                                                                                                                                                                                                                             ?>
-                                                                </td>
-                                                            </tr>
+                                                                    </td>
+                                                                </tr>
                                                         <?php
-                                                        }}
+                                                            }
+                                                        }
                                                         ?>
 
                                                     </tbody>
@@ -646,30 +671,30 @@ License: For each use you must have a valid license purchased only from above li
                                                     </thead>
                                                     <tbody class="fw-semibold text-gray-600">
                                                         <?php
-                                                        if(!empty($procesos)){
-                                                            foreach ($procesos as $p) { 
-                                                        
+                                                        if (!empty($procesos)) {
+                                                            foreach ($procesos as $p) {
+
                                                         ?>
 
-                                                            <!--begin::Table row-->
-                                                            <tr>
-                                                                <td><?php echo $p["nombrePro"]; ?></td>
-                                                                <td>
-                                                                    <?php echo $p["NombreSede"]; ?>
-                                                                </td>
-                                                                <td><?php
-                                                                    if ($p["FechaInicio"] == "" || $p["FechaInicio"] == "0000-00-00 00:00:00") {
-                                                                    ?><div class="badge badge-light-warning">Validando</div><?php
+                                                                <!--begin::Table row-->
+                                                                <tr>
+                                                                    <td><?php echo $p["nombrePro"]; ?></td>
+                                                                    <td>
+                                                                        <?php echo $p["NombreSede"]; ?>
+                                                                    </td>
+                                                                    <td><?php
+                                                                        if ($p["FechaInicio"] == "" || $p["FechaInicio"] == "0000-00-00 00:00:00") {
+                                                                        ?><div class="badge badge-light-warning">Validando</div><?php
                                                                                                                         } else {
                                                                                                                             ?><div class="badge badge-light-success">Aceptado</div><?php
                                                                                                                                                                                 }
                                                                                                                                                                                     ?></td>
 
-                                                            </tr>
-                                                            <!--end::Table row-->
+                                                                </tr>
+                                                                <!--end::Table row-->
                                                         <?php
+                                                            }
                                                         }
-                                                    }
                                                         ?>
 
                                                     </tbody>
@@ -1019,7 +1044,7 @@ License: For each use you must have a valid license purchased only from above li
         <!--end::Modal dialog-->
     </div>
     <!--end::Modal - New Evaluación TEST -->
-    
+
     <!--end::Modals-->
     <!--begin::Javascript-->
     <script>

@@ -51,6 +51,7 @@
 			 $carrera = $alumno["NombrePE"];
 			 $proceso = $alumno["Proceso"];
 			 $estatusAlumno = $alumno["Estatus"];
+			 $procesoAlumno = $alumno["idProceso"];
 
 			$cv_docs = $Alumno->get_alumnodocs($id_alumno);
 			if(!empty($cv_docs)){
