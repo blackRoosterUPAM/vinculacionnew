@@ -69,7 +69,7 @@ class Sede {
 		Utilizada en AlumnosController
 	*/
 	public function get_sedespcp($idProceso, $idCarrera) {
-		$sql = "SELECT * FROM sede as s INNER JOIN vacantes as v on s.IdSede = v.IdSede WHERE IdProceso = $idProceso AND IdCarrera = $idCarrera";
+		$sql = "SELECT * FROM sede as s INNER JOIN vacantes as v on s.IdSede = v.IdSede WHERE IdProceso = $idProceso AND IdCarrera = $idCarrera AND NumVacantes > 0";
 		$resultado = $this->db->query($sql);
 		while ($row = $resultado->fetch_assoc()) {
 			$this->sede[] = $row;
