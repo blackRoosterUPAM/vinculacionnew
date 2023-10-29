@@ -9,12 +9,12 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 		
 	} else {
 		// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-		header('location: index.php');
+		header('location: ../index.php');
 		exit; // Detener la ejecución del script
 	}
 } else {
     // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-    header('location: index.php');
+    header('location: ../index.php');
     exit; // Detener la ejecución del script
 }
 ?>
@@ -177,13 +177,13 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 												if ($result->num_rows > 0) { // output data of each row
 													while ($row = $result->fetch_assoc()) {
 														echo "<tr>
-															  <td>" . $row["IdSede"] . "</td>";
-														echo "<td>" . $row["NombreSede"] . "</td>";
-														echo "<td>" . $row["Dirección"] . "</td>";
-														echo "<td>" . $row["CorreoContacto"] . "</td>";
-														echo "<td>" . $row["Telefono"] . "</td>";
-														echo "<td>"  .$row["tiposede"]."</td>";
-														echo "<td>" . "</td></tr>";
+															  <td align='center'>" . $row["IdSede"] . "</td>";
+														echo "<td align='center'>" . $row["NombreSede"] . "</td>";
+														echo "<td align='center'>" . $row["Dirección"] . "</td>";
+														echo "<td align='center'>" . $row["CorreoContacto"] . "</td>";
+														echo "<td align='center'>" . $row["Telefono"] . "</td>";
+														echo "<td align='center'>"  .$row["tiposede"]."</td>";
+														echo "<td align='center'>" . "</td></tr>";
 													}
 												} else {
 													echo "Error";

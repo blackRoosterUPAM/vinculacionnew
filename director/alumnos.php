@@ -9,12 +9,12 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 		
 	} else {
 		// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-		header('location: index.php');
+		header('location: ../index.php');
 		exit; // Detener la ejecución del script
 	}
 } else {
     // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-    header('location: index.php');
+    header('location: ../index.php');
     exit; // Detener la ejecución del script
 }
 ?>
@@ -195,15 +195,15 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 												if ($result->num_rows > 0) { // output data of each row
 													while ($row = $result->fetch_assoc()) {
 														echo "<tr>
-															  <td>" . $row["Matricula"] . "</td>";
-														echo "<td>" . $row["NombreA"] . "</td>";
-														echo "<td>" . $row["ApellidoP"] . "</td>";
-														echo "<td>" . $row["ApellidoM"] . "</td>";
-														echo "<td>" . $row["Telefono"] . "</td>";
-														echo "<td>" . $row["CorreoE"] . "</td>";
-														echo "<td>" . ($row["Estatus"] == 1 ? "Activo" : "Inactivo") . "</td>";
-														echo "<td>" . proceso($row["Proceso"]) . "</td>";
-														echo "<td>" . $row["NombrePE"] . "</td></tr>";
+															  <td align='center'>" . $row["Matricula"] . "</td>";
+														echo "<td align='center'>" . $row["NombreA"] . "</td>";
+														echo "<td align='center'>" . $row["ApellidoP"] . "</td>";
+														echo "<td align='center'>" . $row["ApellidoM"] . "</td>";
+														echo "<td align='center'>" . $row["Telefono"] . "</td>";
+														echo "<td align='center'>" . $row["CorreoE"] . "</td>";
+														echo "<td align='center'>" . ($row["Estatus"] == 1 ? "Activo" : "Inactivo") . "</td>";
+														echo "<td align='center'>" . proceso($row["Proceso"]) . "</td>";
+														echo "<td align='center'>" . $row["NombrePE"] . "</td></tr>";
 													}
 												} else {
 													echo "Error";

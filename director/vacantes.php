@@ -9,12 +9,12 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 		
 	} else {
 		// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-		header('location: index.php');
+		header('location: ../index.php');
 		exit; // Detener la ejecución del script
 	}
 } else {
     // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-    header('location: index.php');
+    header('location: ../index.php');
     exit; // Detener la ejecución del script
 }
 ?>
@@ -171,7 +171,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 											<tbody class="fw-semibold text-gray-600">
 												<?php
 
-												$sql = "select v.IdSede,v.Perfil,v.Beneficios,v.NumVacantes,										s.NombreSede,s.tiposede,p.Nombrepre,c.NombrePE,pd.Meses,pd.Año
+												$sql = "select v.IdSede,v.Perfil,v.Beneficios,v.NumVacantes,s.NombreSede,s.tiposede,p.NombrePE,c.NombrePE,pd.Meses,pd.Año
 												from vacantes as v
 												INNER JOIN sede as s on v.IdSede = s.IdSede
 												INNER JOIN proceso as p on v.IdProceso = p.IdProceso
@@ -182,18 +182,18 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 
 												if ($result->num_rows > 0) { // output data of each row
 													while ($row = $result->fetch_assoc()) {
-														echo "<tr>
-															  <td>" . $row["IdSede"] . "</td>";
-														echo "<td>" . $row["Perfil"] . "</td>";
-														echo "<td>" . $row["Beneficios"] . "</td>";
-														echo "<td>" . $row["NumVacantes"] . "</td>";
-														echo "<td>" . $row["NombreSede"] . "</td>";
-														echo "<td>" . $row["tiposede"] . "</td>";
-														echo "<td>" . $row["Nombrepre"] . "</td>";
-														echo "<td>" . $row["NombrePE"] . "</td>";
-														echo "<td>" . $row["Meses"] . "</td>";
-														echo "<td>" . $row["Año"] . "</td></tr>";
-													}
+														echo "<tr >
+															  <td align='center'>" . $row["IdSede"] . "</td>";
+														echo "<td align='center'>" . $row["Perfil"] . "</td>";
+														echo "<td align='center'>" . $row["Beneficios"] . "</td>";
+														echo "<td align='center'>" . $row["NumVacantes"] . "</td>";
+														echo "<td align='center'>" . $row["NombreSede"] . "</td>";
+														echo "<td align='center'>" . $row["tiposede"] . "</td>";
+														echo "<td align='center'>" . $row["NombrePE"] . "</td>";
+														echo "<td align='center'>" . $row["NombrePE"] . "</td>";
+														echo "<td align='center'>" . $row["Meses"] . "</td>";
+														echo "<td align='center'>" . $row["Año"] . "</td></tr>";
+													} 
 												} else {
 													echo "Error";
 												}

@@ -9,12 +9,12 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 		
 	} else {
 		// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-		header('location: index.php');
+		header('location: ../index.php');
 		exit; // Detener la ejecución del script
 	}
 } else {
     // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-    header('location: index.php');
+    header('location: ../index.php');
     exit; // Detener la ejecución del script
 }
 ?>
@@ -172,25 +172,24 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 											<tbody class="fw-semibold text-gray-600">
 												<?php
 
-												$sql = "select plib.Estatus, plib.Matricula, pr.NombrePre,dap.EstatusPtc,dap.EstatusVinc,al.NombreA,al.ApellidoP,al.ApellidoM 
+												$sql = "select plib.Estatus, plib.Matricula,pr.NombrePE,dap.EstatusPtc,dap.EstatusVinc,al.NombreA,al.ApellidoP,al.ApellidoM 
 												from pliberación as plib
-												
 												INNER JOIN proceso as pr on plib.IdProceso = pr.IdProceso
-												INNER JOIN docalumnoperiodo as dap on plib.IdValidacion = dap.IdValidacion
+												INNER JOIN docalumnoperiodo as dap on plib.IdValidación = dap.IdValidacion
 												INNER JOIN alumnos as al on plib.Matricula = al.Matricula;";
 												$result = $conn->query($sql);
 
 												if ($result->num_rows > 0) { // output data of each row
 													while ($row = $result->fetch_assoc()) {
 														echo "<tr>
-															  <td>" . ($row["Estatus"] == 1 ? "Liberado" : "Pendiente") . "</td>";
-														echo "<td>" . $row["Matricula"] . "</td>";
-														echo "<td>" . $row["NombrePre"] . "</td>";
-														echo "<td>" . ($row["EstatusPtc"] == 1 ? "Correcto" : "Pendiente") . "</td>";
-														echo "<td>" . ($row["EstatusVinc"] == 1 ? "Correcto" : "Pendiente") . "</td>";
-														echo "<td>" . $row["NombreA"] . "</td>";
-														echo "<td>" . $row["ApellidoP"] . "</td>";
-														echo "<td>" . $row["ApellidoM"] . "</td></tr>";
+															  <td align='center'>" . ($row["Estatus"] == 1 ? "Liberado" : "Pendiente") . "</td>";
+														echo "<td align='center'>" . $row["Matricula"] . "</td>";
+														echo "<td align='center'>" . $row["NombrePE"] . "</td>";
+														echo "<td align='center'>" . ($row["EstatusPtc"] == 1 ? "Correcto" : "Pendiente") . "</td>";
+														echo "<td align='center'>" . ($row["EstatusVinc"] == 1 ? "Correcto" : "Pendiente") . "</td>";
+														echo "<td align='center'>" . $row["NombreA"] . "</td>";
+														echo "<td align='center'>" . $row["ApellidoP"] . "</td>";
+														echo "<td align='center'>" . $row["ApellidoM"] . "</td></tr>";
 													}
 												} else {
 													echo "";

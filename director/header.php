@@ -125,8 +125,8 @@
 					<!--end::Menu item-->
 					<!--begin::Menu item dsdsds-->
 					<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" data-kt-menu-offset="-100,0" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-							<a href="index.php?c=usuarios&a=prueba" class=" menu-link">
-								Sign Out
+							<a href="../index.php?c=usuarios&a=prueba" class=" menu-link">
+								Sign Out 
 							</a>
 					</div>
 				</div>
