@@ -61,6 +61,13 @@ class UsuariosController
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de vinculación
                 header('location: director/index.php');
+            }elseif ($rol == 7) {
+                session_start();
+                $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
+                $name = "ptc";
+                $_SESSION['name'] = $name;
+                // Redirigir a la página de vinculación
+                header('location: index.php?c=ptc&a=index');
             }else{
                 header('location: index.php');
             }

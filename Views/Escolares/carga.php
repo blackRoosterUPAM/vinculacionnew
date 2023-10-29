@@ -118,7 +118,8 @@
                                     <!--begin::Card toolbar-->
                                     <div class="card-toolbar flex-row-fluid justify-content-between gap-5">
                                         <!--begin::Add product-->
-                                        <a href="?c=carreras&a=registro" class="btn btn-primary">Registrar Alumno</a>
+                                        <!--a href="?c=carreras&a=registro" class="btn btn-primary">Registrar Alumno</a-->
+                                        <a href="config/mantenimiento.php" class="btn btn-primary">Registrar Alumno</a>
                                         <!--end::Add product-->
                                     </div>
                                     <!--end::Card toolbar-->
@@ -179,10 +180,10 @@
 
                                             echo "<td class='status-cell $color'>$estatus</td>";
                                             echo "<td>
-                                                <button class='btn btn-activar' data-alumno-id='{$row['Matricula']}' data-alumno-estatus='{$row['Estatus']}'>
+                                                <button class='btn btn-success btn btn-activar' data-alumno-id='{$row['Matricula']}' data-alumno-estatus='{$row['Estatus']}'>
                                                     Activar
                                                 </button>
-                                                <button class='btn btn-desactivar' data-alumno-id='{$row['Matricula']}' data-alumno-estatus='{$row['Estatus']}'>
+                                                <button  class='btn btn-danger btn btn-desactivar' data-alumno-id='{$row['Matricula']}' data-alumno-estatus='{$row['Estatus']}'>
                                                     Desactivar
                                                 </button>
                                             </td>";
@@ -192,7 +193,7 @@
                                         ?>
                                     </table>
 
-                                    <button class="btn-activar-todos">Activar/Desactivar Todos</button>
+                                    <!--button class="btn btn-primary" class="btn-activar-todos">Activar/Desactivar Todos</button-->
                                 </div>
                             </div>
                             <!--end::Content wrapper-->
@@ -265,7 +266,7 @@
             // Lógica para activar el alumno con el ID proporcionado
             $.ajax({
                 type: "POST",
-                url: "tu_ruta_para_activar_alumno.php",
+                url: "config/cambiarEstado.php",
                 data: {
                     alumnoId: alumnoId
                 },
@@ -282,7 +283,7 @@
             // Lógica para desactivar el alumno con el ID proporcionado
             $.ajax({
                 type: "POST",
-                url: "tu_ruta_para_desactivar_alumno.php",
+                url: "config/cambiarEstado.php",
                 data: {
                     alumnoId: alumnoId
                 },
@@ -314,6 +315,43 @@
             });
         }
     });
+</script>
+<script>
+function activarAlumno(alumnoId) {
+    // Lógica para activar el alumno con el ID proporcionado
+    $.ajax({
+        type: "POST",
+        url: "config/cambiarEstado.php",
+        data: {
+            alumnoId: alumnoId,
+            estatus: 1 // 1 para activar
+        },
+        success: function(response) {
+            // Actualiza el estado del botón y muestra un mensaje de éxito
+            $('[data-alumno-id="' + alumnoId + '"]').find('.btn-activar').data('alumno-estatus', 1);
+            $('[data-alumno-id="' + alumnoId + '"]').find('.status-cell').text('Activo').removeClass('text-danger').addClass('text-success');
+            alert('Alumno activado con éxito.');
+        }
+    });
+}
+
+function desactivarAlumno(alumnoId) {
+    // Lógica para desactivar el alumno con el ID proporcionado
+    $.ajax({
+        type: "POST",
+        url: "config/cambiarEstado.php",
+        data: {
+            alumnoId: alumnoId,
+            estatus: 0 // 0 para desactivar
+        },
+        success: function(response) {
+            // Actualiza el estado del botón y muestra un mensaje de éxito
+            $('[data-alumno-id="' + alumnoId + '"]').find('.btn-activar').data('alumno-estatus', 0);
+            $('[data-alumno-id="' + alumnoId + '"]').find('.status-cell').text('Inactivo').removeClass('text-success').addClass('text-danger');
+            alert('Alumno desactivado con éxito.');
+        }
+    });
+}
 </script>
         <!--end::Custom Javascript-->
         <!--end::Javascript-->

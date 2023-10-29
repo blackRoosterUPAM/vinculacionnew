@@ -91,7 +91,7 @@ class ImportarModel
 
                     if ($this->mysqli->query($usuarioSql)) {
                         // Realizar la inserción en la tabla de alumnos
-                        $alumnoSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, Proceso) 
+                        $alumnoSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, idProceso) 
                                 VALUES ('$matricula', '$nombre', '$apellidoP', '$apellidoM', '$telefono', '$correo', $carreraId, $procesoId)";
 
                         if ($this->mysqli->query($alumnoSql)) {
@@ -207,7 +207,7 @@ class ImportarModel
 
             if ($this->mysqli->query($usuarioSql)) {
                 // Realizar la inserción en la tabla de alumnos
-                $alumnoSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, Proceso) 
+                $alumnoSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, idProceso) 
                     VALUES ('$matricula', '$nombre', '$apellidoP', '$apellidoM', '$telefono', '$correo', $carrera, $proceso)";
 
                 if ($this->mysqli->query($alumnoSql)) {
