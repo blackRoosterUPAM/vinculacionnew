@@ -188,6 +188,7 @@ License: For each use you must have a valid license purchased only from above li
 												}
 												?>
 											</select>
+											<br>
 											<div style="margin-left: -289px; position:absolute;">
 												<div class="card-footer d-flex justify-content-end py-6 px-9">
 													<button type="submit" class="btn btn-primary" id="mostrarDatos">Mostrar Datos</button>
@@ -196,17 +197,17 @@ License: For each use you must have a valid license purchased only from above li
 										</div>
 										<!--end::Col-->
 									</div>
-									
+									<br><br><br>
 								<div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
 									<!--begin::Actions-->
 									<div class="d-flex my-4">
-										<a href="?c=vacantes&a=selec_cupos" class="btn btn-sm btn-primary me-3" style="margin-left: 1040px;">Nuevos Cupos</a>
+										<a href="?c=vacantes&a=selec_cupos" class="btn btn-sm btn-primary me-3">Nuevos Cupos</a>
 									</div>
 									<!--end::Actions-->
 								</div>
 								<!--begin::Statements-->
 								</div>
-								<br><br>
+								<br><br><br>
 								<!--end::Input group-->
 								<!--begin::Row-->
 								<div class="row g-xxl-9">

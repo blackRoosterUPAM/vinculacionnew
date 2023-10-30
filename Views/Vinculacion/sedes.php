@@ -175,7 +175,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <!--begin::Actions-->
                                     <div class="d-flex my-4">
-                                        <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal" style="margin-left: 1070px;">Agregar Sede</a>
+                                        <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Agregar Sede</a>
                                     </div>
                                     <!--end::Actions-->
                                 </div>
@@ -419,7 +419,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="row">
                                                 <!--begin::Col-->
                                                 <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                    <input type="password" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
                                                 </div>
                                                 <!--end::Col-->
                                             </div>

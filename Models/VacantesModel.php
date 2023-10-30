@@ -66,7 +66,7 @@ class Vacantes {
 	}
       public function get_periodo()
 	{
-            $sql = "SELECT * FROM periodo";
+            $sql = "SELECT * FROM periodo WHERE estatus = 0";
 		
 		$resultado = $this->db->query($sql);
 		while ($row = $resultado->fetch_assoc()) {

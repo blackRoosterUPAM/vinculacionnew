@@ -30,7 +30,7 @@ class Periodo {
 	}
 
 	public function nuevo_periodo($period, $año){
-		$sql = "INSERT INTO periodo (IdPeriodo, Meses, Año, estatus) VALUE (null, '$period', '$año', 0)";
+		$sql = "INSERT INTO periodo (IdPeriodo, Meses, Año, estatus) VALUE (5, '$period', '$año', 0)";
 		$resultado = $this->db->query($sql);
 	}
 	}
