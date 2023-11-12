@@ -623,24 +623,24 @@ License: For each use you must have a valid license purchased only from above li
                                                                     <td>
                                                                         <?php
                                                                         if ($d["EstatusPtc"] == 0) {
-                                                                        ?><div class="badge badge-light-warning">Validando</div><?php
-                                                                                                                        } else if ($d["EstatusPtc"] == 1) {
-                                                                                                                            ?><div class="badge badge-light-success">Validado</div><?php
-                                                                                                                                                                                } else if ($d["EstatusPtc"] == 2) {
-                                                                                                                                                                                    ?><div class="badge badge-light-danger">No válido</div><?php
-                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                            ?>
+                                                                            ?><div class="badge badge-light-warning">Validando</div><?php
+                                                                        } else if ($d["EstatusPtc"] == 1) {
+                                                                            ?><div class="badge badge-light-success">Validado</div><?php
+                                                                        } else if ($d["EstatusPtc"] == 2) {
+                                                                            ?><div class="badge badge-light-danger">No válido</div><?php
+                                                                        }
+                                                                            ?>
                                                                     </td>
                                                                     <td>
                                                                         <?php
                                                                         if ($d["EstatusVinc"] == 0) {
-                                                                        ?><div class="badge badge-light-warning">Validando</div><?php
-                                                                                                                        } else if ($d["EstatusVinc"] == 1) {
-                                                                                                                            ?><div class="badge badge-light-success">Validado</div><?php
-                                                                                                                                                                                } else if ($d["EstatusVinc"] == 2) {
-                                                                                                                                                                                    ?><div class="badge badge-light-danger">No válido</div><?php
-                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                            ?>
+                                                                            ?><div class="badge badge-light-warning">Validando</div><?php
+                                                                        } else if ($d["EstatusVinc"] == 1) {
+                                                                            ?><div class="badge badge-light-success">Validado</div><?php
+                                                                        } else if ($d["EstatusVinc"] == 2) {
+                                                                            ?><div class="badge badge-light-danger">No válido</div><?php
+                                                                        }
+                                                                            ?>
                                                                     </td>
                                                                 </tr>
                                                         <?php
