@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2023 a las 20:54:39
+-- Tiempo de generación: 13-11-2023 a las 00:08:01
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -155,7 +155,7 @@ CREATE TABLE `docalumnoperiodo` (
 
 CREATE TABLE `documentacion` (
   `IdDocumento` int(11) NOT NULL,
-  `NombreDoc` varchar(25) NOT NULL
+  `NombreDoc` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -166,7 +166,8 @@ INSERT INTO `documentacion` (`IdDocumento`, `NombreDoc`) VALUES
 (1, 'RVIN'),
 (2, 'Carta Aceptación'),
 (3, 'Evaluación Final'),
-(4, 'Carta Liberación');
+(4, 'Carta Liberación'),
+(5, 'Acuse de Carta de Presentación');
 
 -- --------------------------------------------------------
 
