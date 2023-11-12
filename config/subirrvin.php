@@ -5,7 +5,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($_FILES["file_rvin"]["error"] === UPLOAD_ERR_OK) {
         $nombreArchivo = $_FILES['file_rvin']['name'];
         $archivoTemporal = $_FILES['file_rvin']['tmp_name'];
-    } else if ($_FILES["file_cartaAceptacion"]["error"] === UPLOAD_ERR_OK) {
+    } else if ($_FILES["file_cartaPresentacion"]["error"] === UPLOAD_ERR_OK) {
+        $nombreArchivo = $_FILES['file_cartaPresentacion']['name'];
+        $archivoTemporal = $_FILES['file_cartaPresentacion']['tmp_name'];
+    }else if ($_FILES["file_cartaAceptacion"]["error"] === UPLOAD_ERR_OK) {
         $nombreArchivo = $_FILES['file_cartaAceptacion']['name'];
         $archivoTemporal = $_FILES['file_cartaAceptacion']['tmp_name'];
     } else if ($_FILES["file_evaluacion"]["error"] === UPLOAD_ERR_OK) {

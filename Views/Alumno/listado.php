@@ -189,7 +189,7 @@ License: For each use you must have a valid license purchased only from above li
 															</div>-->
 														</td>
 														<td>
-															<a href="../../demo30/dist/apps/customers/view.html" class="text-gray-800 text-hover-primary mb-1"><?php echo $s["NombreSede"]; ?></a>
+															<a href="?c=alumno&a=detsede&id=<?php echo $s["IdSede"]; ?>" class="text-gray-800 text-hover-primary mb-1"><?php echo $s["NombreSede"]; ?></a>
 														</td>
 														<td>
 															<div class="badge badge-light-success"><?php echo $s["NumVacantes"]; ?></div>

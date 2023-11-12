@@ -276,7 +276,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--begin::Tab panel-->
                                         <div id="kt_personal_creditcard" class="tab-pane fade show active" role="tabpanel">
                                             <!--begin::Title-->
-                                            <h3 class="mb-5">Mis documentos</h3>
+                                            <!--<h3 class="mb-5">Mis documentos</h3>-->
                                             <!--end::Title-->
                                             <!--begin::Row-->
                                             <div class="row gx-9 gy-6">
@@ -452,6 +452,38 @@ License: For each use you must have a valid license purchased only from above li
                                                             if ($estatusAlumno == 1) {
                                                             ?>
                                                                 <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_rvin">Añadir</a>
+                                                            <?php
+                                                            }
+                                                            ?>
+                                                            <!--end::Action-->
+                                                        </div>
+                                                        <!--end::Wrapper-->
+                                                    </div>
+                                                    <!--end::Notice-->
+                                                </div>
+                                                <!--end::Col-->
+
+                                                <!--begin::Col-->
+                                                <div class="col-xl-6">
+                                                    <!--begin::Notice-->
+                                                    <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed h-lg-100 p-6">
+                                                        <!--begin::Wrapper-->
+                                                        <div class="d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap">
+                                                            <!--begin::Content-->
+                                                            <div class="mb-3 mb-md-0 fw-semibold">
+                                                                <h4 class="text-gray-900 fw-bold">
+                                                                    Acuse de Carta de Presentación
+                                                                </h4>
+                                                                <div class="fs-6 text-gray-700 pe-7">
+                                                                    Comprobante que valida la entrega de dicha carta a la sede aplicada.
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Content-->
+                                                            <!--begin::Action-->
+                                                            <?php
+                                                            if ($estatusAlumno == 1) {
+                                                            ?>
+                                                                <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_cartaPresentacion">Añadir</a>
                                                             <?php
                                                             }
                                                             ?>
@@ -823,7 +855,7 @@ License: For each use you must have a valid license purchased only from above li
 
                     <form id="kt_modal_new_rvin_form" class="form" action="" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="matricula" value="<?php echo $id_alumno; ?>">
-                        <input type="hidden" name="idProceso" value="1">
+                        <input type="hidden" name="idProceso" value="<?php echo $procesoAlumno; ?>">
                         <input type="hidden" name="idDocumento" value="1">
                         <input type="hidden" name="idPeriodo" value="1">
                         <!--begin::Input group-->
@@ -884,7 +916,7 @@ License: For each use you must have a valid license purchased only from above li
                     <!--begin::Form-->
                     <form id="kt_modal_new_cartaliberacion_form" class="form" action="" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="matricula" value="<?php echo $id_alumno; ?>">
-                        <input type="hidden" name="idProceso" value="1">
+                        <input type="hidden" name="idProceso" value="<?php echo $procesoAlumno; ?>">
                         <input type="hidden" name="idDocumento" value="4">
                         <input type="hidden" name="idPeriodo" value="1">
                         <!--begin::Input group-->
@@ -922,6 +954,67 @@ License: For each use you must have a valid license purchased only from above li
         <!--end::Modal dialog-->
     </div>
     <!--end::Modal - New Carta Liberación-->
+    <!--begin::Modal - New Acuse Carta Presentación-->
+    <div class="modal fade" id="kt_modal_new_cartaPresentacion" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header">
+                    <!--begin::Modal title-->
+                    <h2>Añadir Acuse de Carta de Presentación</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="ki-outline ki-cross fs-1"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <!--begin::Form-->
+                    <form id="kt_modal_new_cartaPresentacion_form" class="form" action="" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="matricula" value="<?php echo $id_alumno; ?>">
+                        <input type="hidden" name="idProceso" value="<?php echo $procesoAlumno; ?>">
+                        <input type="hidden" name="idDocumento" value="5">
+                        <input type="hidden" name="idPeriodo" value="1">
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-8">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-semibold form-label mb-2">Archivo</label>
+                            <!--end::Label-->
+                            <!--begin::Dropzone-->
+                            <div class="dropzone" id="kt_modal_new_cartaPresentacion_archivo">
+                                <!--begin::Message-->
+                                <input type="file" name="file_cartaPresentacion" id="file_cartaPresentacion" class="form-control form-control-flush mb-3" accept=".pdf">
+                            </div>
+                            <!--end::Dropzone-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Actions-->
+                        <div class="text-center pt-15">
+                            <button type="reset" id="kt_modal_new_cartaPresentacion_cancel" class="btn btn-light me-3">
+                                Cancelar
+                            </button>
+                            <button type="submit" id="kt_modal_new_cartaPresentacion_submit" class="btn btn-primary" disabled>
+                                <span class="indicator-label">Enviar</span>
+                                <span class="indicator-progress">Por favor espere...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+    <!--end::Modal - New Acuse Carta Presentación-->
     <!--begin::Modal - New Carta Aceptación-->
     <div class="modal fade" id="kt_modal_new_cartaAceptacion" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
@@ -945,7 +1038,7 @@ License: For each use you must have a valid license purchased only from above li
                     <!--begin::Form-->
                     <form id="kt_modal_new_cartaAceptacion_form" class="form" action="" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="matricula" value="<?php echo $id_alumno; ?>">
-                        <input type="hidden" name="idProceso" value="1">
+                        <input type="hidden" name="idProceso" value="<?php echo $procesoAlumno; ?>">
                         <input type="hidden" name="idDocumento" value="2">
                         <input type="hidden" name="idPeriodo" value="1">
                         <!--begin::Input group-->
@@ -1006,7 +1099,7 @@ License: For each use you must have a valid license purchased only from above li
                     <!--begin::Form-->
                     <form id="kt_modal_new_evaluacion_form" class="form" action="" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="matricula" value="<?php echo $id_alumno; ?>">
-                        <input type="hidden" name="idProceso" value="1">
+                        <input type="hidden" name="idProceso" value="<?php echo $procesoAlumno; ?>">
                         <input type="hidden" name="idDocumento" value="3">
                         <input type="hidden" name="idPeriodo" value="1">
                         <!--begin::Input group-->
@@ -1249,6 +1342,94 @@ License: For each use you must have a valid license purchased only from above li
                             },
                         }).then(function(t) {
                             t.isConfirmed && o_rvin.hide();
+                        });
+                    },
+                    error: function(error) {
+                        console.error(error);
+                        Swal.fire({
+                            text: "Lo sentimos, ocurrió un error al enviar tu formulario, por favor inténtalo más tarde.",
+                            icon: "error",
+                            buttonsStyling: !1,
+                            confirmButtonText: "Aceptar",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            },
+                        });
+                    }
+                });
+            });
+
+            //Para Acuse de CartaPresentación
+            var filecartaPresentacion = document.getElementById("file_cartaPresentacion");
+            var submitbtn_cartaPresentacion = document.getElementById("kt_modal_new_cartaPresentacion_submit");
+            e_cartaPresentacion = document.getElementById("kt_modal_new_cartaPresentacion_cancel")
+            i_cartaPresentacion = document.querySelector("#kt_modal_new_cartaPresentacion")
+            r_cartaPresentacion = document.querySelector("#kt_modal_new_cartaPresentacion_form")
+            o_cartaPresentacion = new bootstrap.Modal(i_cartaPresentacion)
+
+            filecartaPresentacion.addEventListener("change", function() {
+                if (filecartaPresentacion.files.length > 0) {
+                    submitbtn_cartaPresentacion.removeAttribute("disabled");
+                } else {
+                    submitbtn_cartaPresentacion.setAttribute("disabled", "disabled");
+                }
+                const archivo = this.files[0];
+                if (archivo.size > maxSize) {
+                    const tamMb = maxSize / 1000000;
+                    Swal.fire({
+                        text: "Archivo demasiado grande, intenta con otro.",
+                        icon: "error",
+                        buttonsStyling: !1,
+                        confirmButtonText: "Aceptar",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        },
+                    });
+                    filecartaPresentacion.value = "";
+                }
+            });
+            e_cartaPresentacion.addEventListener("click", function(t) {
+                t.preventDefault(),
+                    Swal.fire({
+                        text: "¿Seguro que quieres cancelar?",
+                        icon: "warning",
+                        showCancelButton: !0,
+                        buttonsStyling: !1,
+                        confirmButtonText: "¡Si, cancelar!",
+                        cancelButtonText: "No, volver",
+                        customClass: {
+                            confirmButton: "btn btn-primary",
+                            cancelButton: "btn btn-active-light",
+                        },
+                    }).then(function(t) {
+                        t.value ?
+                            (r_cartaPresentacion.reset(), o_cartaPresentacion.hide()) :
+                            "cancel" === t.dismiss
+                    });
+            });
+            $("#kt_modal_new_cartaPresentacion_form").submit(function(event) {
+                event.preventDefault(); // Evita la recarga de la página
+                var formData = new FormData($("#kt_modal_new_cartaPresentacion_form")[0]);
+
+                $.ajax({
+                    url: "config/subirrvin.php",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log(response);
+                        filecartaPresentacion.value = "";
+                        Swal.fire({
+                            text: "¡Tu formulario se ha enviado exitosamente!",
+                            icon: "success",
+                            buttonsStyling: !1,
+                            confirmButtonText: "Aceptar",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            },
+                        }).then(function(t) {
+                            t.isConfirmed && o_cartaPresentacion.hide();
                         });
                     },
                     error: function(error) {
