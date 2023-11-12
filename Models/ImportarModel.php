@@ -1,10 +1,13 @@
 <?php
 
+require 'vendor/autoload.php';
+
+require 'config/EmailSender.php'; // Importa la clase EmailSender
+
+//require 'config/database.php';
+
 use PhpOffice\PhpSpreadsheet\Reader\Xls\MD5;
 
-require '../vendor/autoload.php'; // Asegúrate de cargar la librería PhpSpreadsheet
-require '../config/database.php';
-require '../config/EmailSender.php'; // Importa la clase EmailSender
 
 class ImportarModel
 {
@@ -19,17 +22,75 @@ class ImportarModel
         $this->procesosDisponibles = $this->getProcesos();
     }
 
+    public function masivo()
+    {
+
+        require_once 'config/correoUserContra.php';
+
+
+        // Arreglo de datos ficticios
+        $datosFicticios = [
+            ['d.hernandezj@upam.edu.mx', 'contrasena1'],
+            ['l.guadalupea@upam.edu.mx', 'contrasena2'],
+            ['m.guadalupea@upam.edu.mx', 'contrasena3'],
+            // Agrega más datos ficticios según sea necesario
+        ];
+
+        // Bucle para enviar correos con los datos ficticios
+        for ($i = 0; $i < count($datosFicticios); $i++) {
+            $correoDestinatario = $datosFicticios[$i][0];
+            $contrasena = $datosFicticios[$i][1];
+            enviarCorreo($correoDestinatario, $contrasena);
+        }
+
+
+        require_once 'Views/Sede/masivo.php';
+    }
+
+    public function statusInactivo()
+    {
+        $sql = "UPDATE alumnos SET Estatus = 0 WHERE Matricula > 0";
+        $resultado = $this->mysqli->query($sql);
+        if ($resultado) {
+            $message = "El estado de los alumnos ha sido cambiado de manera exitosa.";
+            return true;
+        } else {
+            return false;
+            $message = "Error al cambiar el estado de los alumnos.";
+        }
+    
+        // Redirige o muestra el mensaje según tu lógica
+    }
+
+    public function statusActivo()
+    {
+        $sql = "UPDATE alumnos SET Estatus = 1  WHERE Matricula > 0";
+        $resultado = $this->mysqli->query($sql);
+        if ($resultado) {
+            $message = "El estado de los alumnos ha sido cambiado de manera exitosa.";
+            return true;
+        } else {
+            return false;
+            $message = "Error al cambiar el estado de los alumnos.";
+        }
+    
+        // Redirige o muestra el mensaje según tu lógica
+    }
     public function importarDesdeExcel($archivo)
     {
         $inputFileName = $archivo['tmp_name']; // Ruta del archivo Excel subido
+        require_once 'config/correoUserContra.php';
 
         try {
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFileName);
             $worksheet = $spreadsheet->getActiveSheet();
             $highestRow = $worksheet->getHighestRow();
             $duplicates = array();
+            
 
-            $emailSender = new EmailSender();
+            // Crear arrays para acumular los datos
+            $usuariosData = array();
+            $alumnosData = array();
 
             for ($row = 2; $row <= $highestRow; $row++) {
                 $matricula = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
@@ -41,6 +102,7 @@ class ImportarModel
                 $carrera = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
                 $proceso = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
 
+                // Resto del código para procesar y validar los datos, como lo tenías antes
                 // Convertir carreras y procesos a minúsculas
                 $carrera = strtolower($carrera);
                 $proceso = strtolower($proceso);
@@ -71,58 +133,49 @@ class ImportarModel
                     continue; // Omitir esta fila y continuar con la siguiente
                 }
 
-                // Generar una contraseña aleatoria
-                $password = bin2hex(random_bytes(8)); // Se puede ajustar la longitud
+                // Generar la contraseña a partir de las iniciales del nombre y los últimos dígitos de la matrícula
+                $inicialesNombre = substr($nombre, 0, 2); // Tomar las primeras 2 letras del nombre
+                $ultimosDigitosMatricula = substr($matricula, -4); // Tomar los últimos 4 dígitos de la matrícula
 
-                // Obtener el ID del rol "Estudiante"
-                $idRol = 4; // Se debe modificar de acuerdo al rol alamacenado
+                $password = $inicialesNombre . $ultimosDigitosMatricula;
 
-                // Verificar si ya existe un registro con la misma Matrícula
-                $check_sql = "SELECT Matricula FROM alumnos WHERE Matricula = '$matricula'";
-                $check_result = $this->mysqli->query($check_sql);
+                // Encriptar la contraseña usando MD5
+                $passwordHash = md5($password);
 
-                if ($check_result && $check_result->num_rows > 0) {
-                    // Registro duplicado encontrado
-                    $duplicates[] = $matricula;
-                } else {
-                    // Realizar la inserción en la tabla de usuarios
-                    $usuarioSql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) 
-                            VALUES ('$matricula', '$correo', '$password', '$idRol', '$nombre', '$apellidoP', '$apellidoM')";
+                // Obtener el ID del rol "Alumno"
+                $idRol = 4; // Se debe modificar de acuerdo al rol almacenado
 
-                    if ($this->mysqli->query($usuarioSql)) {
-                        // Realizar la inserción en la tabla de alumnos
-                        $alumnoSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, idProceso) 
-                                VALUES ('$matricula', '$nombre', '$apellidoP', '$apellidoM', '$telefono', '$correo', $carreraId, $procesoId)";
+                // Agregar datos a los arrays de inserción
+                $usuariosData[] = "('$matricula', '$correo', '$passwordHash', '$idRol', '$nombre', '$apellidoP', '$apellidoM')";
+                $alumnosData[] = "('$matricula', '$nombre', '$apellidoP', '$apellidoM', '$telefono', '$correo', $carreraId, $procesoId)";
+                //envio de correos
+                enviarCorreo($correo, $password);
 
-                        if ($this->mysqli->query($alumnoSql)) {
-                            // Envía un correo al alumno
-                            $asunto = "Información de cuenta";
-                            $mensaje = "Hola $nombre,\n\nTu cuenta ha sido creada con éxito.\n\nTu Usuario es: $correo\nTu Contraseña es: $password\n";
+            }
 
-                            if ($emailSender->enviarCorreo($correo, $asunto, $mensaje)) {
-                                // Éxito al enviar el correo
-                            } else {
-                                // Error al enviar el correo
-                                return false;
-                            }
+            // Realizar la inserción en la tabla de usuarios
+            if (!empty($usuariosData)) {
+                $usuariosSql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES " . implode(",", $usuariosData);
+                if ($this->mysqli->query($usuariosSql)) {
+                    // Realizar la inserción en la tabla de alumnos
+                    if (!empty($alumnosData)) {
+                        $alumnosSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, idProceso) VALUES " . implode(",", $alumnosData);
+                        if ($this->mysqli->query($alumnosSql)) {
+                            // Éxito al importar los datos
+                            // Resto del código para enviar correos y manejar registros duplicados
+                            return true;
                         } else {
                             // Manejo de errores si la inserción en la tabla de alumnos falla
                             return false;
                         }
-                    } else {
-                        // Manejo de errores si la inserción en la tabla de usuarios falla
-                        return false;
                     }
+                } else {
+                    // Manejo de errores si la inserción en la tabla de usuarios falla
+                    return false;
                 }
             }
 
-            if (!empty($duplicates)) {
-                // Si se encontraron registros duplicados, muestra una ventana emergente con los detalles
-                echo '<script>';
-                echo 'alert("Se encontraron registros duplicados con las siguientes Matrículas: ' . implode(', ', $duplicates) . '");';
-                echo '</script>';
-                echo '<script>window.location.href = "../index.php?c=escolars&a=index";</script>';
-            }
+            // Resto del código para manejar registros duplicados
 
             return true; // Éxito al importar los datos
         } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
@@ -132,6 +185,7 @@ class ImportarModel
             return false;
         }
     }
+
 
     public function getCarreras()
     {
@@ -183,12 +237,20 @@ class ImportarModel
 
     public function insertarAlumnoIndividual($matricula, $nombre, $apellidoP, $apellidoM, $telefono, $correo, $carrera, $proceso)
     {
-
-        $password = bin2hex(random_bytes(4));
-        $md5Hash = md5($password);
         
-        echo "Cadena original: $password\n";
-        echo "MD5: $md5Hash\n";
+        require_once 'config/correoUserContra.php';
+        /*require 'vendor/autoload.php'; // Asegúrate de cargar la librería PhpSpreadsheet
+        require 'config/database.php';
+        require 'config/EmailSender.php'; // Importa la clase EmailSender
+        */
+        // Generar la contraseña a partir de las iniciales del nombre y los últimos dígitos de la matrícula
+        $inicialesNombre = substr($nombre, 0, 2); // Tomar las primeras 2 letras del nombre
+        $ultimosDigitosMatricula = substr($matricula, -4); // Tomar los últimos 2 dígitos de la matrícula
+
+        $password = $inicialesNombre . $ultimosDigitosMatricula;
+
+        // Encriptar la contraseña usando MD5
+        $passwordHash = md5($password);
 
         // IdRol del estudiante
         $idRol = 4;
@@ -203,7 +265,7 @@ class ImportarModel
         } else {
             // Realizar la inserción en la tabla de usuarios
             $usuarioSql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) 
-                VALUES ('$matricula', '$correo', '$password', '$idRol', '$nombre', '$apellidoP', '$apellidoM')";
+    VALUES ('$matricula', '$correo', '$passwordHash', '$idRol', '$nombre', '$apellidoP', '$apellidoM')";
 
             if ($this->mysqli->query($usuarioSql)) {
                 // Realizar la inserción en la tabla de alumnos
@@ -212,23 +274,15 @@ class ImportarModel
 
                 if ($this->mysqli->query($alumnoSql)) {
                     // Envía un correo al alumno
-                    $asunto = "Información de cuenta";
-                    $mensaje = "Hola $nombre,\n\nTu cuenta ha sido creada con éxito.\n\nTu Usuario es: $correo\nTu Contraseña es: $password\n";
-
-                    // Asume que tienes un método para enviar correos en la clase EmailSender
-                    $emailSender = new EmailSender();
-                    if ($emailSender->enviarCorreo($correo, $asunto, $mensaje)) {
-                        // Éxito al enviar el correo
+                    
+                enviarCorreo($correo, $password);
                         return true;
                     } else {
                         // Error al enviar el correo
                         return false;
                     }
-                } else {
-                    // Manejo de errores si la inserción en la tabla de alumnos falla
-                    return false;
-                }
-            } else {
+                 
+                }else {
                 // Manejo de errores si la inserción en la tabla de usuarios falla
                 return false;
             }

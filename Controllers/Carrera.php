@@ -21,7 +21,7 @@
 
 			$proceso = new Proceso();
 			$resultProcesos = $proceso->get_procesos();
-            require_once "views/Escolares/registro.php";
+            require_once "views/Escolares/carga.php";
         }
 	}
 ?>

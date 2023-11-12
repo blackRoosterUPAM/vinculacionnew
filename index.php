@@ -9,36 +9,29 @@
 	require_once "controllers/Carrera.php";
 	require_once "controllers/Proceso.php";
 	require_once "controllers/Escolars.php";
+	require_once "controllers/Registro.php";
 
 	
 	//Mediante la url vamos a saber que controlador se usa
 	//ejemplo index.php?c=sedes
 	if(isset($_GET['c'])){
-		
 		$controlador = cargarControlador($_GET['c']);
 		
 		if(isset($_GET['a'])){
-			//Al url se le debe pasar la accion que deseamos o por defecto pondra index o la que hayan puesto en su confgi
-			//ejemplo 
-			//index.php?c=sedes&a=siguiente
-			//si pasan un id agrefan &id=1
-			
-			if(isset($_GET['id'])){
+			if(isset($_GET['id']) && isset($_GET['id2'])){
+				cargarAccion($controlador, $_GET['a'], $_GET['id'], $_GET['id2']);
+			} else if (isset($_GET['id'])) {
 				cargarAccion($controlador, $_GET['a'], $_GET['id']);
-				//caso contrario se manda la url sin id 
-				} else {
+			} else {
 				cargarAccion($controlador, $_GET['a']);
 			}
-			} else {
-				//sino encuentra la accion manda a su index configurado
+		} else {
 			cargarAccion($controlador, ACCION_PRINCIPAL);
 		}
-		
-		} else {
-		
-		//inica con el controlador principal
+	} else {
 		$controlador = cargarControlador(CONTROLADOR_PRINCIPAL);
 		$accionTmp = ACCION_PRINCIPAL;
 		$controlador->$accionTmp();
 	}
+	
 ?>

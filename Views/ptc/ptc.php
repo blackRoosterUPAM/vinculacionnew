@@ -1,3 +1,6 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <!--Inicio del head-->
@@ -113,160 +116,233 @@
                         <div id="kt_app_content" class="app-content">
                             <!--begin::Products-->
                             <div class="card card-flush">
-                                <!--begin::Card body-->
                                 <div class="card-body pt-0">
+                                    <!--begin::Table-->
+                                    <div class="table-responsive ">
+                                        <table class="table-responsive table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
+                                            <thead class="bg-primary">
+                                                <tr class=" text-start text-gray-100 fw-bold fs-7  gs-4">
 
-                                    <!-- begin::Table -->
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr class="table-primary">
-                                                <th>Matrícula</th>
-                                                <th>Proceso</th>
-                                                <th>Nombre del Documento</th>
-                                                <th>Documento PDF</th>
-                                                <th>EstatusPtc</th>
-                                                <th>EstatusVinc</th>
-                                                <th>Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            foreach ($solicitudes as $solicitud) {
-                                                echo "<tr id='solicitud-" . $solicitud['Matricula'] . "'>";
-                                                echo "<td>" . $solicitud['Matricula'] . "</td>";
-                                                echo "<td>" . $solicitud['Proceso'] . "</td>";
-                                                echo "<td>" . $solicitud['NombreDoc'] . "</td>";
+                                                    <th class="textoTabla min-w-25px">Matricula</th>
+                                                    <th class="textoTabla min-w-25px">Nombre</th>
+                                                    <th class="textoTabla min-w-25px">Nombre Proceso</th>
+                                                    <th class="textoTabla min-w-25px">Nombre Documento</th>
+                                                    <th class="textoTabla min-w-25px">Docoumento PDF</th>
+                                                    <th class="textoTabla min-w-25px">Estatus PTC</th>
+                                                    <th class="textoTabla min-w-25px">Periodo</th>
+                                                    <th class="textoTabla min-w-25px">Acciones</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
 
-                                                // Mostrar el PDF en un elemento <embed>
-                                                echo "<td>";
-                                                if (isset($solicitud['DocumentoPDF']) && $solicitud['DocumentoPDF']) {
-                                                    echo '<embed src="data:application/pdf;base64,' . $solicitud['DocumentoPDF'] . '" type="application/pdf" width="300" height="200">';
-                                                } else {
-                                                    echo "PDF no disponible";
+                                            <tbody class="fw-semibold text-gray-800">
+                                                <?php
+                                                foreach ($solicitudes as $row) {
+
+                                                    $estatusPTC = isset($row['EstatusPtc']) && $row['EstatusPtc'] == 1 ? 'Documento Válido' : 'Documento no Válido';
+                                                    $color =  $row['EstatusPtc'] == 1 ? 'green' : 'red';
+
+                                                    echo "<tr>";
+                                                    echo "<td>" . $row['Matricula'] . "</td>";
+                                                    echo "<td>" . $row['fullName'] . "</td>";
+                                                    echo "<td>" . $row['nombreProceso'] . "</td>";
+                                                    echo "<td>" . $row['nombreDocumento'] . "</td>";
+                                                    // Agregar el botón para ver el PDF
+                                                    echo "<td style='margin-left: 10px;'>";
+
+                                                    echo '
+                                                        <a href="?c=ptc&a=pdf&id=' . $row['Matricula'] . '&id2=' . $row['IdDocumento'] . '" target="_Blank" class="btn btn-sm btn-warning me-1" id="openPdfButton">Mostrar PDF</a>
+                                                       
+                                                     ';
+                                                    echo "</td>";
+                                                    echo "<td class='status-cell' style='color: $color;'>$estatusPTC</td>";
+                                                    echo "<td>" . $row['periodo'] . "</td>";
+                                                    // Agregar un botón para visualizar el PDF
+                                                    echo "<td style='margin-left: 10px;'>";
+                                                    //     echo '<form id="validard" >
+                                                    //     <input type="hidden" id="matricula" name="matricula"  value="' . $row['Matricula'] . '" >
+                                                    //     <input type="hidden" id="idDoc" name="idDoc"  value="' . $row['IdDocumento'] . '">
+                                                    //     <input type="hidden" id="email" name="email" value="d.hernandezj@upam.edu.mx">
+                                                    //     <button class="btn btn-sm btn-warning me-3" type="submit">Validar Documento</button>
+                                                    // </form>
+
+                                                    // ';
+                                                     echo ' <a href="?c=ptc&a=validarDoc&id='.$row['Matricula'].'&id2='.$row['IdDocumento'],'" class="btn btn-sm btn-success me-0.3" id="openPdfButton">Validar</a>
+                                                    <a href="?c=ptc&a=descartarDoc&id='.$row['Matricula'].'&id2='.$row['IdDocumento'],'" class="btn btn-sm btn-danger me-0.3" id="openPdfButton">Anular</a>
+                                                     ';
+
+                                                    echo "</tr>";
                                                 }
-                                                echo "</td>";
-
-                                                echo "<td>";
-                                                if (isset($solicitud['EstatusPtc'])) {
-                                                    if ($solicitud['EstatusPtc'] == 1) {
-                                                        echo "<span class='text-success'>PDF Válido</span>";
-                                                    } else {
-                                                        echo "<span class='text-danger'>PDF No Válido</span>";
-                                                    }
-                                                } else {
-                                                    echo "<span class='text-danger'>Documento Inválido</span>";
-                                                }
-                                                echo "</td>";
-
-                                                echo "<td>";
-                                                if (isset($solicitud['EstatusVinc'])) {
-                                                    if ($solicitud['EstatusVinc'] == 1) {
-                                                        echo "<span class='text-success'>Validado</span>";
-                                                    } else {
-                                                        echo "<span class='text-danger'>No Validado</span>";
-                                                    }
-                                                } else {
-                                                    echo "<span class='text-danger'>Documento Inválido</span>";
-                                                }
-                                                echo "</td>";
-
-                                                echo "<td>";
-                                                echo "<button class='btn btn-success' onclick='validarDocumento(" . $solicitud['Matricula'] . ")'>PDF Válido</button>";
-                                                echo "<button class='btn btn-danger' onclick='invalidarDocumento(" . $solicitud['Matricula'] . ")'>PDF No Válido</button>";
-                                                echo "</td>";
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--end::Table-->
 
                                 </div>
+
                             </div>
-                            <!--end::Content wrapper-->
                         </div>
-                        <!--end:::Main-->
-                        <!--begin::fooder-->
-                        <?php
-                        include('footer.php');
-                        ?>
-                        <!--end::fooder-->
+                        <!--end::Content wrapper-->
                     </div>
-                    <!--end::Wrapper-->
+                    <!--end:::Main-->
+                    <!--begin::fooder-->
+                    <?php
+                    include('footer.php');
+                    ?>
+                    <!--end::fooder-->
                 </div>
-                <!--end::Page-->
+                <!--end::Wrapper-->
             </div>
+            <!--end::Page-->
         </div>
-        <!--end::App-->
-        <!--begin::Drawers-->
+    </div>
+    <!--end::App-->
+    <!--begin::Drawers-->
 
-        <!--begin::Scrolltop-->
-        <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
-            <i class="ki-outline ki-arrow-up"></i>
-        </div>
-        <!--end::Scrolltop-->
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <i class="ki-outline ki-arrow-up"></i>
+    </div>
+    <!--end::Scrolltop-->
 
-        <!--begin::Javascript-->
-        <script src="assets/js/vinculacion.js"></script>
-        <script>
-            var hostUrl = "assets/";
-        </script>
-        <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-        <script src="assets/plugins/global/plugins.bundle.js"></script>
-        <script src="assets/js/scripts.bundle.js"></script>
-        <!--end::Global Javascript Bundle-->
-        <!--begin::Vendors Javascript(used for this page only)-->
-        <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-        <!--end::Vendors Javascript-->
-        <!--begin::Custom Javascript(used for this page only)-->
-        <script src="assets/js/custom/apps/ecommerce/catalog/products.js"></script>
-        <script src="assets/js/widgets.bundle.js"></script>
-        <script src="assets/js/custom/widgets.js"></script>
-        <script src="assets/js/custom/apps/chat/chat.js"></script>
-        <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-        <script src="assets/js/custom/utilities/modals/users-search.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            function validarDocumento(matricula) {
-                // Hacer una petición AJAX para actualizar el estado EstatusPtc en la base de datos
+    <!--begin::Javascript-->
+    <script src="assets/js/vinculacion.js"></script>
+    <script>
+        var hostUrl = "assets/";
+    </script>
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="assets/plugins/global/plugins.bundle.js"></script>
+    <script src="assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <!--end::Vendors Javascript-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="assets/js/custom/apps/ecommerce/catalog/products.js"></script>
+    <script src="assets/js/widgets.bundle.js"></script>
+    <script src="assets/js/custom/widgets.js"></script>
+    <script src="assets/js/custom/apps/chat/chat.js"></script>
+    <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+    <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- <script>
+        $(document).ready(function() {
+            // Agregar un evento al formulario "validard" cuando se envíe
+            $("#validard").submit(function(event) {
+                event.preventDefault(); // Prevenir el envío normal del formulario
+
+                // Obtener la matrícula y el ID del documento
+                var matricula = $("#matricula").val();
+                var idDoc = $("#idDoc").val();
+                var email = $("#email").val();
+
+                console.log(matricula + " " + idDoc);
+
+                // Realizar la solicitud AJAX a "index.php?c=ptc&a=validarDoc" con los datos
                 $.ajax({
-                    method: "POST",
-                    url: "config/actualizarEstado.php", // Asegúrate de especificar la ruta correcta de tu script PHP
+                    type: "POST",
+                    url: "index.php?c=ptc&a=validarDoc",
                     data: {
                         matricula: matricula,
-                        estatus: 1 // 1 para PDF Válido
+                        idDoc: idDoc,
                     },
                     success: function(response) {
-                        // Actualizar la fila en la tabla
-                        $("#solicitud-" + matricula + " .text-danger").removeClass("text-danger").addClass("text-success").text("PDF Válido");
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-            }
+                        // Manejar la respuesta de la primera solicitud aquí
+                        console.log(response);
+                        console.log("Se modificó");
 
-            function invalidarDocumento(matricula) {
-                // Hacer una petición AJAX similar a la función anterior, pero con estatus: 0 para PDF No Válido
-                $.ajax({
-                    method: "POST",
-                    url: "config/actualizarEstado.php", // Asegúrate de especificar la ruta correcta de tu script PHP
-                    data: {
-                        matricula: matricula,
-                        estatus: 0 // 0 para PDF No Válido
+                        // Luego, enviar el formulario a "config/envio.php" después de obtener la respuesta
+                        Swal.fire({
+                            title: 'Éxito',
+                            text: '¡Envío exitoso!',
+                            icon: 'success'
+                        })
                     },
-                    success: function(response) {
-                        // Actualizar la fila en la tabla
-                        $("#solicitud-" + matricula + " .text-success").removeClass("text-success").addClass("text-danger").text("PDF No Válido");
-                    },
-                    error: function(error) {
-                        console.log(error);
+                    error: function() {
+                        // Manejar el error de la primera solicitud aquí, si es necesario
+                        console.log("Error en la primera solicitud.");
                     }
                 });
-            }
-        </script>
-        <!--end::Custom Javascript-->
-        <!--end::Javascript-->
+            });
+        });
+    </script> -->
+
+
+    <!-- <script>
+        function validarDocumento(matricula) {
+            // Hacer una petición AJAX para actualizar el estado EstatusPtc en la base de datos
+            $.ajax({
+                method: "POST",
+                url: "config/actualizarEstado.php", // Asegúrate de especificar la ruta correcta de tu script PHP
+                data: {
+                    matricula: matricula,
+                    estatus: 1 // 1 para PDF Válido
+                },
+                success: function(response) {
+                    // Actualizar la fila en la tabla
+                    $("#solicitud-" + matricula + " .text-danger").removeClass("text-danger").addClass("text-success").text("PDF Válido");
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function invalidarDocumento(matricula) {
+            // Hacer una petición AJAX similar a la función anterior, pero con estatus: 0 para PDF No Válido
+            $.ajax({
+                method: "POST",
+                url: "config/actualizarEstado.php", // Asegúrate de especificar la ruta correcta de tu script PHP
+                data: {
+                    matricula: matricula,
+                    estatus: 0 // 0 para PDF No Válido
+                },
+                success: function(response) {
+                    // Actualizar la fila en la tabla
+                    $("#solicitud-" + matricula + " .text-success").removeClass("text-success").addClass("text-danger").text("PDF No Válido");
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+    </script> -->
+
+    <script>
+    $(document).ready(function() {
+        // Agregar un evento al botón "validarDocumento"
+        $("#validard").click(function() {
+            // Obtener la matrícula y el ID del documento
+            var matricula = $("#matricula").val();
+            var idDoc = $("#idDoc").val();
+            var email = $("#email").val();
+
+            // Crear la URL de la solicitud GET
+            var url = "index.php?c=ptc&a=validarDoc&id=" + matricula + "&id2=" + idDoc;
+
+            // Realizar la solicitud AJAX GET
+            $.get(url, function(response) {
+                // Manejar la respuesta de la solicitud
+                console.log("Se modificó");
+
+                // Mostrar una alerta de éxito
+                Swal.fire({
+                    title: 'Éxito',
+                    text: '¡Envío exitoso!',
+                    icon: 'success'
+                });
+            });
+        });
+    });
+</script>
+
+
+
+    <!--end::Custom Javascript-->
+    <!--end::Javascript-->
 </body>
 <!--end::Body-->
 

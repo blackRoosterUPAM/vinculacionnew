@@ -1,5 +1,5 @@
 <?php
-require_once('../Models/ImportarModel.php'); // Ajusta la ruta según tu estructura de archivos
+require_once('Models/ImportarModel.php'); // Ajusta la ruta según tu estructura de archivos
 
 class ImportarController
 {
@@ -14,14 +14,14 @@ class ImportarController
 
                 if ($resultado) {
                     echo '<script>alert("¡EN HORA BUENA!, REGISTRO PROCESADO EXITOSAMENTE");</script>';
-                    echo '<script>window.location.href = "../index.php?c=escolars&a=index";</script>';
+                    echo '<script>window.location.href = "index.php?c=escolars&a=index";</script>';
                 } else {
                     echo '<script>alert("¡OH NO!, ERROR AL PROCESAR EL REGISTRO");</script>';
-                    echo '<script>window.location.href = "../index.php?c=escolars&a=index";</script>';
+                    echo '<script>window.location.href = "index.php?c=escolars&a=index";</script>';
                 }
             } else {
                 echo '<script>alert("SELECCIONE EL ARCHIVO A PROCESAR");</script>';
-                echo '<script>window.location.href = "../index.php?c=escolars&a=index";</script>';
+                echo '<script>window.location.href = "index.php?c=escolars&a=index";</script>';
             }
         }
     }

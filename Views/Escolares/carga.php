@@ -23,8 +23,8 @@
     <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet type="text/css" />
-    <link href="assets/css/style.bundle.css" rel="stylesheet type="text/css" />
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet type=" text/css" />
+    <link href="assets/css/style.bundle.css" rel="stylesheet type=" text/css" />
     <!--end::Global Stylesheets Bundle-->
     <script>
         // Frame-busting to prevent the site from being loaded within a frame without permission (click-jacking)
@@ -114,21 +114,28 @@
                             <!--begin::Products-->
                             <div class="card card-flush">
                                 <!--begin::Card header-->
-                                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                                    <!--begin::Card toolbar-->
-                                    <div class="card-toolbar flex-row-fluid justify-content-between gap-5">
-                                        <!--begin::Add product-->
-                                        <!--a href="?c=carreras&a=registro" class="btn btn-primary">Registrar Alumno</a-->
-                                        <a href="config/mantenimiento.php" class="btn btn-primary">Registrar Alumno</a>
-                                        <!--end::Add product-->
-                                    </div>
-                                    <!--end::Card toolbar-->
-                                </div>
+                                <!--div class="card-header align-items-center py-5 gap-2 gap-md-5"-->
+                                <!--begin::Card toolbar-->
+                                <!--div class="card-toolbar flex-row-fluid justify-content-between gap-5"-->
+                                <!--begin::Add product-->
+                                <!--a href="?c=carreras&a=registro" class="btn btn-primary">Registrar Alumno</a-->
+                                <!--a href="config/mantenimiento.php" class="btn btn-primary">Registrar Alumno</a-->
+                                <!--end::Add product-->
+                                <!--/div-->
+                                <!--end::Card toolbar-->
+                                <!--/div-->
                                 <!--end::Card header-->
+                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                    <!--begin::Actions-->
+                                    <div class="d-flex my-4">
+                                        <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Registrar Alumno</a>
+                                    </div>
+                                    <!--end::Actions-->
+                                </div>
                                 <!--begin::Card body-->
                                 <div class="card-body pt-0">
                                     <div class="fv-row mb-6">
-                                        <form action="Controllers/Importar.php" method="POST" enctype="multipart/form-data" onsubmit="return validarArchivo()">
+                                        <form action="?c=importar&a=importar" method="POST" enctype="multipart/form-data" onsubmit="return validarArchivo()">
                                             <div class="dz-message needsclick">
                                                 <!-- Icono y texto centrados -->
                                                 <i class="ki-outline ki-file-up text-primary fs-5x"></i>
@@ -140,60 +147,61 @@
                                             <input type="submit" value="Subir Archivo" class="btn btn-primary">
                                         </form>
                                     </div>
+                                    <!--begin::Table-->
+										<div class="table table-striped">
+											<table class="table-responsive table align-middle table-row-dashed fs-8 gy-5" id="kt_customers_table">
+												<thead class="bg-primary">
+													<tr  class=" text-start text-gray-100 fw-bold fs-7  gs-0">
+														<th class="textoTabla min-w-25px">Matricula</th>
+														<th class="textoTabla min-w-25px">Nombre</th>
+														<th class="textoTabla min-w-25px">Apellido Paterno</th>                                                        
+														<th class="textoTabla min-w-25px">Apellido Materno</th>
+														<th class="textoTabla min-w-25px">Telefono</th>
+														<th class="textoTabla min-w-25px">Email</th>
+														<th class="textoTabla min-w-25px">Carrera</th>
+														<th class="textoTabla min-w-25px">Proceso</th>
+														<th class="textoTabla min-w-25px">Estatus Vinculación</th>                                                        
+														<th class="textoTabla min-w-25px">Acciones</th>
+                                                        
+													</tr>
+												</thead>
+												
+												<tbody  class="fw-semibold text-gray-600">
+													<?php
+														foreach ($alumnos as $row)  {
+                                                            $estatus = $row['Estatus'] == 1 ? 'Activo' : 'Inactivo';
+                                                            $color = $row['Estatus'] == 1 ? 'green' : 'red';
+                                                            echo "<tr>";
+                                                            echo "<td>" . $row['Matricula'] . "</td>";
+                                                            echo "<td>" . $row['NombreA'] . "</td>";
+                                                            echo "<td>" . $row['ApellidoP'] . "</td>";
+                                                            echo "<td>" . $row['ApellidoM'] . "</td>";
+                                                            echo "<td>" . $row['Telefono'] . "</td>";
+                                                            echo "<td>" . $row['CorreoE'] . "</td>";
+                                                            echo "<td>" . $row['Carrera'] . "</td>";
+                                                            echo "<td>" . $row["Proceso"] . "</td>";
+                                                            // Celda del estatus con color
+                                                            echo "<td class='status-cell' style='color: $color;'>$estatus</td>"; // Mostrar el estado aquí
+                                                            $matricula = $row['Matricula'];
+                                                            echo "<td style='margin-left: 10px;'><a href='?c=registro&a=estatus_editado&matricula=$matricula' class='btn btn-sm btn-primary me-3'>Activar/Desactivar</a></td>";
+                                                            echo "</tr>";
+														}
+													
+													?>
+												</tbody>
+											</table>
+										</div>
+										<!--end::Table-->
 
-                                    <!-- begin::Table -->
-                                    <table class="table table-striped">
-                                        <h2>Listado de estudiantes</h2>
-                                        <tr>
-                                            <th>Matrícula</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido Paterno</th>
-                                            <th>Apellido Materno</th>
-                                            <th>Teléfono</th>
-                                            <th>Correo</th>
-                                            <th>Carrera</th>
-                                            <th>Proceso</th>
-                                            <th>Estatus</th>
-                                            <th>Acciones</th>
-                                        </tr>
-
-                                        <?php
-                                        foreach ($alumnos as $row) {
-                                            $estatus = $row['Estatus'] == 1 ? 'Activo' : 'Inactivo';
-                                            $color = $row['Estatus'] == 1 ? 'text-success' : 'text-danger';
-
-                                            echo "<tr data-alumno-id='{$row['Matricula']}'>";
-                                            echo "<td>" . $row['Matricula'] . "</td>";
-                                            echo "<td>" . $row['NombreA'] . "</td>";
-                                            echo "<td>" . $row['ApellidoP'] . "</td>";
-                                            echo "<td>" . $row['ApellidoM'] . "</td>";
-                                            echo "<td>" . $row['Telefono'] . "</td>";
-                                            echo "<td>" . $row['CorreoE'] . "</td>";
-                                            echo "<td>" . $row['Carrera'] . "</td>";
-
-                                            // Muestra el nombre del proceso obtenido de la tabla proceso
-                                            if ($row['Proceso']) {
-                                                echo "<td>" . $row['Proceso'] . "</td>";
-                                            } else {
-                                                echo "<td>Sin proceso</td>";
-                                            }
-
-                                            echo "<td class='status-cell $color'>$estatus</td>";
-                                            echo "<td>
-                                                <button class='btn btn-success btn btn-activar' data-alumno-id='{$row['Matricula']}' data-alumno-estatus='{$row['Estatus']}'>
-                                                    Activar
-                                                </button>
-                                                <button  class='btn btn-danger btn btn-desactivar' data-alumno-id='{$row['Matricula']}' data-alumno-estatus='{$row['Estatus']}'>
-                                                    Desactivar
-                                                </button>
-                                            </td>";
-                                            echo "</tr>";
-                                        }
-                                        echo "</table>";
-                                        ?>
-                                    </table>
-
-                                    <!--button class="btn btn-primary" class="btn-activar-todos">Activar/Desactivar Todos</button-->
+                                  
+                                    <div>
+                                        <a href="?c=escolars&a=statusA" id="activarDesactivarTodos" class="btn btn-sm btn-primary me-3">
+                                            Activar Todos
+                                        </a>
+                                        <a href="?c=escolars&a=statusI" id="activarDesactivarTodos" class="btn btn-sm btn-primary me-3">
+                                            Desactivar Todos
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                             <!--end::Content wrapper-->
@@ -207,6 +215,236 @@
         </div>
         <!--end::App-->
         <!--begin::Drawers-->
+
+        <!--begin::Modal - Offer A Deal-->
+        <div class="modal fade" id="kt_modal_offer_a_deal" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-1000px">
+                <!--begin::Modal content-->
+                <div class="modal-content">
+                    <!--begin::Modal header-->
+                    <div class="modal-header py-7 d-flex justify-content-between">
+                        <!--begin::Modal title-->
+                        <h2>Registro de alumnos</h2><br><br><br>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                            <i class="ki-outline ki-cross fs-1"></i>
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <!--begin::Modal header-->
+                    <!--begin::Modal body-->
+                    <div class="modal-body scroll-y m-5">
+                        <!--begin::Stepper-->
+                        <div class="stepper stepper-links d-flex flex-column" id="kt_modal_offer_a_deal_stepper">
+                            <!--begin::Content-->
+                            <div id="kt_account_settings_profile_details" class="collapse show">
+                                <!--begin::Form-->
+                                <form id="kt_account_profile_details_form" class="form" action="index.php?c=escolars&a=cargarAlumnoIndividual" method="post">
+                                    <!--begin::Card body
+                                            index.php?c=escolars&a=registro.php
+                                    -->
+                                    <div class="card-body border-top p-9">
+                                        <!--begin::Input group-->
+                                        <div class="row mb-6" style="margin-left:230px;">
+                                            <!--begin::Label-->
+                                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Matricula del alumno</label>
+                                            <!--end::Label-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-8">
+                                                <!--begin::Row-->
+                                                <div class="row">
+                                                    <!--begin::Col-->
+                                                    <div class="col-lg-7 fv-row">
+                                                        <input type="number" name="matricula" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required pattern="[0-9]{8}" oninput="bloquearCampo(this, 8)" onblur="resaltarCampoVacio(this)" />
+                                                    </div>
+                                                    <!--end::Col-->
+                                                </div>
+                                                <!--end::Row-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <!--begin::Input group-->
+                                        <div class="row mb-6" style="margin-left:230px;">
+                                            <!--begin::Label-->
+                                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nombre(s) del alumno</label>
+                                            <!--end::Label-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-8">
+                                                <!--begin::Row-->
+                                                <div class="row">
+                                                    <!--begin::Col-->
+                                                    <div class="col-lg-7 fv-row">
+                                                        <input type="text" name="nombre_alumno" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required onblur="resaltarCampoVacio(this)" />
+                                                    </div>
+                                                    <!--end::Col-->
+                                                </div>
+                                                <!--end::Row-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <!--begin::Input group-->
+                                        <div class="row mb-6" style="margin-left:230px;">
+                                            <!--begin::Label-->
+                                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Apellido Paterno</label>
+                                            <!--end::Label-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-8">
+                                                <!--begin::Row-->
+                                                <div class="row">
+                                                    <!--begin::Col-->
+                                                    <div class="col-lg-7 fv-row">
+                                                        <input type="text" name="apellidoP" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                    </div>
+                                                    <!--end::Col-->
+                                                </div>
+                                                <!--end::Row-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <!--begin::Input group-->
+                                        <div class="row mb-6" style="margin-left:230px;">
+                                            <!--begin::Label-->
+                                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Apellido Materno</label>
+                                            <!--end::Label-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-8">
+                                                <!--begin::Row-->
+                                                <div class="row">
+                                                    <!--begin::Col-->
+                                                    <div class="col-lg-7 fv-row">
+                                                        <input type="text" name="apellidoM" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                    </div>
+                                                    <!--end::Col-->
+                                                </div>
+                                                <!--end::Row-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <!--begin::Input group-->
+                                        <div class="row mb-6" style="margin-left:230px;">
+                                            <!--begin::Label-->
+                                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Correo institucional</label>
+                                            <!--end::Label-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-8">
+                                                <!--begin::Row-->
+                                                <div class="row">
+                                                    <!--begin::Col-->
+                                                    <div class="col-lg-7 fv-row">
+                                                        <input type="email" name="correo" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                    </div>
+                                                    <!--end::Col-->
+                                                </div>
+                                                <!--end::Row-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <!--begin::Input group-->
+                                        <div class="row mb-6" style="margin-left:230px;">
+                                            <!--begin::Label-->
+                                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Telefono</label>
+                                            <!--end::Label-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-8">
+                                                <!--begin::Row-->
+                                                <div class="row">
+                                                    <!--begin::Col-->
+                                                    <div class="col-lg-7 fv-row">
+                                                        <input type="number" name="telefono" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required pattern="[0-9]{10}" oninput="bloquearCampo(this, 10)" onblur="resaltarCampoVacio(this)" />
+                                                    </div>
+                                                    <!--end::Col-->
+                                                </div>
+                                                <!--end::Row-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <!--begin::Input group-->
+                                        <div class="row mb-6" style="margin-left:230px;">
+                                            <!--begin::Label-->
+                                            <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                                <span class="required">Carrera</span>
+                                                <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
+                                                    <i class="ki-outline ki-information-5 text-gray-500 fs-5"></i>
+                                                </span>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-5 fv-row">
+                                                <!--begin::Input-->
+                                                <select id="carrera" name="carrera" aria-label="Seleccione una carrera" data-control="select2" data-placeholder="Seleccione una carrera..." class="form-select form-select-solid form-select-lg">
+                                                    <option value="">Seleccione una carrera...</option>
+                                                    <?php
+                                                    foreach ($resultCarrera as $row) {
+                                                        echo "<option" . " value=" . $row["IdCarrera"] . ">" . $row["NombrePE"] . "</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <!--end::Input-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <!--begin::Input group-->
+                                        <div class="row mb-6" style="margin-left:230px;">
+                                            <!--begin::Label-->
+                                            <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                                <span class="required">Proceso</span>
+                                                <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
+                                                    <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                                </span>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-5 fv-row">
+                                                <!--begin::Input-->
+                                                <select id="proceso" name="proceso" aria-label="Seleccione un proceso" data-control="select2" data-placeholder="Seleccione un proceso..." class="form-select form-select-solid form-select-lg">
+                                                    <option value="">Seleccione un proceso...</option>
+                                                    <?php
+                                                    foreach ($resultProcesos as $procesos) {
+                                                        echo "<option" . " value=" . $procesos["IdProceso"] . ">" . $procesos["NombrePE"] . "</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <!--end::Input-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                    </div>
+                                    <!--end::Card body-->
+                                    <!--begin::Actions-->
+                                    <div class="card-footer d-flex justify-content-end py-4 px-9">
+                                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Registrar Alumno</button>
+                                    </div>
+                                    <!--end::Actions-->
+                                </form>
+                                <!--end::Form-->
+                            </div>
+                            <!--end::Content-->
+                        </div>
+                        <!--end::Stepper-->
+                    </div>
+                    <!--begin::Modal body-->
+                </div>
+            </div>
+        </div>
+        <!--end::Modal - Offer A Deal-->
 
         <!--begin::Scrolltop-->
         <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
@@ -235,124 +473,88 @@
         <script src="assets/js/custom/utilities/modals/users-search.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="formulario.js"></script>
-		<script>
-    // Script jQuery para manejar los clics en los botones de activar/desactivar
-    $(document).ready(function() {
-        // Botones individuales
-        $('.btn-activar').on('click', function() {
-            var alumnoId = $(this).data('alumno-id');
-            var alumnoEstatus = $(this).data('alumno-estatus');
-            // Realiza aquí la lógica para activar/desactivar al alumno con ID 'alumnoId'
-            // Puedes usar AJAX para enviar una solicitud al servidor y actualizar el estado del alumno en la base de datos
-            if (alumnoEstatus === 1) {
-                desactivarAlumno(alumnoId);
-            } else {
-                activarAlumno(alumnoId);
-            }
-        });
-
-        // Botón para activar/desactivar todos
-        $('.btn-activar-todos').on('click', function() {
-            // Realiza aquí la lógica para activar/desactivar todos los alumnos
-            // Puedes usar AJAX para enviar una solicitud al servidor y actualizar el estado de todos los alumnos en la base de datos
-            var activarTodos = confirm("¿Deseas activar/desactivar a todos los alumnos?");
-            if (activarTodos) {
-                var accion = activarTodos ? 'activar' : 'desactivar';
-                actualizarTodosLosAlumnos(accion);
-            }
-        });
-
-        function activarAlumno(alumnoId) {
-            // Lógica para activar el alumno con el ID proporcionado
-            $.ajax({
-                type: "POST",
-                url: "config/cambiarEstado.php",
-                data: {
-                    alumnoId: alumnoId
-                },
-                success: function(response) {
-                    // Actualiza el estado del botón y muestra un mensaje de éxito
-                    $('[data-alumno-id="' + alumnoId + '"]').find('.btn-activar').data('alumno-estatus', 1);
-                    $('[data-alumno-id="' + alumnoId + '"]').find('.status-cell').text('Activo').removeClass('text-danger').addClass('text-success');
-                    alert('Alumno activado con éxito.');
-                }
-            });
-        }
-
-        function desactivarAlumno(alumnoId) {
-            // Lógica para desactivar el alumno con el ID proporcionado
-            $.ajax({
-                type: "POST",
-                url: "config/cambiarEstado.php",
-                data: {
-                    alumnoId: alumnoId
-                },
-                success: function(response) {
-                    // Actualiza el estado del botón y muestra un mensaje de éxito
-                    $('[data-alumno-id="' + alumnoId + '"]').find('.btn-activar').data('alumno-estatus', 0);
-                    $('[data-alumno-id="' + alumnoId + '"]').find('.status-cell').text('Inactivo').removeClass('text-success').addClass('text-danger');
-                    alert('Alumno desactivado con éxito.');
-                }
-            });
-        }
-
-        function actualizarTodosLosAlumnos(accion) {
-            // Lógica para activar o desactivar a todos los alumnos
-            $.ajax({
-                type: "POST",
-                url: "tu_ruta_para_actualizar_todos_los_alumnos.php",
-                data: {
-                    accion: accion
-                },
-                success: function(response) {
-                    if (accion === 'activar') {
-                        $('.status-cell').text('Activo').removeClass('text-danger').addClass('text-success');
+        <script>
+            // Script jQuery para manejar los clics en los botones de activar/desactivar
+            $(document).ready(function() {
+                // Botones individuales
+                $('.btn-activar').on('click', function() {
+                    var alumnoId = $(this).data('alumno-id');
+                    var alumnoEstatus = $(this).data('alumno-estatus');
+                    // Realiza aquí la lógica para activar/desactivar al alumno con ID 'alumnoId'
+                    // Puedes usar AJAX para enviar una solicitud al servidor y actualizar el estado del alumno en la base de datos
+                    if (alumnoEstatus === 1) {
+                        desactivarAlumno(alumnoId);
                     } else {
-                        $('.status-cell').text('Inactivo').removeClass('text-success').addClass('text-danger');
+                        activarAlumno(alumnoId);
                     }
-                    alert('Todos los alumnos fueron ' + (accion === 'activar' ? 'activados' : 'desactivados') + ' con éxito.');
+                });
+
+                // Botón para activar/desactivar todos
+                $('.btn-activar-todos').on('click', function() {
+                    // Realiza aquí la lógica para activar/desactivar todos los alumnos
+                    // Puedes usar AJAX para enviar una solicitud al servidor y actualizar el estado de todos los alumnos en la base de datos
+                    var activarTodos = confirm("¿Deseas activar/desactivar a todos los alumnos?");
+                    if (activarTodos) {
+                        var accion = activarTodos ? 'activar' : 'desactivar';
+                        actualizarTodosLosAlumnos(accion);
+                    }
+                });
+
+                function activarAlumno(alumnoId) {
+                    // Lógica para activar el alumno con el ID proporcionado
+                    $.ajax({
+                        type: "POST",
+                        url: "config/cambiarEstado.php",
+                        data: {
+                            alumnoId: alumnoId
+                        },
+                        success: function(response) {
+                            // Actualiza el estado del botón y muestra un mensaje de éxito
+                            $('[data-alumno-id="' + alumnoId + '"]').find('.btn-activar').data('alumno-estatus', 1);
+                            $('[data-alumno-id="' + alumnoId + '"]').find('.status-cell').text('Activo').removeClass('text-danger').addClass('text-success');
+                            alert('Alumno activado con éxito.');
+                        }
+                    });
+                }
+
+                function desactivarAlumno(alumnoId) {
+                    // Lógica para desactivar el alumno con el ID proporcionado
+                    $.ajax({
+                        type: "POST",
+                        url: "config/cambiarEstado.php",
+                        data: {
+                            alumnoId: alumnoId
+                        },
+                        success: function(response) {
+                            // Actualiza el estado del botón y muestra un mensaje de éxito
+                            $('[data-alumno-id="' + alumnoId + '"]').find('.btn-activar').data('alumno-estatus', 0);
+                            $('[data-alumno-id="' + alumnoId + '"]').find('.status-cell').text('Inactivo').removeClass('text-success').addClass('text-danger');
+                            alert('Alumno desactivado con éxito.');
+                        }
+                    });
+                }
+
+                function actualizarTodosLosAlumnos(accion) {
+                    // Lógica para activar o desactivar a todos los alumnos
+                    $.ajax({
+                        type: "POST",
+                        url: "tu_ruta_para_actualizar_todos_los_alumnos.php",
+                        data: {
+                            accion: accion
+                        },
+                        success: function(response) {
+                            if (accion === 'activar') {
+                                $('.status-cell').text('Activo').removeClass('text-danger').addClass('text-success');
+                            } else {
+                                $('.status-cell').text('Inactivo').removeClass('text-success').addClass('text-danger');
+                            }
+                            alert('Todos los alumnos fueron ' + (accion === 'activar' ? 'activados' : 'desactivados') + ' con éxito.');
+                        }
+                    });
                 }
             });
-        }
-    });
-</script>
-<script>
-function activarAlumno(alumnoId) {
-    // Lógica para activar el alumno con el ID proporcionado
-    $.ajax({
-        type: "POST",
-        url: "config/cambiarEstado.php",
-        data: {
-            alumnoId: alumnoId,
-            estatus: 1 // 1 para activar
-        },
-        success: function(response) {
-            // Actualiza el estado del botón y muestra un mensaje de éxito
-            $('[data-alumno-id="' + alumnoId + '"]').find('.btn-activar').data('alumno-estatus', 1);
-            $('[data-alumno-id="' + alumnoId + '"]').find('.status-cell').text('Activo').removeClass('text-danger').addClass('text-success');
-            alert('Alumno activado con éxito.');
-        }
-    });
-}
-
-function desactivarAlumno(alumnoId) {
-    // Lógica para desactivar el alumno con el ID proporcionado
-    $.ajax({
-        type: "POST",
-        url: "config/cambiarEstado.php",
-        data: {
-            alumnoId: alumnoId,
-            estatus: 0 // 0 para desactivar
-        },
-        success: function(response) {
-            // Actualiza el estado del botón y muestra un mensaje de éxito
-            $('[data-alumno-id="' + alumnoId + '"]').find('.btn-activar').data('alumno-estatus', 0);
-            $('[data-alumno-id="' + alumnoId + '"]').find('.status-cell').text('Inactivo').removeClass('text-success').addClass('text-danger');
-            alert('Alumno desactivado con éxito.');
-        }
-    });
-}
-</script>
+        </script>
+        </script>
         <!--end::Custom Javascript-->
         <!--end::Javascript-->
 </body>

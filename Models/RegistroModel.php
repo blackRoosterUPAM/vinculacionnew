@@ -1,48 +1,96 @@
 <?php
-
-class RegistrosModel {
-
-    public function existeAlumno($matricula) {
-        $conexion = Conectar::conexion();
-        $sql = "SELECT Matricula FROM alumnos WHERE Matricula = ?";
-        $stmt = $conexion->prepare($sql);
-        $stmt->bind_param("s", $matricula);
-        $stmt->execute();
-        $stmt->store_result();
-        $existe = $stmt->num_rows > 0;
-        $conexion->close();
-        return $existe;
+class registro{
+    private $db;
+    private $proceso;
+    private $carrera;
+    private $alumnos;
+    private $documento;
+    //estableciendo conexion con la base de datos
+    public function __construct(){
+        $this->db = Conectar::conexion();
+        $this->alumnos = array();
     }
 
-    public function insertarAlumno($matricula, $nombre, $apellidoPaterno, $apellidoMaterno, $telefono, $correo, $carrera, $proceso) {
-        $conexion = Conectar::conexion();
-        $sql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, idProceso) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conexion->prepare($sql);
-        $stmt->bind_param("ssssssii", $matricula, $nombre, $apellidoPaterno, $apellidoMaterno, $telefono, $correo, $carrera, $proceso);
-
-        if ($stmt->execute()) {
-            $conexion->close();
-            return true;
-        } else {
-            $conexion->close();
-            return false;
+    //obtiene los procesos registrados en la base de datos
+    public function get_proceso(){
+        $sql = "SELECT * FROM proceso";
+        $result = $this->db->query($sql);
+        while($row = $result->fetch_assoc()){
+            $this->proceso[] = $row;
         }
+        return $this->proceso;
     }
 
-    public function insertarUsuario($matricula, $correo, $contrasena, $nombre, $apellidoPaterno, $apellidoMaterno) {
-        $conexion = Conectar::conexion();
-        $rol = 4; // Supongamos que el rol de los alumnos es 4
-        $sql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conexion->prepare($sql);
-        $stmt->bind_param("sssisss", $matricula, $correo, $contrasena, $rol, $nombre, $apellidoPaterno, $apellidoMaterno);
-
-        if ($stmt->execute()) {
-            $conexion->close();
-            return true;
-        } else {
-            $conexion->close();
-            return false;
+    //obtiene las carreras registradas
+    public function get_carrera(){
+        $sql = "SELECT * FROM carrera";
+        $result = $this->db->query($sql);
+        while($row = $result->fetch_assoc()){
+            $this->carrera[] = $row;
         }
+        return $this->carrera;
+    }
+
+    //Obtiene el estatus del alumno
+    public function get_alumnos() {
+		$sql = "SELECT * FROM alumnos WHERE Estatus = 0";
+		$resultado = $this->db->query($sql);
+		while ($row = $resultado->fetch_assoc()) {
+			$this->alumnos[] = $row;
+		}
+		return $this->alumnos;
+	}
+
+    //Cambia el estatus del alumno
+    public function estatus_editado($matricula) {
+        $query1 = mysqli_query($this->db, "SELECT * FROM alumnos WHERE Matricula = $matricula");
+        $alumnos = mysqli_fetch_array($query1);
+        $status = $alumnos["Estatus"];
+        $message = "";
+    
+        if ($status == 0) {
+            $sql = "UPDATE alumnos SET Estatus = 1 WHERE Matricula = $matricula";
+            $resultado = $this->db->query($sql);
+            $message = "El alumno ha sido activado de manera exitosa.";
+        } elseif ($status == 1) {
+            $sql = "UPDATE alumnos SET Estatus = 0 WHERE Matricula = $matricula";
+            $resultado = $this->db->query($sql);
+            $message = "El alumno ha sido desactivado de manera exitosa.";
+        }
+    
+        // Envía el mensaje al navegador usando JavaScript
+        echo "<script>alert('$message'); window.location.href = 'index.php?c=escolars&a=index';</script>";
+    }
+
+    //obtiene el estatus del documento
+    public function get_documentos() {
+		$sql = "SELECT * FROM docalumnoperiodo WHERE EstatusPtc = 0";
+		$resultado = $this->db->query($sql);
+		while ($row = $resultado->fetch_assoc()) {
+			$this->documento[] = $row;
+		}
+		return $this->documento;
+	}
+
+    //Cambia el estatus del alumno
+    public function estatus_documento($idDocumento) {
+        $query1 = mysqli_query($this->db, "SELECT * FROM docalumnoperiodo WHERE IdDocumento = $idDocumento");
+        $documento = mysqli_fetch_array($query1);
+        $status = $documento["EstatusPtc"];
+        $message = "";
+    
+        if ($status == 0) {
+            $sql = "UPDATE docalumnoperiodo SET EstatusPtc = 1 WHERE IdDocumento = $idDocumento";
+            $resultado = $this->db->query($sql);
+            $message = "El documento ha sido validado de manera exitosa.";
+        } elseif ($status == 1) {
+            $sql = "UPDATE docalumnoperiodo SET EstatusPtc = 0 WHERE IdDocumento = $idDocumento";
+            $resultado = $this->db->query($sql);
+            $message = "El documento no cumple con las características adecuadas.";
+        }
+    
+        // Envía el mensaje al navegador usando JavaScript
+        echo "<script>alert('$message'); window.location.href = 'index.php?c=ptcs&a=index';</script>";
     }
 }
 ?>

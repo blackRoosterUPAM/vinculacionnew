@@ -15,16 +15,20 @@
 		return $control;
 	}
 	
-	function cargarAccion($controller, $accion, $id = null){
-		
+	function cargarAccion($controller, $accion, $id = null, $id2 = null){
 		if(isset($accion) && method_exists($controller, $accion)){
 			if($id == null){
 				$controller->$accion();
-				} else {
-				$controller->$accion($id);
-			}
 			} else {
+				if($id2 == null){
+					$controller->$accion($id);
+				} else {
+					$controller->$accion($id, $id2);
+				}
+			}
+		} else {
 			$controller->ACCION_PRINCIPAL();
-		}	
+		}
 	}
+	
 ?>
