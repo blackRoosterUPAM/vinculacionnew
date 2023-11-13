@@ -1,19 +1,18 @@
-<?php 
- if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
-	 $idUsuario = $_SESSION['id_usuario'];
-	 $name = $_SESSION['name'];
-	 if($name == 'sedes'){
-		 
-	 } else {
-		 // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-		 header('location: index.php');
-		 exit; // Detener la ejecución del script
-	 }
- } else {
-	 // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-	 header('location: index.php');
-	 exit; // Detener la ejecución del script
- }
+<?php
+if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
+	$idUsuario = $_SESSION['id_usuario'];
+	$name = $_SESSION['name'];
+	if ($name == 'sedes') {
+	} else {
+		// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
+		header('location: index.php');
+		exit; // Detener la ejecución del script
+	}
+} else {
+	// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
+	header('location: index.php');
+	exit; // Detener la ejecución del script
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -140,7 +139,7 @@
 														<button class="btn btn-primary mb-2 me-2" data-bs-toggle="modal" data-bs-target="#projectSettingsModal">Generar Cita</button>
 
 														<!-- Apartado que muestra los datos actuales del número de vacantes -->
-														<a class="btn btn-info mb-2 rounded-circle"><?=$vacante["NumPostulados"]?>/<?=$vacante["totalVacantes"]?></a>
+														<a class="btn btn-info mb-2 rounded-circle"><?= $vacante["NumPostulados"] ?>/<?= $vacante["totalVacantes"] ?></a>
 													</div>
 												</div>
 
@@ -272,15 +271,14 @@
 	<script>
 		var hostUrl = "assets/";
 	</script>
+	<!-- Asegúrate de incluir SweetAlert2 antes de tu script -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
-
 	<script>
 		$(document).ready(function() {
-			// Agregar un evento al botón "descartar" para mostrar la confirmación
 			$("#descartar").click(function() {
+				console.log("Se hizo click en descartar");
 				Swal.fire({
 					title: '¿Estás seguro de que deseas descartar?',
 					text: 'Esta acción no se puede deshacer.',
@@ -292,29 +290,39 @@
 					if (result.isConfirmed) {
 						// Realizar la solicitud AJAX si el usuario confirmó
 						console.log("<?= $data["alumno"]["Matricula"] ?>");
+						var matricula = <?= $data["alumno"]["Matricula"] ?>;
 						$.ajax({
 							type: "POST",
 							url: "index.php?c=sedes&a=descartar",
 							data: {
-								matricula: <?= $data["alumno"]["Matricula"] ?>
+								matricula: matricula ,
 							},
 							success: function(response) {
+								console.log("se borro al pendejo");
 								// Manejar la respuesta de la primera solicitud aquí
-								console.log(response);
+								//console.log(response);
 
-								// Obtener el correo y la matrícula desde la respuesta o definirlos
+								
+								console.log("<?= $data["alumno"]["CorreoE"] ?>");
+								// Obtener para envio de correo 
+								var matricula = "<?= $data["alumno"]["Matricula"]?>";
+								
 								var correo = "<?= $data["alumno"]["CorreoE"] ?>";
 								var sede = "<?= $sede["NombreSede"] ?>";
-								var boton_enviar = true;
-								console.log("<?= $data["alumno"]["CorreoE"] ?>");
+								var alumno = "Brandon Cara de verga";
+								var respuestaSede = "descartado por su perfil";
+								var tipoCorreo = 'rechazado';
 								// Luego, enviar el correo y la matrícula a envio.php
 								$.ajax({
 									type: "POST",
-									url: "config/envio.php",
+									url: "config/correoSede.php",
 									data: {
 										destinatario: correo,
-										boton_enviar: boton_enviar,
-										sede : sede
+										matricula: matricula,
+										sede: sede,
+										alumno: alumno,
+										respuestaSede: respuestaSede,
+										tipoCorreo: tipoCorreo,
 									},
 									success: function(response) {
 										// Manejar la respuesta del servidor para el correo y matrícula aquí
@@ -346,6 +354,9 @@
 			});
 		});
 	</script>
+
+
+	
 
 
 	<!-- Script que manda correo de cita y modifica que esta por confirmar si es aceptado o nel -->
@@ -408,16 +419,16 @@
 				enableTime: true,
 				dateFormat: "d, M Y, H:i",
 				"locale": {
-            "firstDayOfWeek": 1, // Lunes como el primer día de la semana (opcional)
-            "weekdays": {
-                "shorthand": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
-                "longhand": ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
-            },
-            "months": {
-                "shorthand": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-                "longhand": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-            }
-        }
+					"firstDayOfWeek": 1, // Lunes como el primer día de la semana (opcional)
+					"weekdays": {
+						"shorthand": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+						"longhand": ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
+					},
+					"months": {
+						"shorthand": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+						"longhand": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+					}
+				}
 			});
 		});
 	</script>
@@ -532,7 +543,7 @@
 								<input type="hidden" name="sede" value="<?= $sede["NombreSede"]; ?>">
 							</div>
 							<div class="modal-footer">
-								<button type="button" id="cancelarCita"  data-bs-dismiss="modal" class="btn btn-light me-3">Cancel</button>
+								<button type="button" id="cancelarCita" data-bs-dismiss="modal" class="btn btn-light me-3">Cancel</button>
 
 								<button id="enviarCita" type="submit" class="btn btn-primary">Guardar Cambios</button>
 							</div>
