@@ -10,6 +10,7 @@
 	require_once "controllers/Proceso.php";
 	require_once "controllers/Escolars.php";
 	require_once "controllers/Registro.php";
+	require_once "controllers/vinculacion.php";
 
 	
 	//Mediante la url vamos a saber que controlador se usa
