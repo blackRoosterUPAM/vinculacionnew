@@ -3,19 +3,18 @@ session_start(); // Asegúrate de iniciar la sesión en cada vista que utilice s
 
 // Verifica si la variable de sesión existe antes de mostrarla
 if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
-    $idUsuario = $_SESSION['id_usuario'];
+	$idUsuario = $_SESSION['id_usuario'];
 	$name = $_SESSION['name'];
-	if($name == 'vinculacion'){
-		
+	if ($name == 'vinculacion') {
 	} else {
 		// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
 		header('location: index.php');
 		exit; // Detener la ejecución del script
 	}
 } else {
-    // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-    header('location: index.php');
-    exit; // Detener la ejecución del script
+	// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
+	header('location: index.php');
+	exit; // Detener la ejecución del script
 }
 ?>
 <!DOCTYPE html>
@@ -35,7 +34,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--begin::Head-->
 
 <head>
-<base href="" />
+	<base href="" />
 	<title>UPAM - Vinculación</title>
 	<meta charset="utf-8" />
 	<meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
@@ -107,25 +106,6 @@ License: For each use you must have a valid license purchased only from above li
 						<div class="d-flex flex-column flex-row-fluid">
 							<!--begin::Toolbar wrapper-->
 							<div class="d-flex align-items-center pt-1">
-								<!--begin::Breadcrumb-->
-								<ul class="breadcrumb breadcrumb-separatorless fw-semibold">
-									<!--begin::Item-->
-									<li class="breadcrumb-item text-white fw-bold lh-1">
-										<a href="../../demo30/dist/index.php" class="text-white text-hover-primary">
-											<i class="ki-outline ki-home text-white fs-3"></i>
-										</a>
-									</li>
-									<!--end::Item-->
-									<!--begin::Item-->
-									<li class="breadcrumb-item">
-										<i class="ki-outline ki-right fs-4 text-white mx-n1"></i>
-									</li>
-									<!--end::Item-->
-									<!--begin::Item-->
-									<li class="breadcrumb-item text-white fw-bold lh-1">Account</li>
-									<!--end::Item-->
-								</ul>
-								<!--end::Breadcrumb-->
 							</div>
 							<!--end::Toolbar wrapper=-->
 						</div>
@@ -150,12 +130,12 @@ License: For each use you must have a valid license purchased only from above li
 										<ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
 											<!--begin::Nav item-->
 											<li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index">Listas</a>
+												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index">Listas</a>
 											</li>
 											<!--end::Nav item-->
 											<!--begin::Nav item-->
 											<li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=sedes&a=show_sede">Sedes</a>
+												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=sedes&a=show_sede">Sedes</a>
 											</li>
 											<!--end::Nav item-->
 											<!--begin::Nav item-->
@@ -177,37 +157,28 @@ License: For each use you must have a valid license purchased only from above li
 
 								<div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
 									<!--begin::Input group-->
-									<div class="row mb-6" style="margin-left:250px;">
+									<div class="row mb-6">
+
+										<label class="col-lg-4 col-form-label fw-semibold fs-6">
+											<span class="required">Carrera</span>
+										</label>
 										<!--begin::Col-->
 										<div class="col-lg-8 fv-row">
 											<select id="carrera" name="carrera" aria-label="Seleccione una Carrera" data-control="select2" data-placeholder="Seleccione una Carrera..." class="form-select form-select-solid form-select-lg">
 												<option value="">Seleccione una Carrera...</option>
 												<?php
 												foreach ($result as $row) {
-													echo "<option value=". $row["IdCarrera"] .">". $row["NombrePE"] ."</option>";
+													echo "<option value=" . $row["IdCarrera"] . ">" . $row["NombrePE"] . "</option>";
 												}
 												?>
 											</select>
-											<br>
-											<div style="margin-left: -289px; position:absolute;">
-												<div class="card-footer d-flex justify-content-end py-6 px-9">
-													<button type="submit" class="btn btn-primary" id="mostrarDatos">Mostrar Datos</button>
-												</div>
-											</div>
 										</div>
 										<!--end::Col-->
 									</div>
-									<br><br><br>
-								<div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
-									<!--begin::Actions-->
-									<div class="d-flex my-4">
-										<a href="?c=vacantes&a=selec_cupos" class="btn btn-sm btn-primary me-3">Nuevos Cupos</a>
-									</div>
-									<!--end::Actions-->
+
+									<!--begin::Statements-->
 								</div>
-								<!--begin::Statements-->
-								</div>
-								<br><br><br>
+								<br>
 								<!--end::Input group-->
 								<!--begin::Row-->
 								<div class="row g-xxl-9">
@@ -217,11 +188,37 @@ License: For each use you must have a valid license purchased only from above li
 								<div class="card">
 									<!--begin::Header-->
 									<div class="card-header card-header-stretch">
+
+										<div class="d-flex my-4">
+											<button type="submit" class="btn btn-sm btn-primary me-3" id="mostrarDatos">Mostrar Datos</button>
+										</div>
 										<!--begin::Title-->
 										<div class="card-title">
 											<h3 class="m-0 text-gray-800">Listas de Alumnos</h3>
 										</div>
 										<!--end::Title-->
+
+										<div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+											<!--begin::Actions-->
+											<div class="d-flex my-4">
+												<a href="?c=vacantes&a=selec_cupos" class="btn btn-sm btn-primary me-3">Nuevos Cupos</a>
+											</div>
+
+											<div class="d-flex my-4">
+												<a href="#" class="btn btn-sm btn-primary me-3" id="exportarPDF">Exportar PDF</a>
+											</div>
+
+											<script>
+												document.getElementById('exportarPDF').addEventListener('click', function() {
+													var selectedCarrera = document.getElementById('carrera').value;
+													if (selectedCarrera) {
+														window.location.href = "?c=alumno&a=exportarVacantes&id=" + selectedCarrera;
+													} else {
+														alert('Por favor, seleccione una carrera antes de exportar.');
+													}
+												});
+											</script>
+										</div>
 									</div>
 									<!--end::Header-->
 									<!--begin::Tab Content-->
@@ -247,8 +244,8 @@ License: For each use you must have a valid license purchased only from above li
 												</table>
 
 												<script>
-														// Cuando se hace clic en el botón "Mostrar Datos", hacer una solicitud AJAX para obtener los datos de los alumnos
-                                                        $('#mostrarDatos').click(function() {
+													// Cuando se hace clic en el botón "Mostrar Datos", hacer una solicitud AJAX para obtener los datos de los alumnos
+													$('#mostrarDatos').click(function() {
 														var selectedCarrera = $('#carrera').val();
 
 														// Verificar si se ha seleccionado una carrera

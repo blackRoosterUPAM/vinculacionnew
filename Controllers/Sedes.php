@@ -145,9 +145,10 @@
             $nombre = $_POST["nombre"];
             $apellidop = $_POST["apellidop"];
             $apellidom = $_POST["apellidom"];
+            $logo = $_POST["logo"];
 
             $sedes = new Sede();
-			$dato = $sedes->new_sede($matricula, $nombre_sede,$direccion,$correo,$telefono,$tiposede,$contraseña,$nombre,$apellidop,$apellidom);
+			$dato = $sedes->new_sede($matricula, $nombre_sede,$direccion,$correo,$telefono,$tiposede,$contraseña,$nombre,$apellidop,$apellidom,$logo);
 
             $sedes = new Sede();
 			$data = $sedes->get_sedes();

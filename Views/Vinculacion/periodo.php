@@ -103,30 +103,6 @@ License: For each use you must have a valid license purchased only from above li
                     <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex align-items-start">
                         <!--begin::Toolbar container-->
                         <div class="d-flex flex-column flex-row-fluid">
-                            <!--begin::Toolbar wrapper-->
-                            <div class="d-flex align-items-center pt-1">
-                                <!--begin::Breadcrumb-->
-                                <ul class="breadcrumb breadcrumb-separatorless fw-semibold">
-                                    <!--begin::Item-->
-                                    <li class="breadcrumb-item text-white fw-bold lh-1">
-                                        <a href="../../demo30/dist/index.php" class="text-white text-hover-primary">
-                                            <i class="ki-outline ki-home text-white fs-3"></i>
-                                        </a>
-                                    </li>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="breadcrumb-item">
-                                        <i class="ki-outline ki-right fs-4 text-white mx-n1"></i>
-                                    </li>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="breadcrumb-item text-white fw-bold lh-1">Account</li>
-                                    <!--end::Item-->
-                                </ul>
-                                <!--end::Breadcrumb-->
-                            </div>
-                            <!--end::Toolbar wrapper=-->
-                            <br><br><br>
                         </div>
                         <!--end::Toolbar container=-->
                     </div>
@@ -170,25 +146,25 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--begin::Navs-->
                                     </div>
                                 </div>
-                                <!--end::Navbar-->
-                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
-                                    <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
-                                        <!--begin::Actions-->
-                                        <div class="d-flex my-4">
-                                            <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Agregar Periodo</a>
-                                        </div>
-                                        <!--end::Actions-->
-                                    </div>
-                                </div>
                                 <!--begin::Referred users-->
                                 <div class="card">
                                     <!--begin::Header-->
                                     <div class="card-header card-header-stretch">
                                         <!--begin::Title-->
                                         <div class="card-title">
-                                            <h3>Sedes Registradas</h3>
+                                            <h3>Periodos Registrados</h3>
                                         </div>
                                         <!--end::Title-->
+                                        <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                            <div class="d-flex my-4">
+                                                <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Agregar Periodo</a>
+                                            </div>
+                                            <div class="d-flex my-4">
+                                                <a href="?c=alumno&a=exportarPeriodo" class="btn btn-sm btn-primary me-3">Exportar Periodo</a>
+                                            </div>
+
+                                        </div>
+
                                     </div>
                                     <!--end::Header-->
                                     <!--begin::Tab content-->

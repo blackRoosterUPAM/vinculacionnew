@@ -61,9 +61,9 @@ class Sede
 		}
 	}
 
-	public function new_sede($matricula, $nombre_sede, $direccion, $correo, $telefono, $tiposede, $contraseña, $nombre, $apellidop, $apellidom)
+	public function new_sede($matricula, $nombre_sede, $direccion, $correo, $telefono, $tiposede, $contraseña, $nombre, $apellidop, $apellidom, $logo)
 	{
-		$query = mysqli_query($this->db, "INSERT INTO sede (IdSede, NombreSede, Dirección, CorreoContacto, Telefono, tiposede) VALUES ( '$matricula','$nombre_sede', '$direccion', '$correo', '$telefono', '$tiposede')");
+		$query = mysqli_query($this->db, "INSERT INTO sede (IdSede, NombreSede, Dirección, CorreoContacto, Telefono, tiposede, logo) VALUES ( '$matricula','$nombre_sede', '$direccion', '$correo', '$telefono', '$tiposede', '$logo')");
 
 		if ($query) {
 			$query1 = mysqli_query($this->db, "SELECT IdSede FROM sede WHERE CorreoContacto = '$correo'");
@@ -101,4 +101,31 @@ class Sede
 		$row = $resultado->fetch_assoc();
 		return $row;
 	}
+
+	public function obtenerSedes()
+      {
+            $vacantes = array();
+
+            $query = "SELECT * FROM sede";
+
+            $result = mysqli_query($this->db, $query);
+
+            if ($result) {
+                  while ($row = mysqli_fetch_assoc($result)) {
+                        $vacantes[] = array(
+                              "Matricula" => $row["IdSede"],
+                              "Nombre sede" => $row["NombreSede"],
+                              "Dirección" => $row["Dirección"],
+                              "Correo" => $row["CorreoContacto"],
+                              "Telefono" => $row["Telefono"],
+                              "Tipo de sede" => $row["tiposede"]
+                        );
+                  }
+                  // Devolver vacantes como JSON
+                  return json_encode($vacantes);
+            } else {
+                  // Manejo de errores o mensaje de error
+                  return json_encode(array("error" => "Error al obtener las vacantes"));
+            }
+      }
 }

@@ -33,5 +33,27 @@ class Periodo {
 		$sql = "INSERT INTO periodo (IdPeriodo, Meses, Año, estatus) VALUE (5, '$period', '$año', 0)";
 		$resultado = $this->db->query($sql);
 	}
+
+	public function obtenerPeriodos() {
+        $periodos = array();
+
+        $query = "SELECT Meses, Año FROM periodo";
+
+        $result = mysqli_query($this->db, $query);
+
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $periodos[] = array(
+                    "Meses" => $row["Meses"],
+                    "Año" => $row["Año"]
+                );
+            }
+            // Devolver periodos como JSON
+            return json_encode($periodos);
+        } else {
+            // Manejo de errores o mensaje de error
+            return json_encode(array("error" => "Error al obtener los datos de periodos"));
+        }
+    }
 	}
 
