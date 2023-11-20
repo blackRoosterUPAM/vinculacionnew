@@ -39,9 +39,6 @@ class ptc{
         $sql = "UPDATE `docalumnoperiodo` SET EstatusPtc= 1  WHERE Matricula = $matricula and  IdDocumento =  $idDoc ";
         // Utiliza una consulta preparada para evitar SQL injection
         $stmt = $this->db->prepare($sql);
-        // Vincula el parámetro de la matrícula
-        // $stmt->bind_param("s", $matricula);        
-        // $stmt->bind_param("s", $idDoc);
         // // Ejecuta la consulta
         $stmt->execute();
         // Devuelve un valor para indicar si la actualización se realizó con éxito

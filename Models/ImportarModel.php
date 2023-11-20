@@ -235,14 +235,8 @@ class ImportarModel
         return null;
     }
 
-    public function insertarAlumnoIndividual($matricula, $nombre, $apellidoP, $apellidoM, $telefono, $correo, $carrera, $proceso)
-    {
-        
+    public function insertarAlumnoIndividual($matricula, $nombre, $apellidoP, $apellidoM, $telefono, $correo, $carrera, $proceso){
         require_once 'config/correoUserContra.php';
-        /*require 'vendor/autoload.php'; // Asegúrate de cargar la librería PhpSpreadsheet
-        require 'config/database.php';
-        require 'config/EmailSender.php'; // Importa la clase EmailSender
-        */
         // Generar la contraseña a partir de las iniciales del nombre y los últimos dígitos de la matrícula
         $inicialesNombre = substr($nombre, 0, 2); // Tomar las primeras 2 letras del nombre
         $ultimosDigitosMatricula = substr($matricula, -4); // Tomar los últimos 2 dígitos de la matrícula

@@ -9,12 +9,15 @@
     <base href="" />
     <title>UPAM</title>
     <meta charset="utf-8" />
-    <meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
-    <meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+    <meta name="description"
+        content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
+    <meta name="keywords"
+        content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_es" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Metronic - Bootstrap Admin Template, HTML, VueJS, React, Angular. Laravel, Asp.Net Core, Ruby on Rails, Spring Boot, Blazor, Django, Express.js, Node.js, Flask Admin Dashboard Theme & Template" />
+    <meta property="og:title"
+        content="Metronic - Bootstrap Admin Template, HTML, VueJS, React, Angular. Laravel, Asp.Net Core, Ruby on Rails, Spring Boot, Blazor, Django, Express.js, Node.js, Flask Admin Dashboard Theme & Template" />
     <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
@@ -94,7 +97,8 @@
                                 <div class="page-title d-flex align-items-center me-3">
                                     <img alt="Logo" src="assets/media/svg/misc/layer.svg" class="h-60px me-5" />
                                     <!--begin::Title-->
-                                    <h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">
+                                    <h1
+                                        class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">
                                         POFESOR DE TIEMPO COMPLETO PTC
                                     </h1>
                                     <!--end::Title-->
@@ -118,8 +122,33 @@
                             <div class="card card-flush">
                                 <div class="card-body pt-0">
                                     <!--begin::Table-->
+                                    <!--begin::Navbar-->
+                                    <div class="card mb-5 mb-xl-10">
+                                        <div class="card-body pt-9 pb-0">
+                                            <!--begin::Navs-->
+                                            <ul
+                                                class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                                                <!--begin::Nav item-->
+                                                <li class="nav-item mt-2">
+                                                    <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
+                                                        href="#">Validación de Documentos</a>
+                                                </li>
+                                                <!--end::Nav item-->
+                                                <!--begin::Nav item-->
+                                                <li class="nav-item mt-2">
+                                                    <a class="nav-link text-active-primary ms-0 me-10 py-5 "
+                                                        href="?c=contacto&a=show_sede">Contacto de la Sede</a>
+                                                </li>
+                                                <!--end::Nav item-->
+                                            </ul>
+                                            <!--begin::Navs-->
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+								</div>
                                     <div class="table-responsive ">
-                                        <table class="table-responsive table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
+                                        <table class="table-responsive table align-middle table-row-dashed fs-6 gy-5"
+                                            id="kt_customers_table">
                                             <thead class="bg-primary">
                                                 <tr class=" text-start text-gray-100 fw-bold fs-7  gs-4">
 
@@ -140,7 +169,7 @@
                                                 foreach ($solicitudes as $row) {
 
                                                     $estatusPTC = isset($row['EstatusPtc']) && $row['EstatusPtc'] == 1 ? 'Documento Válido' : 'Documento no Válido';
-                                                    $color =  $row['EstatusPtc'] == 1 ? 'green' : 'red';
+                                                    $color = $row['EstatusPtc'] == 1 ? 'green' : 'red';
 
                                                     echo "<tr>";
                                                     echo "<td>" . $row['Matricula'] . "</td>";
@@ -165,10 +194,10 @@
                                                     //     <input type="hidden" id="email" name="email" value="d.hernandezj@upam.edu.mx">
                                                     //     <button class="btn btn-sm btn-warning me-3" type="submit">Validar Documento</button>
                                                     // </form>
-
+                                                
                                                     // ';
-                                                     echo ' <a href="?c=ptc&a=validarDoc&id='.$row['Matricula'].'&id2='.$row['IdDocumento'],'" class="btn btn-sm btn-success me-0.3" id="openPdfButton">Validar</a>
-                                                    <a href="?c=ptc&a=descartarDoc&id='.$row['Matricula'].'&id2='.$row['IdDocumento'],'" class="btn btn-sm btn-danger me-0.3" id="openPdfButton">Anular</a>
+                                                    echo ' <a href="?c=ptc&a=validarDoc&id=' . $row['Matricula'] . '&id2=' . $row['IdDocumento'], '" class="btn btn-sm btn-success me-0.3" id="openPdfButton">Validar</a>
+                                                    <a href="?c=ptc&a=descartarDoc&id=' . $row['Matricula'] . '&id2=' . $row['IdDocumento'], '" class="btn btn-sm btn-danger me-0.3" id="openPdfButton">Anular</a>
                                                      ';
 
                                                     echo "</tr>";
@@ -312,32 +341,32 @@
     </script> -->
 
     <script>
-    $(document).ready(function() {
-        // Agregar un evento al botón "validarDocumento"
-        $("#validard").click(function() {
-            // Obtener la matrícula y el ID del documento
-            var matricula = $("#matricula").val();
-            var idDoc = $("#idDoc").val();
-            var email = $("#email").val();
+        $(document).ready(function () {
+            // Agregar un evento al botón "validarDocumento"
+            $("#validard").click(function () {
+                // Obtener la matrícula y el ID del documento
+                var matricula = $("#matricula").val();
+                var idDoc = $("#idDoc").val();
+                var email = $("#email").val();
 
-            // Crear la URL de la solicitud GET
-            var url = "index.php?c=ptc&a=validarDoc&id=" + matricula + "&id2=" + idDoc;
+                // Crear la URL de la solicitud GET
+                var url = "index.php?c=ptc&a=validarDoc&id=" + matricula + "&id2=" + idDoc;
 
-            // Realizar la solicitud AJAX GET
-            $.get(url, function(response) {
-                // Manejar la respuesta de la solicitud
-                console.log("Se modificó");
+                // Realizar la solicitud AJAX GET
+                $.get(url, function (response) {
+                    // Manejar la respuesta de la solicitud
+                    console.log("Se modificó");
 
-                // Mostrar una alerta de éxito
-                Swal.fire({
-                    title: 'Éxito',
-                    text: '¡Envío exitoso!',
-                    icon: 'success'
+                    // Mostrar una alerta de éxito
+                    Swal.fire({
+                        title: 'Éxito',
+                        text: '¡Envío exitoso!',
+                        icon: 'success'
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 
 
 
