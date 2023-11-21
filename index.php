@@ -11,6 +11,7 @@
 	require_once "controllers/Escolars.php";
 	require_once "controllers/Registro.php";
 	require_once "controllers/vinculacion.php";
+	require_once "controllers/Rcontraseña.php";
 
 	
 	//Mediante la url vamos a saber que controlador se usa

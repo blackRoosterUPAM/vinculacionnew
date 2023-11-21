@@ -152,59 +152,11 @@ License: For each use you must have a valid license purchased only from above li
 							<!--begin::Heading-->
 							<div class="text-center mb-11">
 								<!--begin::Title-->
-								<h1 class="text-dark fw-bolder mb-3">Sign In</h1>
+								<h1 class="text-dark fw-bolder mb-3">Iniciar sesión</h1>
 								<!--end::Title-->
-								<!--begin::Subtitle-->
-								<div class="text-gray-500 fw-semibold fs-6">Your Social Campaigns</div>
-								<!--end::Subtitle=-->
-							</div>
-							<!--begin::Heading-->
-							<!--begin::Login options-->
-							<div class="row g-3 mb-9">
-								<!--begin::Col-->
-								<div class="col-md-6">
-									<!--begin::Google link=-->
-									<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-
-										<img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-15px me-3" />Sign in with Google</a>
-
-									<!--end::Google link=-->
-
-								</div>
-
-								<!--end::Col-->
-
-								<!--begin::Col-->
-
-								<div class="col-md-6">
-
-									<!--begin::Google link=-->
-
-									<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-
-										<img alt="Logo" src="assets/media/svg/brand-logos/apple-black.svg" class="theme-light-show h-15px me-3" />
-
-										<img alt="Logo" src="assets/media/svg/brand-logos/apple-black-dark.svg" class="theme-dark-show h-15px me-3" />Sign in with Apple</a>
-
-									<!--end::Google link=-->
-
-								</div>
-
-								<!--end::Col-->
-
 							</div>
 
 							<!--end::Login options-->
-
-							<!--begin::Separator-->
-
-							<div class="separator separator-content my-14">
-
-								<span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
-
-							</div>
-
-							<!--end::Separator-->
 
 							<!--begin::Input group=-->
 
@@ -212,7 +164,7 @@ License: For each use you must have a valid license purchased only from above li
 
 								<!--begin::Email-->
 
-								<input type="text" placeholder="Email" name="correo"  class="form-control bg-transparent" />
+								<input type="text" placeholder="Email" name="correo" class="form-control bg-transparent" />
 
 								<!--end::Email-->
 
@@ -224,7 +176,7 @@ License: For each use you must have a valid license purchased only from above li
 
 								<!--begin::Password-->
 
-								<input type="password" placeholder="Password" name="contraseña"  class="form-control bg-transparent" />
+								<input type="password" placeholder="Password" name="contraseña" class="form-control bg-transparent" />
 
 								<!--end::Password-->
 
@@ -239,8 +191,9 @@ License: For each use you must have a valid license purchased only from above li
 								<div></div>
 
 								<!--begin::Link-->
-
-								<a href="../../demo30/dist/authentication/layouts/corporate/reset-password.html" class="link-primary">Forgot Password ?</a>
+								<div class="d-flex my-4">
+									<a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Has olvidado tu contraseña?</a>
+								</div>
 
 								<!--end::Link-->
 
@@ -256,33 +209,13 @@ License: For each use you must have a valid license purchased only from above li
 
 									<!--begin::Indicator label-->
 
-									<span class="indicator-label">Sign In</span>
+									<span class="indicator-label">Iniciar sesión</span>
 
 									<!--end::Indicator label-->
-
-									<!--begin::Indicator progress-->
-
-									<span class="indicator-progress">Please wait...
-
-										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-
-									<!--end::Indicator progress-->
 
 								</button>
 
 							</div>
-
-							<!--end::Submit button-->
-
-							<!--begin::Sign up-->
-
-							<div class="text-gray-500 text-center fw-semibold fs-6">Not a Member yet?
-
-								<a href="../../demo30/dist/authentication/layouts/corporate/sign-up.html" class="link-primary">Sign up</a>
-
-							</div>
-
-							<!--end::Sign up-->
 
 						</form>
 
@@ -293,164 +226,93 @@ License: For each use you must have a valid license purchased only from above li
 					<!--end::Wrapper-->
 
 				</div>
-
+				<script>
+					// Capturar el mensaje de la URL y mostrar un alert si está presente
+					var mensaje = '<?php echo isset($_GET["mensaje"]) ? $_GET["mensaje"] : "" ?>';
+					if (mensaje !== '') {
+						alert(mensaje);
+					}
+				</script>
 				<!--end::Form-->
-
-				<!--begin::Footer-->
-
-				<div class="w-lg-500px d-flex flex-stack px-10 mx-auto">
-
-					<!--begin::Languages-->
-
-					<div class="me-10">
-
-						<!--begin::Toggle-->
-
-						<button class="btn btn-flex btn-link btn-color-gray-700 btn-active-color-primary rotate fs-base" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="0px, 0px">
-
-							<img data-kt-element="current-lang-flag" class="w-20px h-20px rounded me-3" src="assets/media/flags/united-states.svg" alt="" />
-
-							<span data-kt-element="current-lang-name" class="me-1">English</span>
-
-							<span class="d-flex flex-center rotate-180">
-
-								<i class="ki-outline ki-down fs-5 text-muted m-0"></i>
-
-							</span>
-
-						</button>
-
-						<!--end::Toggle-->
-
-						<!--begin::Menu-->
-
-						<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-4 fs-7" data-kt-menu="true" id="kt_auth_lang_menu">
-
-							<!--begin::Menu item-->
-
-							<div class="menu-item px-3">
-
-								<a href="#" class="menu-link d-flex px-5" data-kt-lang="English">
-
-									<span class="symbol symbol-20px me-4">
-
-										<img data-kt-element="lang-flag" class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />
-
-									</span>
-
-									<span data-kt-element="lang-name">English</span>
-
-								</a>
-
+				<!--begin::Modal - Offer A Deal-->
+				<div class="modal fade" id="kt_modal_offer_a_deal" tabindex="-1" aria-hidden="true">
+					<!--begin::Modal dialog-->
+					<div class="modal-dialog modal-dialog-centered mw-1000px">
+						<!--begin::Modal content-->
+						<div class="modal-content">
+							<!--begin::Modal header-->
+							<div class="modal-header py-7 d-flex justify-content-between">
+								<!--begin::Modal title-->
+								<h2 style="margin-left:36%;">Recuperacion de contraseña</h2>
 							</div>
+							<!--begin::Modal header-->
+							<!--begin::Modal body-->
+							<div class="modal-body scroll-y m-5">
+								<!--begin::Stepper-->
+								<div class="stepper stepper-links d-flex flex-column" id="kt_modal_offer_a_deal_stepper">
+									<!--begin::Content-->
+									<div id="kt_account_settings_profile_details" class="collapse show">
+										<!--begin::Form-->
+										<form id="kt_account_profile_details_form" class="form" action="?c=rcontraseña&a=index" method="post" onsubmit="return validarCorreo()">
+											<!--begin::Card body-->
+											<div class="card-body border-top p-9">
+												<!--begin::Input group-->
+												<div class="row mb-6" style="margin-left:16%;">
+													<!--begin::Label-->
+													<label class="">Escribe tu correo electronico para obtener tu codigo para la restauranción de contraseña</label>
+													<!--end::Label-->
+													<!--begin::Col-->
+													<div class="col-lg-8">
+														<!--begin::Row-->
+														<div class="row" style="margin-top: 10%; margin-left:33%;">
+															<!--begin::Col-->
+															<div class="col-lg-6 fv-row">
+																<input type="text" id="correo" name="correo" class="form-control" style="width: 260px;" required />
+															</div>
+															<script>
+																function validarCorreo() {
+																	// Obtener el valor del correo electrónico
+																	var correo = document.getElementById("correo").value;
 
-							<!--end::Menu item-->
+																	// Expresión regular para validar un correo electrónico
+																	var expresionRegular = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-							<!--begin::Menu item-->
+																	// Validar el correo electrónico con la expresión regular
+																	if (!expresionRegular.test(correo)) {
+																		// Mostrar una alerta si el correo no es válido
+																		alert("Por favor, ingrese un correo electrónico válido.");
+																		return false; // Evitar que el formulario se envíe
+																	}
 
-							<div class="menu-item px-3">
-
-								<a href="#" class="menu-link d-flex px-5" data-kt-lang="Spanish">
-
-									<span class="symbol symbol-20px me-4">
-
-										<img data-kt-element="lang-flag" class="rounded-1" src="assets/media/flags/spain.svg" alt="" />
-
-									</span>
-
-									<span data-kt-element="lang-name">Spanish</span>
-
-								</a>
-
+																	return true; // Permitir que el formulario se envíe si el correo es válido
+																}
+															</script>
+															<!--end::Col-->
+														</div>
+														<!--end::Row-->
+													</div>
+													<!--end::Col-->
+												</div>
+												<!--end::Input group-->
+											</div>
+											<!--end::Card body-->
+											<!--begin::Actions-->
+											<div class="card-footer d-flex justify-content-end py-6 px-9">
+												<button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Siguiente...</button>
+											</div>
+											<!--end::Actions-->
+										</form>
+										<!--end::Form-->
+									</div>
+									<!--end::Content-->
+								</div>
+								<!--end::Stepper-->
 							</div>
-
-							<!--end::Menu item-->
-
-							<!--begin::Menu item-->
-
-							<div class="menu-item px-3">
-
-								<a href="#" class="menu-link d-flex px-5" data-kt-lang="German">
-
-									<span class="symbol symbol-20px me-4">
-
-										<img data-kt-element="lang-flag" class="rounded-1" src="assets/media/flags/germany.svg" alt="" />
-
-									</span>
-
-									<span data-kt-element="lang-name">German</span>
-
-								</a>
-
-							</div>
-
-							<!--end::Menu item-->
-
-							<!--begin::Menu item-->
-
-							<div class="menu-item px-3">
-
-								<a href="#" class="menu-link d-flex px-5" data-kt-lang="Japanese">
-
-									<span class="symbol symbol-20px me-4">
-
-										<img data-kt-element="lang-flag" class="rounded-1" src="assets/media/flags/japan.svg" alt="" />
-
-									</span>
-
-									<span data-kt-element="lang-name">Japanese</span>
-
-								</a>
-
-							</div>
-
-							<!--end::Menu item-->
-
-							<!--begin::Menu item-->
-
-							<div class="menu-item px-3">
-
-								<a href="#" class="menu-link d-flex px-5" data-kt-lang="French">
-
-									<span class="symbol symbol-20px me-4">
-
-										<img data-kt-element="lang-flag" class="rounded-1" src="assets/media/flags/france.svg" alt="" />
-
-									</span>
-
-									<span data-kt-element="lang-name">French</span>
-
-								</a>
-
-							</div>
-
-							<!--end::Menu item-->
-
+							<!--begin::Modal body-->
 						</div>
-
-						<!--end::Menu-->
-
 					</div>
-
-					<!--end::Languages-->
-
-					<!--begin::Links-->
-
-					<div class="d-flex fw-semibold text-primary fs-base gap-5">
-
-						<a href="../../demo30/dist/pages/team.html" target="_blank">Terms</a>
-
-						<a href="../../demo30/dist/pages/pricing/column.html" target="_blank">Plans</a>
-
-						<a href="../../demo30/dist/pages/contact.html" target="_blank">Contact Us</a>
-
-					</div>
-
-					<!--end::Links-->
-
 				</div>
-
-				<!--end::Footer-->
+				<!--end::Modal - Offer A Deal-->
 
 			</div>
 
