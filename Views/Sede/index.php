@@ -309,7 +309,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 								
 								var correo = "<?= $data["alumno"]["CorreoE"] ?>";
 								var sede = "<?= $sede["NombreSede"] ?>";
-								var alumno = "Brandon Cara de verga";
+								var alumno = "<?= $data["alumno"]["NombreA"]. " ".$data["alumno"]["ApellidoP"]. " ". $data["alumno"]["ApellidoM"]?>";
 								var respuestaSede = "descartado por su perfil";
 								var tipoCorreo = 'rechazado';
 								// Luego, enviar el correo y la matrícula a envio.php
@@ -364,6 +364,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 		$(document).ready(function() {
 			// Agregar un evento al formulario "generarCita" cuando se envíe
 			$("#generarCita").submit(function(event) {
+
 				event.preventDefault(); // Prevenir el envío normal del formulario
 				var form = document.querySelector("#generarCita");
 
@@ -378,11 +379,14 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 						// Manejar la respuesta de la primera solicitud aquí
 						console.log("Se modifico");
 
-						// Luego, enviar el formulario a "config/envio.php" después de obtener la respuesta
+						var formData = $("#generarCita").serialize();
+
+						console.log(formData);
+						// Luego, enviar el correo y la matrícula a envio.php
 						$.ajax({
 							type: "POST",
-							url: "config/envio.php",
-							data: $("#generarCita").serialize(), // Serializar los datos del formulario
+							url: "config/correoSede.php",
+							data: formData,
 							success: function(response) {
 								// Manejar la respuesta del servidor para el formulario aquí
 								const fechaInput = form.querySelector('[name="fecha"]');
@@ -451,8 +455,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 							<div data-kt-stepper-element="content">
 								<!--begin::Wrapper-->
 								<div class="w-100">
-									<input type="hidden" class="form-control form-control-solid ps-12" name="destinatario" value="<?php echo $data["alumno"]["CorreoE"]; ?>">
-
+								
 									<!--begin::Heading-->
 									<div class="pb-12">
 										<!--begin::Title-->
@@ -540,8 +543,28 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 									</div>
 									<!--end::Input group-->
 								</div>
-								<input type="hidden" name="sede" value="<?= $sede["NombreSede"]; ?>">
 							</div>
+							<!-- Datos que mandamos -->
+							<!--
+								Fecha y hora;
+								asunto;
+								mensaje;
+								Direccion;
+								Entrevistador;
+								numero de telefono;
+								var matricula = "";
+								var correo = "";
+								var sede = "";
+								var alumno = "Brandon Cara de verga";
+								var respuestaSede = "descartado por su perfil";
+								var tipoCorreo = 'cita';
+							-->
+							<input type="hidden" name="matricula" value="<?= $data["alumno"]["Matricula"]?>">
+							<input type="hidden" name="destinatario" value="<?= $data["alumno"]["CorreoE"]?>">
+							<input type="hidden" name="sede" value="<?=$sede['NombreSede']?>">
+							<input type="hidden" name="alumno" value="<?= $data["alumno"]["NombreA"]. " ".$data["alumno"]["ApellidoP"]. " ". $data["alumno"]["ApellidoM"]?>">
+							<input type="hidden" name="respuestaSede" value=" citado para una entrevista">
+							<input type="hidden" name="tipoCorreo" value="cita">
 							<div class="modal-footer">
 								<button type="button" id="cancelarCita" data-bs-dismiss="modal" class="btn btn-light me-3">Cancel</button>
 

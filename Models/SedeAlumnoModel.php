@@ -78,11 +78,12 @@ class SedeAlumno
     {
         //Agregar el id de la sede para que solo en esa busque
         $sql =
-            "SELECT a.*, ad.*, al.* , c.NombrePE as nombreCarrera
+        "SELECT a.*, ad.*, al.* , c.NombrePE as nombreCarrera, p.NombrePE
         FROM alumnosede AS a
         INNER JOIN alumnodocs AS ad ON a.Matricula = ad.Matricula
         INNER JOIN alumnos AS al ON a.Matricula = al.Matricula
         INNER JOIN carrera as c on al.Carrera = c.IdCarrera
+        INNER JOIN proceso as p on p.IdProceso = al.idProceso
         WHERE  a.Aceptado = 2 AND a.IdSede = $id";
         //1 Significa que esta pendiente por confirmar		
         $resultado = $this->db->query($sql);
