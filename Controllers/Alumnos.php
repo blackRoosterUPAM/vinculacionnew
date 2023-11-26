@@ -62,6 +62,7 @@ class AlumnoController
 		$proceso = $alumno["Proceso"];
 		$estatusAlumno = $alumno["Estatus"];
 		$procesoAlumno = $alumno["idProceso"];
+		$periodoAlumno = $alumno["idPeriodo"];
 
 		$cv_docs = $Alumno->get_alumnodocs($id_alumno);
 		if (!empty($cv_docs)) {

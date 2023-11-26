@@ -857,7 +857,7 @@ License: For each use you must have a valid license purchased only from above li
                         <input type="hidden" name="matricula" value="<?php echo $id_alumno; ?>">
                         <input type="hidden" name="idProceso" value="<?php echo $procesoAlumno; ?>">
                         <input type="hidden" name="idDocumento" value="1">
-                        <input type="hidden" name="idPeriodo" value="1">
+                        <input type="hidden" name="idPeriodo" value="<?php echo $periodoAlumno; ?>">
                         <!--begin::Input group-->
                         <div class="fv-row mb-8">
                             <!--begin::Label-->
@@ -918,7 +918,7 @@ License: For each use you must have a valid license purchased only from above li
                         <input type="hidden" name="matricula" value="<?php echo $id_alumno; ?>">
                         <input type="hidden" name="idProceso" value="<?php echo $procesoAlumno; ?>">
                         <input type="hidden" name="idDocumento" value="4">
-                        <input type="hidden" name="idPeriodo" value="1">
+                        <input type="hidden" name="idPeriodo" value="<?php echo $periodoAlumno; ?>">
                         <!--begin::Input group-->
                         <div class="fv-row mb-8">
                             <!--begin::Label-->
@@ -979,7 +979,7 @@ License: For each use you must have a valid license purchased only from above li
                         <input type="hidden" name="matricula" value="<?php echo $id_alumno; ?>">
                         <input type="hidden" name="idProceso" value="<?php echo $procesoAlumno; ?>">
                         <input type="hidden" name="idDocumento" value="5">
-                        <input type="hidden" name="idPeriodo" value="1">
+                        <input type="hidden" name="idPeriodo" value="<?php echo $periodoAlumno; ?>">
                         <!--begin::Input group-->
                         <div class="fv-row mb-8">
                             <!--begin::Label-->
@@ -1040,7 +1040,7 @@ License: For each use you must have a valid license purchased only from above li
                         <input type="hidden" name="matricula" value="<?php echo $id_alumno; ?>">
                         <input type="hidden" name="idProceso" value="<?php echo $procesoAlumno; ?>">
                         <input type="hidden" name="idDocumento" value="2">
-                        <input type="hidden" name="idPeriodo" value="1">
+                        <input type="hidden" name="idPeriodo" value="<?php echo $periodoAlumno; ?>">
                         <!--begin::Input group-->
                         <div class="fv-row mb-8">
                             <!--begin::Label-->
@@ -1101,7 +1101,7 @@ License: For each use you must have a valid license purchased only from above li
                         <input type="hidden" name="matricula" value="<?php echo $id_alumno; ?>">
                         <input type="hidden" name="idProceso" value="<?php echo $procesoAlumno; ?>">
                         <input type="hidden" name="idDocumento" value="3">
-                        <input type="hidden" name="idPeriodo" value="1">
+                        <input type="hidden" name="idPeriodo" value="<?php echo $periodoAlumno; ?>">
                         <!--begin::Input group-->
                         <div class="fv-row mb-8">
                             <!--begin::Label-->
