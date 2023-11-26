@@ -58,7 +58,7 @@ class AlumnoController
 		$apellidoM = $alumno["ApellidoM"];
 		$telefono = $alumno["Telefono"];
 		$correoE = $alumno["CorreoE"];
-		$carrera = $alumno["NombrePE"];
+		$carrera = $alumno["nombreCarrera"];
 		$proceso = $alumno["Proceso"];
 		$estatusAlumno = $alumno["Estatus"];
 		$procesoAlumno = $alumno["idProceso"];
@@ -74,7 +74,7 @@ class AlumnoController
 		}
 
 		//$data["docs"] = $Alumno->get_docsvinculacion($id_alumno);
-		$docs = $Alumno->get_docsvinculacion($id_alumno);
+		$docs = $Alumno->get_docsvinculacion($id_alumno, $periodoAlumno);
 
 		$procesos = $Alumno->get_procesos($id_alumno);
 		// Verifica si la variable de sesión 'contador' está definida

@@ -67,9 +67,9 @@ class Alumno
 	}
 
 
-	public function get_docsvinculacion($id)
+	public function get_docsvinculacion($id, $periodo)
 	{
-		$sql = "SELECT * FROM docalumnoperiodo as dap INNER JOIN documentacion as do ON dap.IdDocumento = do.IdDocumento WHERE Matricula = $id";
+		$sql = "SELECT * FROM docalumnoperiodo as dap INNER JOIN documentacion as do ON dap.IdDocumento = do.IdDocumento WHERE Matricula = $id AND idPeriodo = $periodo";
 
 		$resultado = $this->db->query($sql);
 		while ($row = $resultado->fetch_assoc()) {
