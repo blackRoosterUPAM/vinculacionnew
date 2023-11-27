@@ -28,9 +28,9 @@ class Vacantes
                   $sede = mysqli_fetch_array($query1);
                   $nombre_sede = $sede["NombreSede"];
 
-                  $query2 = mysqli_query($this->db, "SELECT NombrePE FROM carrera WHERE IdCarrera = $id_carrera");
+                  $query2 = mysqli_query($this->db, "SELECT nombreCarrera FROM carrera WHERE IdCarrera = $id_carrera");
                   $sede = mysqli_fetch_array($query2);
-                  $nombre_carrera = $sede["NombrePE"];
+                  $nombre_carrera = $sede["nombreCarrera"];
 
                   $query3 = mysqli_query($this->db, "SELECT NombrePE FROM proceso WHERE IdProceso = $id_proceso");
                   $sede = mysqli_fetch_array($query3);
@@ -140,7 +140,7 @@ class Vacantes
             $condicionesSql = implode(' OR ', $condiciones);
 
             // Realizar la consulta para obtener los datos de búsqueda con INNER JOIN
-            $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.NombrePE as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
+            $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.nombreCarrera as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
             FROM vacantes 
             INNER JOIN sede ON vacantes.IdSede = sede.IdSede
             INNER JOIN carrera ON vacantes.IdCarrera = carrera.IdCarrera
@@ -167,7 +167,7 @@ class Vacantes
             } else {
                   // Si no se encontraron resultados en la tabla vacantes, buscar en otras tablas
                   $querySede = mysqli_query($this->db, "SELECT * FROM sede WHERE NombreSede = '$datoBusqueda'");
-                  $queryCarrera = mysqli_query($this->db, "SELECT * FROM carrera WHERE NombrePE = '$datoBusqueda'");
+                  $queryCarrera = mysqli_query($this->db, "SELECT * FROM carrera WHERE nombreCarrera = '$datoBusqueda'");
                   $queryProceso = mysqli_query($this->db, "SELECT * FROM proceso WHERE NombrePE = '$datoBusqueda'");
                   $queryPeriodo = mysqli_query($this->db, "SELECT * FROM periodo WHERE Meses = '$datoBusqueda' OR Año = '$datoBusqueda'");
 
@@ -175,7 +175,7 @@ class Vacantes
                   if ($querySede && $querySede->num_rows > 0) {
                         $sede = mysqli_fetch_array($querySede);
                         $idsede = $sede["IdSede"];
-                        $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.NombrePE as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
+                        $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.nombreCarrera as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
                 FROM vacantes 
                 INNER JOIN sede ON vacantes.IdSede = sede.IdSede
                 INNER JOIN carrera ON vacantes.IdCarrera = carrera.IdCarrera
@@ -207,7 +207,7 @@ class Vacantes
                         if ($queryCarrera && $queryCarrera->num_rows > 0) {
                               $carrera = mysqli_fetch_array($queryCarrera);
                               $idCarrera = $carrera["IdCarrera"];
-                              $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.NombrePE as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
+                              $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.nombreCarrera as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
                         FROM vacantes 
                         INNER JOIN sede ON vacantes.IdSede = sede.IdSede
                         INNER JOIN carrera ON vacantes.IdCarrera = carrera.IdCarrera
@@ -239,7 +239,7 @@ class Vacantes
                               if ($queryProceso && $queryProceso->num_rows > 0) {
                                     $proceso = mysqli_fetch_array($queryProceso);
                                     $idproceso = $proceso["IdProceso"];
-                                    $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.NombrePE as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
+                                    $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.nombreCarrera as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
                         FROM vacantes 
                         INNER JOIN sede ON vacantes.IdSede = sede.IdSede
                         INNER JOIN carrera ON vacantes.IdCarrera = carrera.IdCarrera

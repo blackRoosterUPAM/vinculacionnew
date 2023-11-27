@@ -130,7 +130,7 @@ License: For each use you must have a valid license purchased only from above li
 										<ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
 											<!--begin::Nav item-->
 											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Listas</a>
+												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">Listas</a>
 											</li>
 											<!--end::Nav item-->
 											<!--begin::Nav item-->
@@ -152,7 +152,7 @@ License: For each use you must have a valid license purchased only from above li
 
 											<!--begin::Nav item-->
 											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index_">PTC</a>
+												<a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">PTC</a>
 											</li>
 											<!--end::Nav item-->
 
@@ -189,7 +189,7 @@ License: For each use you must have a valid license purchased only from above li
 										if (searchText !== '') {
 											// Realizar una solicitud AJAX al servidor para obtener los datos de los alumnos
 											$.ajax({
-												url: "index.php?c=alumno&a=mostrar_busqueda", // Reemplaza 'buscar_alumnos.php' con la ruta correcta a tu archivo PHP que realiza la búsqueda
+												url: "index.php?c=ptc&a=mostrar_busqueda", // Reemplaza 'buscar_alumnos.php' con la ruta correcta a tu archivo PHP que realiza la búsqueda
 												method: 'POST',
 												data: {
 													busqueda: searchText
@@ -239,11 +239,12 @@ License: For each use you must have a valid license purchased only from above li
 
 										<!--begin::Title-->
 										<div class="card-title">
-											<h3 class="m-0 text-gray-800">Listas de Alumnos</h3>
+											<h3 class="m-0 text-gray-800">Listas de Ptc</h3>
 										</div>
 										<!--end::Title-->
 										<div class="d-flex my-4">
-											<a href="#" class="btn btn-sm btn-primary me-3" id="exportarPDF">Exportar PDF</a>
+											<a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Agregar PTC</a>
+											<a href="#" class="btn btn-sm btn-primary me-3" id="exportarPDF">Exportar Excel</a>
 										</div>
 
 										<script>
@@ -251,7 +252,7 @@ License: For each use you must have a valid license purchased only from above li
 												var selectedCarrera = document.getElementById('carrera').value;
 												var name = "listas";
 												if (selectedCarrera) {
-													window.location.href = "?c=alumno&a=exportar&id=" + selectedCarrera;
+													window.location.href = "?c=ptc&a=exportar&id=" + encodeURIComponent(selectedCarrera);
 												} else {
 													alert('Por favor, seleccione una carrera antes de exportar.');
 												}
@@ -267,11 +268,9 @@ License: For each use you must have a valid license purchased only from above li
 												<table class="table align-middle table-row-bordered table-row-solid gy-4 gs-9">
 													<thead class="border-gray-200 fs-5 fw-semibold bg-lighten">
 														<tr>
-															<th class="min-w-175px ps-9">Matricula</th>
-															<th class="min-w-150px px-0">Nombre del Alumno</th>
-															<th class="min-w-350px">Telefono</th>
-															<th class="min-w-125px">Correo</th>
-															<th class="min-w-125px text-center">Carrera</th>
+															<th class="min-w-175px ps-9">Nombre del PTC</th>
+															<th class="min-w-150px px-0">Correo</th>
+															<th class="min-w-350px">Carrera</th>
 														</tr>
 													</thead>
 													<tbody id="alumnos" class="fs-6 fw-semibold text-gray-600">
@@ -288,7 +287,7 @@ License: For each use you must have a valid license purchased only from above li
 														if (selectedCarrera !== '') {
 															// Realizar una solicitud AJAX al servidor para obtener los datos de los alumnos
 															$.ajax({
-																url: "index.php?c=alumno&a=show_alumonos_carrera", // Reemplaza 'obtener_alumnos.php' con la ruta correcta a tu archivo PHP que obtiene los datos de los alumnos
+																url: "index.php?c=ptc&a=show_ptc_carrera", // Reemplaza 'obtener_alumnos.php' con la ruta correcta a tu archivo PHP que obtiene los datos de los alumnos
 																method: 'POST',
 																data: {
 																	carrera: selectedCarrera
@@ -332,7 +331,175 @@ License: For each use you must have a valid license purchased only from above li
 		</div>
 		<!--end::Page-->
 	</div>
+	<div class="modal fade" id="kt_modal_offer_a_deal" tabindex="-1" aria-hidden="true">
+		<!--begin::Modal dialog-->
+		<div class="modal-dialog modal-dialog-centered mw-1000px">
+			<!--begin::Modal content-->
+			<div class="modal-content">
+				<!--begin::Modal header-->
+				<div class="modal-header py-7 d-flex justify-content-between">
+					<!--begin::Modal title-->
+					<h2>Agrega un nuevo PTC</h2>
+					<!--end::Modal title-->
+					<!--begin::Close-->
+					<div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+						<i class="ki-outline ki-cross fs-1"></i>
+					</div>
+					<!--end::Close-->
+				</div>
+				<!--begin::Modal header-->
+				<!--begin::Modal body-->
+				<div class="modal-body scroll-y m-5">
+					<!--begin::Stepper-->
+					<div class="stepper stepper-links d-flex flex-column" id="kt_modal_offer_a_deal_stepper">
+						<!--begin::Content-->
+						<div id="kt_account_settings_profile_details" class="collapse show">
+							<!--begin::Form-->
+							<form id="kt_account_profile_details_form" class="form" action="?c=sedes&a=nueva_sede" method="post" enctype="multipart/form-data">
+								<!--begin::Card body-->
+								<div class="card-body border-top p-9">
+									<!--begin::Input group-->
+									<div class="row mb-6" style="margin-left:250px;">
+										<!--begin::Label-->
+										<label class="col-lg-4 col-form-label required fw-semibold fs-6">Identificador</label>
+										<!--end::Label-->
+										<!--begin::Col-->
+										<div class="col-lg-8">
+											<!--begin::Row-->
+											<div class="row">
+												<!--begin::Col-->
+												<div class="col-lg-6 fv-row">
+													<input type="text" name="matricula" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+												</div>
+												<!--end::Col-->
+											</div>
+											<!--end::Row-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Input group-->
 
+									<!--begin::Input group-->
+									<div class="row mb-6" style="margin-left:250px;">
+										<!--begin::Label-->
+										<label class="col-lg-4 col-form-label required fw-semibold fs-6">Nombre</label>
+										<!--end::Label-->
+										<!--begin::Col-->
+										<div class="col-lg-8">
+											<!--begin::Row-->
+											<div class="row">
+												<!--begin::Col-->
+												<div class="col-lg-6 fv-row">
+													<input type="text" name="nombre_sede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+												</div>
+												<!--end::Col-->
+											</div>
+											<!--end::Row-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Input group-->
+
+									<!--begin::Input group-->
+									<div class="row mb-6" style="margin-left:250px;">
+										<!--begin::Label-->
+										<label class="col-lg-4 col-form-label required fw-semibold fs-6">Apellido Parterno:</label>
+										<!--end::Label-->
+										<!--begin::Col-->
+										<div class="col-lg-8">
+											<!--begin::Row-->
+											<div class="row">
+												<!--begin::Col-->
+												<div class="col-lg-6 fv-row">
+													<input type="text" name="nombre_sede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+												</div>
+												<!--end::Col-->
+											</div>
+											<!--end::Row-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Input group-->
+
+									<!--begin::Input group-->
+									<div class="row mb-6" style="margin-left:250px;">
+										<!--begin::Label-->
+										<label class="col-lg-4 col-form-label required fw-semibold fs-6">Apellido Materno:</label>
+										<!--end::Label-->
+										<!--begin::Col-->
+										<div class="col-lg-8">
+											<!--begin::Row-->
+											<div class="row">
+												<!--begin::Col-->
+												<div class="col-lg-6 fv-row">
+													<input type="text" name="nombre_sede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+												</div>
+												<!--end::Col-->
+											</div>
+											<!--end::Row-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Input group-->
+
+									<!--begin::Input group-->
+									<div class="row mb-6" style="margin-left:250px;">
+										<!--begin::Label-->
+										<label class="col-lg-4 col-form-label required fw-semibold fs-6">Correo:</label>
+										<!--end::Label-->
+										<!--begin::Col-->
+										<div class="col-lg-8">
+											<!--begin::Row-->
+											<div class="row">
+												<!--begin::Col-->
+												<div class="col-lg-6 fv-row">
+													<input type="text" name="correo" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+												</div>
+												<!--end::Col-->
+											</div>
+											<!--end::Row-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Input group-->
+									
+									<div class="row mb-6" style="margin-left:250px;">
+										<label class="col-lg-4 col-form-label fw-semibold fs-6">
+											<span>Carrera:</span>
+										</label>
+										<!--begin::Col-->
+										<div class="col-lg-8 fv-row">
+											<select id="carrera" name="carrera" aria-label="Seleccione una Carrera" data-control="select2" data-placeholder="Seleccione una Carrera..." class="form-select form-select-solid form-select-lg">
+												<option value="">Seleccione una Carrera...</option>
+												<?php
+												foreach ($result as $row) {
+													echo "<option name="."carrera"." value=" . $row["IdCarrera"] . ">" . $row["nombreCarrera"] . "</option>";
+												}
+												?>
+											</select>
+										</div>
+										<!--end::Col-->
+									</div>
+
+
+								</div>
+								<!--end::Card body-->
+								<!--begin::Actions-->
+								<div class="card-footer d-flex justify-content-end py-6 px-9">
+									<button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Guardar</button>
+								</div>
+								<!--end::Actions-->
+							</form>
+							<!--end::Form-->
+						</div>
+						<!--end::Content-->
+					</div>
+					<!--end::Stepper-->
+				</div>
+				<!--begin::Modal body-->
+			</div>
+		</div>
+	</div>
 	<!--begin::Javascript-->
 	<script>
 		var hostUrl = "assets/";

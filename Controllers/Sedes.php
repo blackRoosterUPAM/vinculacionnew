@@ -152,15 +152,20 @@ class SedesController
         $nombre = $_POST["nombre"];
         $apellidop = $_POST["apellidop"];
         $apellidom = $_POST["apellidom"];
-        $logo = $_POST["logo"];
+
+        $logo = isset($_FILES["logo"]["tmp_name"]) ? $_FILES["logo"]["tmp_name"] : null;
+
+        // Obtiene el contenido binario de la imagen
+        $logoContenido = $logo ? file_get_contents($logo) : null;
 
         $sedes = new Sede();
-        $dato = $sedes->new_sede($matricula, $nombre_sede, $direccion, $correo, $telefono, $tiposede, $contraseña, $nombre, $apellidop, $apellidom, $logo);
+        $dato = $sedes->new_sede($matricula, $nombre_sede, $direccion, $correo, $telefono, $tiposede, $contraseña, $nombre, $apellidop, $apellidom, $logoContenido);
 
         $sedes = new Sede();
         $data = $sedes->get_sedes();
         require_once "Views/Vinculacion/sedes.php";
     }
+    
     public function edit_sede($id)
     {
         $sede = new Sede();

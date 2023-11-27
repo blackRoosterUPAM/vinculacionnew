@@ -207,7 +207,7 @@ License: For each use you must have a valid license purchased only from above li
 									<div class="row mb-6">
 
 										<label class="col-lg-4 col-form-label fw-semibold fs-6">
-											<span class="required">Carrera</span>
+											<span>Buscar por Carrera</span>
 										</label>
 										<!--begin::Col-->
 										<div class="col-lg-8 fv-row">
@@ -215,7 +215,7 @@ License: For each use you must have a valid license purchased only from above li
 												<option value="">Seleccione una Carrera...</option>
 												<?php
 												foreach ($result as $row) {
-													echo "<option value=" . $row["IdCarrera"] . ">" . $row["NombrePE"] . "</option>";
+													echo "<option value=" . $row["IdCarrera"] . ">" . $row["nombreCarrera"] . "</option>";
 												}
 												?>
 											</select>

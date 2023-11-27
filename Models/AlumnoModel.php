@@ -128,7 +128,7 @@ class Alumno
 		while ($row = $query->fetch_assoc()) {
 			$query2 = mysqli_query($this->db, "SELECT * FROM carrera WHERE IdCarrera = $idCarrera");
 			$carrera = mysqli_fetch_array($query2);
-			$nombre_carrera = $carrera["NombrePE"];
+			$nombre_carrera = $carrera["nombreCarrera"];
 			echo "<tr>";
 			echo "<td class=" . "ps-9" . ">" . $row["Matricula"] . "</td>";
 			echo "<td class=" . "ps-0" . ">" . $row["NombreA"] . " " . $row["ApellidoP"] . " " . $row["ApellidoM"] . "</td>";
@@ -147,7 +147,7 @@ class Alumno
 		$query = mysqli_query($this->db, 'SELECT * FROM alumnos WHERE Carrera = ' . $idCarrera . '');
 		$query2 = mysqli_query($this->db, "SELECT * FROM carrera WHERE IdCarrera = $idCarrera");
 		$carrera = mysqli_fetch_array($query2);
-		$nombre_carrera = $carrera["NombrePE"];
+		$nombre_carrera = $carrera["nombreCarrera"];
 
 		while ($row = $query->fetch_assoc()) {
 			$alumnos[] = array(
@@ -189,7 +189,7 @@ class Alumno
                 while ($row = $query->fetch_assoc()) {
                     $query2 = mysqli_query($this->db, "SELECT * FROM carrera WHERE IdCarrera = " . $row['Carrera']);
                     $carrera = mysqli_fetch_array($query2);
-                    $nombre_carrera = $carrera["NombrePE"];
+                    $nombre_carrera = $carrera["nombreCarrera"];
 
                     echo "<tr>";
                     echo "<td class='ps-9'>" . htmlentities($row["Matricula"]) . "</td>";
@@ -201,7 +201,7 @@ class Alumno
                 }
             } else {
                 // Si no se encontraron resultados, mostrar una alerta
-                $query3 = mysqli_query($this->db, "SELECT * FROM carrera WHERE NombrePE = '$datoBusqueda'");
+                $query3 = mysqli_query($this->db, "SELECT * FROM carrera WHERE nombreCarrera = '$datoBusqueda'");
                 $carrera = mysqli_fetch_array($query3);
                 $idCarrera = $carrera["IdCarrera"];
 
@@ -214,7 +214,7 @@ class Alumno
 						while ($row = $query->fetch_assoc()) {
 							$query2 = mysqli_query($this->db, "SELECT * FROM carrera WHERE IdCarrera = " . $row['Carrera']);
 							$carrera = mysqli_fetch_array($query2);
-							$nombre_carrera = $carrera["NombrePE"];
+							$nombre_carrera = $carrera["nombreCarrera"];
 		
 							echo "<tr>";
 							echo "<td class='ps-9'>" . htmlentities($row["Matricula"]) . "</td>";
