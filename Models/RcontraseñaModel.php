@@ -31,18 +31,17 @@ class Contraseña
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'b.rodriguezt@upam.edu.mx';
-            $mail->Password = 'ROD@2021';
+            $mail->Username = 'ctrlescolar.software@upamozoc.edu.mx';
+            $mail->Password = 'GallosNegros#2023';
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
             // Configuración del remitente y destinatario
-            $mail->setFrom('b.rodriguezt@upam.edu.mx', 'Brandon');
             $mail->addAddress($correo);
 
             // Contenido del correo
             $mail->isHTML(true);
-            $mail->Subject = 'Código de Recuperación de Contraseña';
+            $mail->Subject = "Codigo de Recuperacion de Contraseña";
             $mail->Body = "Su código de recuperación de contraseña es: $codigo";
 
             // Enviar el correo

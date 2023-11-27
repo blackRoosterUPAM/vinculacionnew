@@ -103,29 +103,89 @@ class Sede
 	}
 
 	public function obtenerSedes()
-      {
-            $vacantes = array();
+	{
+		$vacantes = array();
 
-            $query = "SELECT * FROM sede";
+		$query = "SELECT * FROM sede";
 
-            $result = mysqli_query($this->db, $query);
+		$result = mysqli_query($this->db, $query);
 
-            if ($result) {
-                  while ($row = mysqli_fetch_assoc($result)) {
-                        $vacantes[] = array(
-                              "Matricula" => $row["IdSede"],
-                              "Nombre sede" => $row["NombreSede"],
-                              "Dirección" => $row["Dirección"],
-                              "Correo" => $row["CorreoContacto"],
-                              "Telefono" => $row["Telefono"],
-                              "Tipo de sede" => $row["tiposede"]
-                        );
-                  }
-                  // Devolver vacantes como JSON
-                  return json_encode($vacantes);
-            } else {
-                  // Manejo de errores o mensaje de error
-                  return json_encode(array("error" => "Error al obtener las vacantes"));
-            }
-      }
+		if ($result) {
+			while ($row = mysqli_fetch_assoc($result)) {
+				$vacantes[] = array(
+					"Matricula" => $row["IdSede"],
+					"Nombre sede" => $row["NombreSede"],
+					"Dirección" => $row["Dirección"],
+					"Correo" => $row["CorreoContacto"],
+					"Telefono" => $row["Telefono"],
+					"Tipo de sede" => $row["tiposede"]
+				);
+			}
+			// Devolver vacantes como JSON
+			return json_encode($vacantes);
+		} else {
+			// Manejo de errores o mensaje de error
+			return json_encode(array("error" => "Error al obtener las vacantes"));
+		}
+	}
+
+	public function datos_busqueda($datoBusqueda)
+	{
+		// Convertir el dato de búsqueda a minúsculas
+		$datoBusqueda = strtolower($datoBusqueda);
+
+		// Dividir el dato de búsqueda en palabras clave
+		$palabrasClave = explode(' ', $datoBusqueda);
+		$condiciones = [];
+
+		// Crear condiciones para cada palabra clave
+		foreach ($palabrasClave as $palabra) {
+			$condiciones[] = "LOWER(CONCAT(IdSede,NombreSede, Dirección, CorreoContacto, Telefono, tiposede, Logo)) LIKE '%$palabra%'";
+		}
+
+		// Unir condiciones con operador OR
+		$condicionesSql = implode(' OR ', $condiciones);
+
+		// Realizar la consulta para obtener los datos de búsqueda
+		$query = mysqli_query($this->db, "SELECT * FROM sede WHERE $condicionesSql");
+
+		// Verificar si se encontraron resultados
+		if ($query) {
+			if ($query->num_rows > 0) {
+				while ($row = $query->fetch_assoc()) {
+					echo "<tr>";
+					echo "<td class='ps-9'>" . htmlentities($row["IdSede"]) . "</td>";
+					echo "<td class='ps-0'>" . htmlentities($row["NombreSede"]) . "</td>";
+					echo "<td style='margin-left: 10px;'>" . htmlentities($row["Dirección"]) . "</td>";
+					echo "<td style='margin-left: 10px;'>" . htmlentities($row["CorreoContacto"]) . "</td>";
+					echo "<td style='margin-left: 10px;'>" . htmlentities($row["Telefono"]) . "</td>";
+					echo "<td style='margin-left: 10px;'>" . htmlentities($row["tiposede"]) . "</td>";
+					// Verificamos si se obtuvo un logo desde la base de datos
+					echo "<td class='ps-9'>";
+					if (!empty($row["Logo"])) {
+						// Mostramos la imagen directamente desde la base de datos
+						$imageSrc = "data:image/jpeg;base64," . base64_encode($row["Logo"]);
+						echo "<img src='{$imageSrc}' alt='Logo de la sede' style='max-width: 100px; max-height: 100px;' type='image/jpeg'>";
+						echo "<script>console.log('Ruta de la imagen:', '{$imageSrc}');</script>";
+					} else {
+						// Si no hay un logo, mostramos un mensaje o un marcador de posición
+						echo "Sin logo";
+						echo "<script>console.log('Sin imagen');</script>";
+					}
+					echo "</td>";
+					echo "<td style='margin-left: 10px;'><a href='index.php?c=sedes&a=edit_sede&id=" . $row["IdSede"] . "'>Editar Sede</a></td>";
+					echo "</tr>";
+
+					// Imprimimos información sobre la imagen directamente
+					echo "<script>console.log('Datos binarios de la imagen:', '" . base64_encode($row["Logo"]) . "');</script>";
+				}
+			} else {
+				// Si no se encontraron resultados, mostrar una alerta
+				echo "<script>alert('Sin datos');</script>";
+			}
+		} else {
+			// Si hubo un problema con la consulta, mostrar una alerta
+			echo "<script>alert('Hubo un problema con la búsqueda');</script>";
+		}
+	}
 }

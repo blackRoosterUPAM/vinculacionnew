@@ -60,5 +60,26 @@ class VacantesController
         $result = $carrera->get_carreras();
         require_once "views/Vinculacion/vacantes.php";
     }
+
+    public function mostrar_busqueda()
+	{
+		// Obtener el dato de búsqueda desde la solicitud POST
+		$datoBusqueda = $_POST['busqueda'];
+
+		// Validar si se ingresó un dato de búsqueda
+		if (!empty($datoBusqueda)) {
+			// Crear una instancia del modelo de búsqueda
+			$modeloBusqueda = new Vacantes();
+
+			// Llamar a la función en el modelo para realizar la búsqueda
+			$resultados = $modeloBusqueda->datos_busqueda($datoBusqueda);
+
+			// Mostrar los resultados (puedes implementar tu propia lógica para mostrar los resultados en la vista)
+			echo json_encode($resultados);
+		} else {
+			// Manejar el caso en el que no se proporcionó un dato de búsqueda
+			echo json_encode(["error" => "Por favor, ingresa un dato de búsqueda válido."]);
+		}
+	}
     
 }

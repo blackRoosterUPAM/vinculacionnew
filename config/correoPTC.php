@@ -16,12 +16,12 @@ $mail = new PHPMailer(true);
             $mail->Port = 587;
             $mail->SMTPSecure = 'tls';
             $mail->SMTPAuth = true;
-            $mail->Username = 'l.guadalupea@upam.edu.mx';
-            $mail->Password = 'LuisAntonio';
+            $mail->Username = 'ctrlescolar.software@upamozoc.edu.mx';
+            $mail->Password = 'GallosNegros#2023';
 
-            $mail->setFrom('l.guadalupea@upam.edu.mx', ' VALIDACION DE DOCUMENTACION ');
+            $mail->setFrom('ctrlescolar.software@upamozoc.edu.mx', ' VALIDACION DE DOCUMENTACION ');
             $mail->addAddress($correoDestinatario);
-            $mail->addReplyTo('l.guadalupea@upam.edu.mx', 'CARACTER URGENTE'); // Ajusta tu nombre y correo electrónico
+            $mail->addReplyTo('ctrlescolar.software@upamozoc.edu.mx', 'CARACTER URGENTE'); // Ajusta tu nombre y correo electrónico
             $mail->Subject = 'Documento invalido';
             $mail->Body = 'Hola que tal, adjunto este correo para informarte que el documento ' .$tipoD. ' no es valido, para resolver tus dudas, acude con tu PTC';
             $mail->CharSet = 'UTF-8';  // Configurar la codificación

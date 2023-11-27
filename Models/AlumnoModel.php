@@ -162,4 +162,80 @@ class Alumno
 		// Return alumnos as JSON
 		return json_encode($alumnos);
 	}
+
+	public function datos_busqueda($datoBusqueda)
+    {
+        // Convertir el dato de búsqueda a minúsculas
+        $datoBusqueda = strtolower($datoBusqueda);
+
+        // Dividir el dato de búsqueda en palabras clave
+        $palabrasClave = explode(' ', $datoBusqueda);
+        $condiciones = [];
+
+        // Crear condiciones para cada palabra clave
+        foreach ($palabrasClave as $palabra) {
+            $condiciones[] = "LOWER(CONCAT(Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, Estatus, Proceso, idProceso)) LIKE '%$palabra%'";
+        }
+
+        // Unir condiciones con operador OR
+        $condicionesSql = implode(' OR ', $condiciones);
+
+        // Realizar la consulta para obtener los datos de búsqueda
+        $query = mysqli_query($this->db, "SELECT * FROM alumnos WHERE $condicionesSql");
+
+        // Verificar si se encontraron resultados
+        if ($query) {
+            if ($query->num_rows > 0) {
+                while ($row = $query->fetch_assoc()) {
+                    $query2 = mysqli_query($this->db, "SELECT * FROM carrera WHERE IdCarrera = " . $row['Carrera']);
+                    $carrera = mysqli_fetch_array($query2);
+                    $nombre_carrera = $carrera["NombrePE"];
+
+                    echo "<tr>";
+                    echo "<td class='ps-9'>" . htmlentities($row["Matricula"]) . "</td>";
+                    echo "<td class='ps-0'>" . htmlentities($row["NombreA"] . " " . $row["ApellidoP"] . " " . $row["ApellidoM"]) . "</td>";
+                    echo "<td style='margin-left: 10px;'>" . htmlentities($row["Telefono"]) . "</td>";
+                    echo "<td style='margin-left: 10px;'>" . htmlentities($row["CorreoE"]) . "</td>";
+                    echo "<td style='margin-left: 10px;'>" . htmlentities($nombre_carrera) . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                // Si no se encontraron resultados, mostrar una alerta
+                $query3 = mysqli_query($this->db, "SELECT * FROM carrera WHERE NombrePE = '$datoBusqueda'");
+                $carrera = mysqli_fetch_array($query3);
+                $idCarrera = $carrera["IdCarrera"];
+
+				// Realizar la consulta para obtener los datos de búsqueda
+				$query = mysqli_query($this->db, "SELECT * FROM alumnos WHERE Carrera = $idCarrera");
+
+				// Verificar si se encontraron resultados
+				if ($query) {
+					if ($query->num_rows > 0) {
+						while ($row = $query->fetch_assoc()) {
+							$query2 = mysqli_query($this->db, "SELECT * FROM carrera WHERE IdCarrera = " . $row['Carrera']);
+							$carrera = mysqli_fetch_array($query2);
+							$nombre_carrera = $carrera["NombrePE"];
+		
+							echo "<tr>";
+							echo "<td class='ps-9'>" . htmlentities($row["Matricula"]) . "</td>";
+							echo "<td class='ps-0'>" . htmlentities($row["NombreA"] . " " . $row["ApellidoP"] . " " . $row["ApellidoM"]) . "</td>";
+							echo "<td style='margin-left: 10px;'>" . htmlentities($row["Telefono"]) . "</td>";
+							echo "<td style='margin-left: 10px;'>" . htmlentities($row["CorreoE"]) . "</td>";
+							echo "<td style='margin-left: 10px;'>" . htmlentities($nombre_carrera) . "</td>";
+							echo "</tr>";
+						}
+					} else {
+						// Si no se encontraron resultados, mostrar una alerta
+						echo "<script>alert('Sin datos');</script>";
+					}
+				} else {
+					// Si hubo un problema con la consulta, mostrar una alerta
+					echo "<script>alert('Hubo un problema con la búsqueda');</script>";
+				}
+            }
+        } else {
+            // Si hubo un problema con la consulta, mostrar una alerta
+            echo "<script>alert('Hubo un problema con la búsqueda');</script>";
+        }
+    }
 }

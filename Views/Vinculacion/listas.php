@@ -163,6 +163,47 @@ License: For each use you must have a valid license purchased only from above li
 								<div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
 									<!--begin::Input group-->
 									<div class="row mb-6">
+										<div class="d-flex my-4">
+											<label class="col-lg-4 col-form-label fw-semibold fs-6">
+												<span>Buscar:</span>
+											</label>
+											<input type="text" id="busqueda" name="busqueda" class="form-control bg-transparent" required style="width: 70%; margin-left: -18%;">
+											<button type="button" id="buscarDatos" class="btn btn-sm btn-primary me-3" style="margin-left: 2%;">Buscar</button>
+										</div>
+									</div>
+								</div>
+
+								<script>
+									// Cuando se hace clic en el botón "Buscar", hacer una solicitud AJAX para obtener los datos de los alumnos
+									$('#buscarDatos').click(function() {
+										var searchText = $('#busqueda').val();
+
+										// Verificar si se ha ingresado un texto de búsqueda
+										if (searchText !== '') {
+											// Realizar una solicitud AJAX al servidor para obtener los datos de los alumnos
+											$.ajax({
+												url: "index.php?c=alumno&a=mostrar_busqueda", // Reemplaza 'buscar_alumnos.php' con la ruta correcta a tu archivo PHP que realiza la búsqueda
+												method: 'POST',
+												data: {
+													busqueda: searchText
+												},
+												success: function(response) {
+													// Rellenar la tabla de alumnos con los datos recibidos
+													$('#alumnos').html(response);
+												},
+												error: function(xhr, status, error) {
+													console.error(error);
+												}
+											});
+										} else {
+											alert("Por favor, ingresa un texto de búsqueda antes de buscar.");
+										}
+									});
+								</script>
+
+								<div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+									<!--begin::Input group-->
+									<div class="row mb-6">
 										<label class="col-lg-4 col-form-label fw-semibold fs-6">
 											<span class="required">Carrera</span>
 										</label>

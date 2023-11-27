@@ -121,4 +121,192 @@ class Vacantes
                   return json_encode(array("error" => "Error al obtener las vacantes"));
             }
       }
+
+      public function datos_busqueda($datoBusqueda)
+      {
+            // Convertir el dato de búsqueda a minúsculas
+            $datoBusqueda = strtolower($datoBusqueda);
+
+            // Dividir el dato de búsqueda en palabras clave
+            $palabrasClave = explode(' ', $datoBusqueda);
+            $condiciones = [];
+
+            // Crear condiciones para cada palabra clave
+            foreach ($palabrasClave as $palabra) {
+                  $condiciones[] = "LOWER(CONCAT(Perfil, Beneficios, NumVacantes, NumPostulados, totalVacantes, Meses, Año)) LIKE '%$palabra%'";
+            }
+
+            // Unir condiciones con operador OR
+            $condicionesSql = implode(' OR ', $condiciones);
+
+            // Realizar la consulta para obtener los datos de búsqueda con INNER JOIN
+            $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.NombrePE as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
+            FROM vacantes 
+            INNER JOIN sede ON vacantes.IdSede = sede.IdSede
+            INNER JOIN carrera ON vacantes.IdCarrera = carrera.IdCarrera
+            INNER JOIN proceso ON vacantes.IdProceso = proceso.IdProceso
+            INNER JOIN periodo ON vacantes.IdPeriodo = periodo.IdPeriodo
+            WHERE $condicionesSql");
+
+            // Verificar si se encontraron resultados en la tabla vacantes
+            if ($query && $query->num_rows > 0) {
+                  while ($row = $query->fetch_assoc()) {
+                        echo "<tr>";
+
+                        // Resto de las celdas de la fila
+                        echo "<td class='ps-9'>" . htmlentities($row["NombreSede"]) . "</td>";
+                        echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreCarrera"]) . "</td>";
+                        echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreProceso"]) . "</td>";
+                        echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["Año"]) . "</td>";
+                        echo "<td style='margin-left: 10px;'>" . htmlentities($row["Perfil"]) . "</td>";
+                        echo "<td style='margin-left: 10px;'>" . htmlentities($row["Beneficios"]) . "</td>";
+                        echo "<td style='margin-left: 10px;'>" . htmlentities($row["NumVacantes"]) . "</td>";
+
+                        echo "</tr>";
+                  }
+            } else {
+                  // Si no se encontraron resultados en la tabla vacantes, buscar en otras tablas
+                  $querySede = mysqli_query($this->db, "SELECT * FROM sede WHERE NombreSede = '$datoBusqueda'");
+                  $queryCarrera = mysqli_query($this->db, "SELECT * FROM carrera WHERE NombrePE = '$datoBusqueda'");
+                  $queryProceso = mysqli_query($this->db, "SELECT * FROM proceso WHERE NombrePE = '$datoBusqueda'");
+                  $queryPeriodo = mysqli_query($this->db, "SELECT * FROM periodo WHERE Meses = '$datoBusqueda' OR Año = '$datoBusqueda'");
+
+                  // Verificar resultados en la tabla sede
+                  if ($querySede && $querySede->num_rows > 0) {
+                        $sede = mysqli_fetch_array($querySede);
+                        $idsede = $sede["IdSede"];
+                        $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.NombrePE as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
+                FROM vacantes 
+                INNER JOIN sede ON vacantes.IdSede = sede.IdSede
+                INNER JOIN carrera ON vacantes.IdCarrera = carrera.IdCarrera
+                INNER JOIN proceso ON vacantes.IdProceso = proceso.IdProceso
+                INNER JOIN periodo ON vacantes.IdPeriodo = periodo.IdPeriodo
+                WHERE vacantes.IdSede = $idsede");
+
+                        // Verificar si se encontraron resultados en la tabla vacantes
+                        if ($query && $query->num_rows > 0) {
+                              while ($row = $query->fetch_assoc()) {
+                                    echo "<tr>";
+
+                                    // Resto de las celdas de la fila
+                                    echo "<td class='ps-9'>" . htmlentities($row["NombreSede"]) . "</td>";
+                                    echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreCarrera"]) . "</td>";
+                                    echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreProceso"]) . "</td>";
+                                    echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["Año"]) . "</td>";
+                                    echo "<td style='margin-left: 10px;'>" . htmlentities($row["Perfil"]) . "</td>";
+                                    echo "<td style='margin-left: 10px;'>" . htmlentities($row["Beneficios"]) . "</td>";
+                                    echo "<td style='margin-left: 10px;'>" . htmlentities($row["NumVacantes"]) . "</td>";
+
+                                    echo "</tr>";
+                              }
+                        } else {
+                              echo "<script>alert('Dato no encontrado');</script>";
+                        }
+                  } else {
+                        // Verificar resultados en la tabla carrera
+                        if ($queryCarrera && $queryCarrera->num_rows > 0) {
+                              $carrera = mysqli_fetch_array($queryCarrera);
+                              $idCarrera = $carrera["IdCarrera"];
+                              $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.NombrePE as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
+                        FROM vacantes 
+                        INNER JOIN sede ON vacantes.IdSede = sede.IdSede
+                        INNER JOIN carrera ON vacantes.IdCarrera = carrera.IdCarrera
+                        INNER JOIN proceso ON vacantes.IdProceso = proceso.IdProceso
+                        INNER JOIN periodo ON vacantes.IdPeriodo = periodo.IdPeriodo
+                        WHERE vacantes.IdCarrera = $idCarrera");
+
+                              // Verificar si se encontraron resultados en la tabla vacantes
+                              if ($query && $query->num_rows > 0) {
+                                    while ($row = $query->fetch_assoc()) {
+                                          echo "<tr>";
+
+                                          // Resto de las celdas de la fila
+                                          echo "<td class='ps-9'>" . htmlentities($row["NombreSede"]) . "</td>";
+                                          echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreCarrera"]) . "</td>";
+                                          echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreProceso"]) . "</td>";
+                                          echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["Año"]) . "</td>";
+                                          echo "<td style='margin-left: 10px;'>" . htmlentities($row["Perfil"]) . "</td>";
+                                          echo "<td style='margin-left: 10px;'>" . htmlentities($row["Beneficios"]) . "</td>";
+                                          echo "<td style='margin-left: 10px;'>" . htmlentities($row["NumVacantes"]) . "</td>";
+
+                                          echo "</tr>";
+                                    }
+                              } else {
+                                    echo "<script>alert('Dato no encontrado');</script>";
+                              }
+                        } else {
+                              // Verificar resultados en la tabla proceso
+                              if ($queryProceso && $queryProceso->num_rows > 0) {
+                                    $proceso = mysqli_fetch_array($queryProceso);
+                                    $idproceso = $proceso["IdProceso"];
+                                    $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.NombrePE as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
+                        FROM vacantes 
+                        INNER JOIN sede ON vacantes.IdSede = sede.IdSede
+                        INNER JOIN carrera ON vacantes.IdCarrera = carrera.IdCarrera
+                        INNER JOIN proceso ON vacantes.IdProceso = proceso.IdProceso
+                        INNER JOIN periodo ON vacantes.IdPeriodo = periodo.IdPeriodo
+                        WHERE vacantes.IdProceso = $idproceso");
+
+                                    // Verificar si se encontraron resultados en la tabla vacantes
+                                    if ($query && $query->num_rows > 0) {
+                                          while ($row = $query->fetch_assoc()) {
+                                                echo "<tr>";
+
+                                                // Resto de las celdas de la fila
+                                                echo "<td class='ps-9'>" . htmlentities($row["NombreSede"]) . "</td>";
+                                                echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreCarrera"]) . "</td>";
+                                                echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreProceso"]) . "</td>";
+                                                echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["Año"]) . "</td>";
+                                                echo "<td style='margin-left: 10px;'>" . htmlentities($row["Perfil"]) . "</td>";
+                                                echo "<td style='margin-left: 10px;'>" . htmlentities($row["Beneficios"]) . "</td>";
+                                                echo "<td style='margin-left: 10px;'>" . htmlentities($row["NumVacantes"]) . "</td>";
+
+                                                echo "</tr>";
+                                          }
+                                    } else {
+                                          echo "<script>alert('Dato no encontrado');</script>";
+                                    }
+                              } else {
+                                    if ($queryPeriodo && $queryPeriodo->num_rows > 0) {
+                                          $periodo = mysqli_fetch_array($queryPeriodo);
+                                          $meses = $periodo["Meses"];
+                                          $ano = $periodo["Año"];
+
+                                          // Realizar la consulta para obtener los datos de búsqueda con INNER JOIN
+                                          $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.NombrePE as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
+                                              FROM vacantes 
+                                              INNER JOIN sede ON vacantes.IdSede = sede.IdSede
+                                              INNER JOIN carrera ON vacantes.IdCarrera = carrera.IdCarrera
+                                              INNER JOIN proceso ON vacantes.IdProceso = proceso.IdProceso
+                                              INNER JOIN periodo ON vacantes.IdPeriodo = periodo.IdPeriodo
+                                              WHERE periodo.Meses = '$meses' AND periodo.Año = '$ano'");
+
+                                          // Verificar si se encontraron resultados en la tabla vacantes
+                                          if ($query && $query->num_rows > 0) {
+                                                while ($row = $query->fetch_assoc()) {
+                                                      echo "<tr>";
+
+                                                      // Resto de las celdas de la fila
+                                                      echo "<td class='ps-9'>" . htmlentities($row["NombreSede"]) . "</td>";
+                                                      echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreCarrera"]) . "</td>";
+                                                      echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreProceso"]) . "</td>";
+                                                      echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["Año"]) . "</td>";
+                                                      echo "<td style='margin-left: 10px;'>" . htmlentities($row["Perfil"]) . "</td>";
+                                                      echo "<td style='margin-left: 10px;'>" . htmlentities($row["Beneficios"]) . "</td>";
+                                                      echo "<td style='margin-left: 10px;'>" . htmlentities($row["NumVacantes"]) . "</td>";
+
+                                                      echo "</tr>";
+                                                }
+                                          } else {
+                                                echo "<script>alert('Dato no encontrado');</script>";
+                                          }
+                                    } else {
+                                          // Si no se encontraron resultados en ninguna tabla, mostrar una alerta
+                                          echo "<script>alert('No se encontraron resultados en ninguna tabla');</script>";
+                                    }
+                              }
+                        }
+                  }
+            }
+      }
 }
