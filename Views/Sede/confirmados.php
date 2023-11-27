@@ -81,7 +81,7 @@
 									<!--begin::Title-->
 									<h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Listado General
 										<!--begin::Description-->
-										<span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Alumnos Pendientes</span>
+										<span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Alumnos Aceptados</span>
 										<!--end::Description-->
 									</h1>
 									<!--end::Title-->
@@ -110,10 +110,10 @@
 										<!--begin::Card title-->
 										<div class="card-title">
 											<!--begin::Search-->
-											<div class="d-flex align-items-center position-relative my-1">
+											<!-- <div class="d-flex align-items-center position-relative my-1">
 												<i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i>
 												<input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Busqueda especifica" />
-											</div>
+											</div> -->
 											<!--end::Search-->
 										</div>
 										<!--begin::Card title-->
@@ -138,9 +138,9 @@
 											<table class="table-responsive table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
 												<thead class="bg-primary">
 													<tr  class=" text-start text-gray-400 fw-bold fs-7  gs-0">
-														<th class="textoTabla min-w-25px">Matricula</th>
+														<th class="textoTabla min-w-25px">Matrícula</th>
 														<th class="textoTabla min-w-50px">Nombre</th>
-														<th class="textoTabla min-w-50px">Telefono</th>
+														<th class="textoTabla min-w-50px">Teléfono</th>
 														<th class="textoTabla min-w-50px">Email</th>
 														<th class="textoTabla min-w-50px">Carrera</th>
 														<th class="textoTabla min-w-50px">Modalidad</th>

@@ -137,9 +137,9 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 											<table class="table-responsive table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
 												<thead class="bg-primary">
 													<tr class="text-start text-gray-400 fw-bold fs-7  gs-0">
-														<th class="textoTabla min-w-25px">Matricula</th>
+														<th class="textoTabla min-w-25px">Matrícula</th>
 														<th class="textoTabla min-w-50px">Nombre</th>
-														<th class="textoTabla min-w-50px">Telefono</th>
+														<th class="textoTabla min-w-50px">Teléfono</th>
 														<th class="textoTabla min-w-50px">Email</th>
 														<th class="textoTabla min-w-50px">Carrera</th>
 														<th class="textoTabla min-w-50px">Modalidad</th>
@@ -197,6 +197,8 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 																								<input type="hidden" name="respuestaSede" value="aceptado para ser parte del equipo">
 																								<input type="hidden" id="matricula" name="matricula" value="<?= $row["Matricula"] ?>">
 																								<input type="hidden" id="sede" name="sede" value="<?= $sede["NombreSede"] ?>">
+																								<input type="hidden" id="sede" name="correoSede" value="<?= $sede["CorreoContacto"] ?>">
+																								<input type="hidden" id="tsede" name="telefonoSede" value="<?= $sede["Telefono"] ?>">
 																								<input type="hidden" id="destinatario" name="destinatario" value="<?= $row["CorreoE"] ?>">
 																								<input type="hidden" name="alumno" value="<?= $row["NombreA"] . " " . $row["ApellidoP"] . " " . $row["ApellidoM"] ?>">
 																								<input type="hidden" id="tipoCorreo" name="tipoCorreo" value="aceptado">
@@ -228,6 +230,8 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 																								<input type="hidden" name="respuestaSede" value="descartado">
 																								<input type="hidden" id="matricula" name="matricula" value="<?= $row["Matricula"] ?>">
 																								<input type="hidden" id="sede" name="sede" value="<?= $sede["NombreSede"] ?>">
+																								<input type="hidden" id="sede" name="correoSede" value="<?= $sede["CorreoContacto"] ?>">
+																								<input type="hidden" id="sede" name="telefonoSede" value="<?= $sede["Telefono"] ?>">
 																								<input type="hidden" id="destinatario" name="destinatario" value="<?= $row["CorreoE"] ?>">
 																								<input type="hidden" name="alumno" value="<?= $row["NombreA"] . " " . $row["ApellidoP"] . " " . $row["ApellidoM"] ?>">
 																								<input type="hidden" id="tipoCorreo" name="tipoCorreo" value="rechazado">
@@ -304,115 +308,135 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- Este script manda correo de confirmación al alumno cunado una sede lo acpeta para formar parte de ella. -->
 	<script>
+		//Se prepara para que carque cuando se inicie la página.
 		$(document).ready(function() {
+			//Para le id aceptar alumno con jquery preparamos una funcion cuando suceda el evento de click.
 			$('#aceptarAlumno').click(function() {
-				var matricula = $('#matricula').val(); // Reemplaza '12345' con la matrícula que deseas enviar
-
+				//Recuperamos datos que necesitamos para el envio del correo.
+				var matricula = $('#matricula').val();
 				var formData = $("#aceptarForm").serialize();
-
-				console.log(matricula);
+				// Ahora, realiza la primera solicitud AJAX
+				console.log(formData); //mostarmos datos que se mandan del formulario
 				$.ajax({
 					type: 'POST',
-					url: '?c=sedes&a=aceptar', // Reemplaza 'primera_solicitud.php' con la URL de la primera solicitud
-					data: {
-						matricula: matricula
-					},
-					success: function(response) {
-						// La primera solicitud AJAX fue exitosa
-						console.log('Respuesta del servidor (Primera solicitud): ' + response);
-						// Realiza acciones adicionales aquí después de una respuesta exitosa
-						// Ahora, realiza la segunda solicitud AJAX
-						console.log(formData);
+					url: 'config/correoSede.php', // Reemplaza 'segunda_solicitud.php' con la URL de la segunda solicitud
+					data: formData,
+					success: function(secondResponse) {
+						// La segunda solicitud AJAX fue exitosa
+						console.log('Entro al succes de la primera');
+						//Hacemos la seunda peticion.
+						console.log(matricula);
 						$.ajax({
 							type: 'POST',
-							url: 'config/correoSede.php', // Reemplaza 'segunda_solicitud.php' con la URL de la segunda solicitud
-							data: formData,
-							success: function(secondResponse) {
-								// La segunda solicitud AJAX fue exitosa
-								console.log('Respuesta del servidor (Segunda solicitud): ' + secondResponse);
-
-								// Muestra una alerta después de la segunda solicitud
+							url: '?c=sedes&a=aceptar', // Reemplaza 'primera_solicitud.php' con la URL de la primera solicitud
+							data: {
+								matricula: matricula
+							},
+							success: function(response) {
 								Swal.fire({
-									icon: 'success',
-									title: 'Solicitud completada con éxito',
+									title: 'Éxito',
+									text: '¡Envío exitoso!',
+									icon: 'success'
 								}).then((result) => {
 									// Recargar la página
 									if (result.isConfirmed) {
 										location.href = "index.php?c=sedes&a=pendientes";
 									}
 								});
-
-								// Realiza acciones adicionales después de la segunda solicitud
 							},
 							error: function(xhr, status, error) {
-								// Ocurrió un error en la segunda solicitud AJAX
-								console.error('Error en la segunda solicitud: ' + error);
+								// Ocurrió un error en la primera solicitud AJAX
+								console.error('Error en la primera solicitud: ' + error);
 							}
 						});
 					},
 					error: function(xhr, status, error) {
-						// Ocurrió un error en la primera solicitud AJAX
-						console.error('Error en la primera solicitud: ' + error);
+						// Ocurrió un error en la segunda solicitud AJAX
+						console.error('Error en la segunda solicitud: ' + error);
+						console.log("Entro al error funcion");
+						// Manejar el error para el formulario aquí, por ejemplo, mostrar un mensaje de error
+						Swal.fire({
+							title: 'Error',
+							text: '¡Error al confirmar al alumno, intente más tarde!',
+							icon: 'error'
+						});
 					}
 				});
 			});
 		});
 	</script>
+
 
 	<!-- Descarta al alumno depues de su cita -->
 	<script>
 		$(document).ready(function() {
 			$('#descartarAlumno').click(function() {
-				var formData = $('#descartarForm').serialize(); // Serializa los datos del formulario
-				var matricula = $('#matricula').val(); // Reemplaza '12345' con la matrícula que deseas enviar
-				$.ajax({
-					type: 'POST',
-					url: '?c=sedes&a=descartarAlumno', // Reemplaza 'primera_solicitud.php' con la URL de la primera solicitud
-					data: {
-						matricula: matricula
-					},
-					success: function(response) {
-						// La primera solicitud AJAX fue exitosa
-						console.log('Respuesta del servidor (Primera solicitud): ' + response);
+				// Mostrar una alerta de SweetAlert para confirmar
+				Swal.fire({
+					title: '¿Estás seguro?',
+					text: '¿Deseas descartar al alumno?',
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Sí, descartar',
+					cancelButtonText: 'Cancelar'
+				}).then((result) => {
+					// Si el usuario confirma, proceder con la acción
+					if (result.isConfirmed) {
+						var formData = $('#descartarForm').serialize();
+						var matricula = $('#matricula').val();
+
 						console.log(formData);
-						// Realiza acciones adicionales aquí después de una respuesta exitosa
-						// Ahora, realiza la segunda solicitud AJAX
+
 						$.ajax({
 							type: 'POST',
-							url: 'config/correoSede.php', // Reemplaza 'segunda_solicitud.php' con la URL de la segunda solicitud
+							url: 'config/correoSede.php',
 							data: formData,
-
 							success: function(secondResponse) {
-								// La segunda solicitud AJAX fue exitosa
 								console.log('Respuesta del servidor (Segunda solicitud): ' + secondResponse);
 
-								// Muestra una alerta después de la segunda solicitud
-								Swal.fire({
-									title: 'Éxito',
-									text: '¡Envío exitoso!',
-									icon: 'success'
-								}).then((result) => {
-									// Recargar la página después de hacer clic en OK en la alerta
-									location.href = "index.php?c=sedes&a=pendientes";
+								$.ajax({
+									type: 'POST',
+									url: '?c=sedes&a=descartarAlumno',
+									data: {
+										matricula: matricula
+									},
+									success: function(response) {
+										Swal.fire({
+											title: 'Éxito',
+											text: '¡Envío exitoso!',
+											icon: 'success'
+										}).then((result) => {
+											location.href = "index.php?c=sedes&a=pendientes";
+										});
+									},
+									error: function(xhr, status, error) {
+										console.error('Error en la segunda solicitud: ' + error);
+									}
 								});
-
-								// Realiza acciones adicionales después de la segunda solicitud
 							},
 							error: function(xhr, status, error) {
-								// Ocurrió un error en la segunda solicitud AJAX
-								console.error('Error en la segunda solicitud: ' + error);
+								console.error('Error en la primera solicitud: ' + error);
+
+								Swal.fire({
+									title: 'Error',
+									text: '¡Error al enviar la solicitud!',
+									icon: 'error'
+								});
 							}
 						});
-					},
-					error: function(xhr, status, error) {
-						// Ocurrió un error en la primera solicitud AJAX
-						console.error('Error en la primera solicitud: ' + error);
+					} else {
+						// El usuario canceló la acción
+						console.log('Descarte de alumno cancelado por el usuario.');
 					}
 				});
 			});
 		});
 	</script>
+
 
 	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 	<script src="assets/plugins/global/plugins.bundle.js"></script>
@@ -422,8 +446,8 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 	<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
 	<!--end::Vendors Javascript-->
 	<!--begin::Custom Javascript(used for this page only)-->
-	<script src="assets/js/custom/apps/customers/list/list.js"></script>
-
+	<script src="assets/js/widgets.bundle.js"></script>
+	<script src="assets/js/custom/widgets.js"></script>
 
 	<!--end::Custom Javascript-->
 	<!--end::Javascript-->

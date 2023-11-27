@@ -83,8 +83,10 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 										<span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Alumnos Postulados</span>
 										<!--end::Description-->
 									</h1>
+									
 									<!--end::Title-->
 								</div>
+								<a style="float: right;" class="btn btn-info mb-2 rounded-circle"><?= $vacante["NumPostulados"] ?>/<?= $vacante["totalVacantes"] ?></a>
 								<!--end::Page title-->
 							</div>
 							<!--end::Toolbar wrapper=-->
@@ -133,13 +135,25 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 													<div class="d-flex flex-wrap justify-content-start align-items-center" style="margin-left: 5%; margin-top: -1%;">
 														<!-- Botón "Siguiente" para cargar el siguiente alumno -->
 														<a href="?c=sedes&a=index" class="btn btn-secondary mb-2 me-2">Siguiente</a>
+
+														<form id="descartarP">
+															<input type="hidden" name="matricula" value="<?= $data["alumno"]["Matricula"] ?>">
+															<input type="hidden" name="destinatario" value="<?= $data["alumno"]["CorreoE"] ?>">
+															<input type="hidden" name="sede" value="<?= $sede['NombreSede'] ?>">
+															<input type="hidden" name="alumno" value="<?= $data["alumno"]["NombreA"] . " " . $data["alumno"]["ApellidoP"] . " " . $data["alumno"]["ApellidoM"] ?>">
+															<input type="hidden" name="respuestaSede" value=" rechazado por su perfil">
+															<input type="hidden" name="tipoCorreo" value="rechazado">
+															<input type="hidden" id="correoSede" name="correoSede" value="<?= $sede["CorreoContacto"] ?>">
+															<input type="hidden" id="telefonoSede" name="telefonoSede" value="<?= $sede["Telefono"] ?>">
+															<button class="btn btn-danger mb-2 me-2">Descartar</button>
+
+														</form>
 														<!-- Botón "Descartar" -->
-														<button id="descartar" class="btn btn-danger mb-2 me-2">Descartar</button>
 														<!-- Botón "Generar Cita" -->
 														<button class="btn btn-primary mb-2 me-2" data-bs-toggle="modal" data-bs-target="#projectSettingsModal">Generar Cita</button>
 
 														<!-- Apartado que muestra los datos actuales del número de vacantes -->
-														<a class="btn btn-info mb-2 rounded-circle"><?= $vacante["NumPostulados"] ?>/<?= $vacante["totalVacantes"] ?></a>
+														<!-- <a class="btn btn-info mb-2 rounded-circle"><?= $vacante["NumPostulados"] ?>/<?= $vacante["totalVacantes"] ?></a> -->
 													</div>
 												</div>
 
@@ -274,81 +288,75 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 	<!-- Asegúrate de incluir SweetAlert2 antes de tu script -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+	<!-- Funcion cuando se descarta un alumno -->
+	<!-- Script de prueba -->
+	<!-- Script de prueba -->
 	<script>
 		$(document).ready(function() {
-			$("#descartar").click(function() {
-				console.log("Se hizo click en descartar");
+			// Agregar un evento al botón con id "prueba" cuando se haga clic
+			$("#descartarP").submit(function(event) {
+				event.preventDefault(); // Prevenir el envío normal del formulario
+				var formData = $(this).serialize();
+				console.log(formData);
+				console.log("se mando el formulario");
 				Swal.fire({
-					title: '¿Estás seguro de que deseas descartar?',
-					text: 'Esta acción no se puede deshacer.',
+					title: '¿Estás seguro?',
+					text: '¿Deseas descartar al alumno?',
 					icon: 'warning',
 					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
 					confirmButtonText: 'Sí, descartar',
 					cancelButtonText: 'Cancelar'
 				}).then((result) => {
+					// Si el usuario confirma, proceder con la acción
 					if (result.isConfirmed) {
-						// Realizar la solicitud AJAX si el usuario confirmó
-						console.log("<?= $data["alumno"]["Matricula"] ?>");
-						var matricula = <?= $data["alumno"]["Matricula"] ?>;
+						
+
+						console.log(formData);
+
 						$.ajax({
-							type: "POST",
-							url: "index.php?c=sedes&a=descartar",
-							data: {
-								matricula: matricula ,
-							},
-							success: function(response) {
-								console.log("se borro al pendejo");
-								// Manejar la respuesta de la primera solicitud aquí
-								//console.log(response);
-
-								
-								console.log("<?= $data["alumno"]["CorreoE"] ?>");
-								// Obtener para envio de correo 
-								var matricula = "<?= $data["alumno"]["Matricula"]?>";
-								
-								var correo = "<?= $data["alumno"]["CorreoE"] ?>";
-								var sede = "<?= $sede["NombreSede"] ?>";
-								var alumno = "<?= $data["alumno"]["NombreA"]. " ".$data["alumno"]["ApellidoP"]. " ". $data["alumno"]["ApellidoM"]?>";
-								var respuestaSede = "descartado por su perfil";
-								var tipoCorreo = 'rechazado';
-								// Luego, enviar el correo y la matrícula a envio.php
+							type: 'POST',
+							url: 'config/correoSede.php',
+							data: formData,
+							dataType: 'json',
+							success: function(secondResponse) {
+								console.log('Respuesta del servidor (Segunda solicitud): ' + secondResponse);
+								var matricula = <?=$data['alumno']['Matricula']?>;
 								$.ajax({
-									type: "POST",
-									url: "config/correoSede.php",
+									type: 'POST',
+									url: '?c=sedes&a=descartarAlumno',
 									data: {
-										destinatario: correo,
-										matricula: matricula,
-										sede: sede,
-										alumno: alumno,
-										respuestaSede: respuestaSede,
-										tipoCorreo: tipoCorreo,
+										matricula: matricula
 									},
-									success: function(response) {
-										// Manejar la respuesta del servidor para el correo y matrícula aquí
-										console.log(response);
 
-										// Mostrar una alerta SweetAlert2
+									success: function(response) {
 										Swal.fire({
 											title: 'Éxito',
 											text: '¡Envío exitoso!',
 											icon: 'success'
 										}).then((result) => {
-											// Recargar la página después de hacer clic en OK en la alerta
 											location.href = "index.php?c=sedes&a=index";
 										});
 									},
-									error: function() {
-										// Manejar el error para el correo y matrícula aquí, por ejemplo, mostrar un mensaje de error
-										console.log("Error al enviar el correo y la matrícula.");
+									error: function(xhr, status, error) {
+										console.error('Error en la segunda solicitud: ' + error);
 									}
 								});
 							},
-							error: function() {
-								// Manejar el error de la primera solicitud aquí, si es necesario
-								console.log("Error en la primera solicitud.");
+							error: function(xhr, status, error) {
+								console.error('Error en la primera solicitud: ' + error);
+
+								Swal.fire({
+									title: 'Error',
+									text: '¡Error al enviar la solicitud!',
+									icon: 'error'
+								});
 							}
 						});
+					} else {
+						// El usuario canceló la acción
+						console.log('Descarte de alumno cancelado por el usuario.');
 					}
 				});
 			});
@@ -356,18 +364,83 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 	</script>
 
 
-	
 
 
-	<!-- Script que manda correo de cita y modifica que esta por confirmar si es aceptado o nel -->
+
+	<!-- Script de prueba -->
 	<script>
+		$(document).ready(function() {
+			// Agregar un evento al botón con id "prueba" cuando se haga clic
+			$("#generarCita").submit(function(event) {
+				event.preventDefault(); // Prevenir el envío normal del formulario
+				var form = document.querySelector("#generarCita");
+				var formData = $("#generarCita").serialize();
+				$.ajax({
+					type: "POST",
+					url: "config/correoSede.php",
+					data: formData,
+					dataType: 'json', // Especificar el tipo de datos esperado en la respuesta
+					success: function(response) {
+						const fechaInput = form.querySelector('[name="fecha"]');
+						// Aplica el estilo para ocultar el campo
+						fechaInput.style.display = 'none';
+						console.log("Entro al success");
+						// Obtener el valor de la respuesta de la solicitud AJAX
+						var resultado = response.resultado;
+						console.log(resultado);
+						// Si el resultado es false, mostrar la alerta de error
+						// Realizar la solicitud AJAX si el usuario confirmó
+						console.log("<?= $data["alumno"]["Matricula"] ?>");
+						var matricula = <?= $data["alumno"]["Matricula"] ?>;
+						$.ajax({
+							type: "POST",
+							url: "index.php?c=sedes&a=pendiente",
+							data: {
+								matricula: matricula,
+							},
+							success: function(response) {
+								console.log("Se paso a pendie  nte el alumno");
+
+
+								Swal.fire({
+									title: 'Éxito',
+									text: '¡Envío exitoso!',
+									icon: 'success'
+								}).then((result) => {
+									// Recargar la página después de hacer clic en OK en la alerta
+									location.href = "index.php?c=sedes&a=index";
+								});
+
+							},
+							error: function() {
+								// Manejar el error de la primera solicitud aquí, si es necesario
+								console.log("Error en la primera solicitud.");
+
+							}
+						});
+					},
+					error: function() {
+						console.log("Entro al error funcion");
+						// Manejar el error para el formulario aquí, por ejemplo, mostrar un mensaje de error
+						Swal.fire({
+							title: 'Error',
+							text: '¡Error al enviar la solicitud!',
+							icon: 'error'
+						});
+					}
+				});
+			});
+		});
+	</script>
+	<!-- Script que manda correo de cita y modifica que esta por confirmar si es aceptado o nel -->
+	<!-- <script>
 		$(document).ready(function() {
 			// Agregar un evento al formulario "generarCita" cuando se envíe
 			$("#generarCita").submit(function(event) {
 
 				event.preventDefault(); // Prevenir el envío normal del formulario
-				var form = document.querySelector("#generarCita");
-
+				var form = document.querySelector("#generarCita");				
+				console.log(formData);
 				// Realizar la solicitud AJAX a "index.php?c=sedes&a=pendiente"
 				$.ajax({
 					type: "POST",
@@ -415,7 +488,9 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 				});
 			});
 		});
-	</script>
+	</script> -->
+
+	<!-- Script para la fecha -->
 	<script>
 		$(document).ready(function() {
 			var form = document.querySelector("#generarCita");
@@ -455,7 +530,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 							<div data-kt-stepper-element="content">
 								<!--begin::Wrapper-->
 								<div class="w-100">
-								
+
 									<!--begin::Heading-->
 									<div class="pb-12">
 										<!--begin::Title-->
@@ -559,12 +634,15 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 								var respuestaSede = "descartado por su perfil";
 								var tipoCorreo = 'cita';
 							-->
-							<input type="hidden" name="matricula" value="<?= $data["alumno"]["Matricula"]?>">
-							<input type="hidden" name="destinatario" value="<?= $data["alumno"]["CorreoE"]?>">
-							<input type="hidden" name="sede" value="<?=$sede['NombreSede']?>">
-							<input type="hidden" name="alumno" value="<?= $data["alumno"]["NombreA"]. " ".$data["alumno"]["ApellidoP"]. " ". $data["alumno"]["ApellidoM"]?>">
+							<input type="hidden" name="matricula" value="<?= $data["alumno"]["Matricula"] ?>">
+							<input type="hidden" name="destinatario" value="<?= $data["alumno"]["CorreoE"] ?>">
+							<input type="hidden" name="sede" value="<?= $sede['NombreSede'] ?>">
+							<input type="hidden" name="alumno" value="<?= $data["alumno"]["NombreA"] . " " . $data["alumno"]["ApellidoP"] . " " . $data["alumno"]["ApellidoM"] ?>">
 							<input type="hidden" name="respuestaSede" value=" citado para una entrevista">
 							<input type="hidden" name="tipoCorreo" value="cita">
+							<!-- Datos sede -->
+							<input type="hidden" id="sede" name="correoSede" value="<?= $sede["CorreoContacto"] ?>">
+							<input type="hidden" id="sede" name="telefonoSede" value="<?= $sede["Telefono"] ?>">
 							<div class="modal-footer">
 								<button type="button" id="cancelarCita" data-bs-dismiss="modal" class="btn btn-light me-3">Cancel</button>
 
