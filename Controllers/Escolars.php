@@ -9,6 +9,7 @@ class EscolarsController
         require_once "Models/CarreraModel.php";
         require_once "Models/ProcesoModel.php";
         require_once "Models/ImportarModel.php";
+        require_once "Models/PeriodoModel.php";
     }
 
     public function index()
@@ -21,6 +22,9 @@ class EscolarsController
 
         $proceso = new Proceso();
         $resultProcesos = $proceso->get_procesos();
+
+        $periodo = new Periodo();
+        $resultPeriodo = $periodo->get_periodos();
 
         include('views/escolares/carga.php');
     }
@@ -37,6 +41,8 @@ class EscolarsController
             echo "Error al cambiar el estado de los alumnos.";
         }
     }
+
+    //funcion que cambia el estado de inactivo de todos los alumnos
     public function statusI(){
         $importarModel = new ImportarModel();
         $exito = $importarModel->statusInactivo();
@@ -48,9 +54,10 @@ class EscolarsController
             echo "Error al cambiar el estado de los alumnos.";
         }
     }
+
+    //funcion que registra a los alumnos de manera individual
     public function cargarAlumnoIndividual()
     {
-        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $matricula = $_POST['matricula'];
             $nombre = $_POST['nombre_alumno'];
@@ -60,11 +67,13 @@ class EscolarsController
             $correo = $_POST['correo'];
             $carrera = $_POST['carrera'];
             $proceso = $_POST['proceso'];
-
+            $periodo = $_POST['periodo'];
+            $periodoSeleccionado = $_POST['periodo']; // Obtener el periodo seleccionado
 
             // Llama al modelo para insertar el alumno en la base de datos
             $importarModel = new ImportarModel();
-            $exito = $importarModel->insertarAlumnoIndividual($matricula, $nombre, $apellidoP, $apellidoM, $telefono, $correo, $carrera, $proceso);
+            $exito = $importarModel->insertarAlumnoIndividual(
+                $matricula, $nombre, $apellidoP, $apellidoM, $telefono, $correo, $carrera, $proceso, $periodo); // Pasa el periodo seleccionado
 
             if ($exito) {
                 header('Location: index.php?c=escolars&a=index');
@@ -83,6 +92,9 @@ class EscolarsController
 
             $proceso = new Proceso();
             $resultProcesos = $proceso->get_procesos();
+
+            $periodo = new Periodo();
+            $resultPeriodo = $periodo->get_periodos();
             include 'Views/Escolares/carga.php';
         }
     }

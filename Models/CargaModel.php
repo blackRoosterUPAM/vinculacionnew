@@ -9,10 +9,11 @@ class Escolares{
     }
 
     public function get_escolares() {
-        $sql = "SELECT alumnos.*, carrera.NombrePE as Carrera, proceso.NombrePE as Proceso
+        $sql = "SELECT alumnos.*, carrera.nombreCarrera as Carrera, proceso.NombrePE as Proceso, CONCAT(periodo.Meses, periodo.Año) as Periodo
         FROM alumnos
         LEFT JOIN carrera ON alumnos.Carrera = carrera.IdCarrera
         LEFT JOIN proceso ON alumnos.IdProceso = proceso.IdProceso
+        LEFT JOIN periodo ON alumnos.idPeriodo = periodo.idPeriodo
         ORDER BY alumnos.Matricula DESC";
         
         $resultado = $this->db->query($sql);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <!--Inicio del head-->
 
 <head>
@@ -113,18 +113,6 @@
                         <div id="kt_app_content" class="app-content">
                             <!--begin::Products-->
                             <div class="card card-flush">
-                                <!--begin::Card header-->
-                                <!--div class="card-header align-items-center py-5 gap-2 gap-md-5"-->
-                                <!--begin::Card toolbar-->
-                                <!--div class="card-toolbar flex-row-fluid justify-content-between gap-5"-->
-                                <!--begin::Add product-->
-                                <!--a href="?c=carreras&a=registro" class="btn btn-primary">Registrar Alumno</a-->
-                                <!--a href="config/mantenimiento.php" class="btn btn-primary">Registrar Alumno</a-->
-                                <!--end::Add product-->
-                                <!--/div-->
-                                <!--end::Card toolbar-->
-                                <!--/div-->
-                                <!--end::Card header-->
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <!--begin::Actions-->
                                     <div class="d-flex my-4">
@@ -148,52 +136,53 @@
                                         </form>
                                     </div>
                                     <!--begin::Table-->
-										<div class="table table-striped">
-											<table class="table-responsive table align-middle table-row-dashed fs-8 gy-5" id="kt_customers_table">
-												<thead class="bg-primary">
-													<tr  class=" text-start text-gray-100 fw-bold fs-7  gs-0">
-														<th class="textoTabla min-w-25px">Matricula</th>
-														<th class="textoTabla min-w-25px">Nombre</th>
-														<th class="textoTabla min-w-25px">Apellido Paterno</th>                                                        
-														<th class="textoTabla min-w-25px">Apellido Materno</th>
-														<th class="textoTabla min-w-25px">Telefono</th>
-														<th class="textoTabla min-w-25px">Email</th>
-														<th class="textoTabla min-w-25px">Carrera</th>
-														<th class="textoTabla min-w-25px">Proceso</th>
-														<th class="textoTabla min-w-25px">Estatus Vinculación</th>                                                        
-														<th class="textoTabla min-w-25px">Acciones</th>
-                                                        
-													</tr>
-												</thead>
-												
-												<tbody  class="fw-semibold text-gray-600">
-													<?php
-														foreach ($alumnos as $row)  {
-                                                            $estatus = $row['Estatus'] == 1 ? 'Activo' : 'Inactivo';
-                                                            $color = $row['Estatus'] == 1 ? 'green' : 'red';
-                                                            echo "<tr>";
-                                                            echo "<td>" . $row['Matricula'] . "</td>";
-                                                            echo "<td>" . $row['NombreA'] . "</td>";
-                                                            echo "<td>" . $row['ApellidoP'] . "</td>";
-                                                            echo "<td>" . $row['ApellidoM'] . "</td>";
-                                                            echo "<td>" . $row['Telefono'] . "</td>";
-                                                            echo "<td>" . $row['CorreoE'] . "</td>";
-                                                            echo "<td>" . $row['Carrera'] . "</td>";
-                                                            echo "<td>" . $row["Proceso"] . "</td>";
-                                                            // Celda del estatus con color
-                                                            echo "<td class='status-cell' style='color: $color;'>$estatus</td>"; // Mostrar el estado aquí
-                                                            $matricula = $row['Matricula'];
-                                                            echo "<td style='margin-left: 10px;'><a href='?c=registro&a=estatus_editado&matricula=$matricula' class='btn btn-sm btn-primary me-3'>Activar/Desactivar</a></td>";
-                                                            echo "</tr>";
-														}
-													
-													?>
-												</tbody>
-											</table>
-										</div>
-										<!--end::Table-->
+                                    <div class="table table-striped">
+                                        <table class="table-responsive table align-middle table-row-dashed fs-8 gy-5" id="kt_customers_table">
+                                            <thead class="bg-primary">
+                                                <tr class=" text-start text-gray-100 fw-bold fs-7  gs-0">
+                                                    <th class="textoTabla min-w-25px">Matricula</th>
+                                                    <th class="textoTabla min-w-25px">Nombre</th>
+                                                    <th class="textoTabla min-w-25px">Apellido Paterno</th>
+                                                    <th class="textoTabla min-w-25px">Apellido Materno</th>
+                                                    <th class="textoTabla min-w-25px">Telefono</th>
+                                                    <th class="textoTabla min-w-25px">Email</th>
+                                                    <th class="textoTabla min-w-25px">Carrera</th>
+                                                    <th class="textoTabla min-w-25px">Proceso</th>
+                                                    <th class="textoTabla min-w-25px">Periodo</th>
+                                                    <th class="textoTabla min-w-25px">Estatus</th>
+                                                    <th class="textoTabla min-w-25px">Acciones</th>
 
-                                  
+                                                </tr>
+                                            </thead>
+
+                                            <tbody class="fw-semibold text-gray-800">
+                                                <?php
+                                                foreach ($alumnos as $row) {
+                                                    $estatus = $row['Estatus'] == 1 ? 'Activo' : 'Inactivo';
+                                                    $color = $row['Estatus'] == 1 ? 'green' : 'red';
+                                                    echo "<tr>";
+                                                    echo "<td>" . $row['Matricula'] . "</td>";
+                                                    echo "<td>" . $row['NombreA'] . "</td>";
+                                                    echo "<td>" . $row['ApellidoP'] . "</td>";
+                                                    echo "<td>" . $row['ApellidoM'] . "</td>";
+                                                    echo "<td>" . $row['Telefono'] . "</td>";
+                                                    echo "<td>" . $row['CorreoE'] . "</td>";
+                                                    echo "<td>" . $row['Carrera'] . "</td>";
+                                                    echo "<td>" . $row["Proceso"] . "</td>";
+                                                    echo "<td>" . $row["Periodo"] . "</td>";
+                                                    // Celda del estatus con color
+                                                    echo "<td class='status-cell' style='color: $color;'>$estatus</td>"; // Mostrar el estado aquí
+                                                    $matricula = $row['Matricula'];
+                                                    echo "<td style='margin-left: 10px;'><a href='?c=registro&a=estatus_editado&matricula=$matricula' class='btn btn-sm btn-primary me-3'>Activar/Desactivar</a></td>";
+                                                    echo "</tr>";
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--end::Table-->
+
+
                                     <div>
                                         <a href="?c=escolars&a=statusA" id="activarDesactivarTodos" class="btn btn-sm btn-primary me-3">
                                             Activar Todos
@@ -389,7 +378,7 @@
                                                     <option value="">Seleccione una carrera...</option>
                                                     <?php
                                                     foreach ($resultCarrera as $row) {
-                                                        echo "<option" . " value=" . $row["IdCarrera"] . ">" . $row["NombrePE"] . "</option>";
+                                                        echo "<option" . " value=" . $row["IdCarrera"] . ">" . $row["nombreCarrera"] . "</option>";
                                                     }
                                                     ?>
                                                 </select>
@@ -425,7 +414,32 @@
                                             <!--end::Col-->
                                         </div>
                                         <!--end::Input group-->
-
+                                        <!--Begin::Input groupl-->
+                                        <div class="row mb-6" style="margin-left:230px;">
+                                            <!--begin::Label-->
+                                            <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                                <span class="required">Periodo</span>
+                                                <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
+                                                    <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                                </span>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-5 fv-row">
+                                                <!--begin::Input-->
+                                                <select id="periodo" name="periodo" aria-label="Seleccione un periodo" data-control="select2" data-placeholder="Seleccione un periodo..." class="form-select form-select-solid form-select-lg">
+                                                    <option value="">Seleccione un periodo...</option>
+                                                    <?php foreach ($resultPeriodo as $periodo) : ?>
+                                                        <option value="<?php echo $periodo['IdPeriodo']; ?>">
+                                                            <?php echo $periodo['Meses'] . ' ' . $periodo['Año']; ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <!--end::Input-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Input group-->
                                     </div>
                                     <!--end::Card body-->
                                     <!--begin::Actions-->

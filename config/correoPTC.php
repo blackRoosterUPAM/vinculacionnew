@@ -7,7 +7,7 @@ require 'vendor/autoload.php';
 
 $mail = new PHPMailer(true);
 
-     function enviarCorreo($correoDestinatario, $contrasena, $tipoD) {
+     function enviarCorreo($correoDestinatario, $tipoD) {
         $mail = new PHPMailer(true);
 
         try {

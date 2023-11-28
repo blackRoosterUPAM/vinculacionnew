@@ -1,6 +1,5 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
@@ -9,13 +8,19 @@ $mail = new PHPMailer(true);
 
 function enviarCorreo($correoDestinatario, $contrasena)
 {
-    //datos del alumno
-    $alumno = $_POST['nombre_alumno'];
-    $apellidoP =$_POST['$apellidoP'];
-    $apellidoM =$_POST['$apellidoM'];
-    $matricula = $_POST['matricula'];
-    $carrera = $_POST['NombrePE'];
+    $db = Conectar::conexion();
     $mail = new PHPMailer(true);
+
+    // Consulta para obtener el nombre de la carrera
+    $consultaCarrera = $db->prepare("SELECT nombreCarrera FROM carrera WHERE IdCarrera = ?");
+    $consultaCarrera->bind_param("i", $carreraId);
+    $consultaCarrera->execute();
+    $resultadoCarrera = $consultaCarrera->get_result();
+    $alumno = $_POST['nombre_alumno'];
+    $apellidoP = $_POST['apellidoP'];
+    $apellidoM = $_POST['apellidoM'];
+    $matricula = $_POST['matricula'];
+    $carreraId = $_POST['carrera'];
 
     try {
         $mail->isSMTP();
@@ -23,38 +28,39 @@ function enviarCorreo($correoDestinatario, $contrasena)
         $mail->Port = 587;
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;
-        $mail->Username = 'l.guadalupea@upam.edu.mx';
-        $mail->Password = 'LuisAntonio';
+        $mail->Username = 'ctrlescolar.software@upamozoc.edu.mx';  // Tu dirección de correo
+        $mail->Password = 'GallosNegros#2023';        // Tu contraseña
 
-        $mail->setFrom('l.guadalupea@upam.edu.mx', ' DATOS DE ACCESO ');
+        $mail->setFrom('ctrlescolar.software@upamozoc.edu.mx', 'INFORMACIÓN DE LOGUEO');
         $mail->addAddress($correoDestinatario);
-        $mail->addReplyTo('l.guadalupea@upam.edu.mx', 'Prueba Omitir'); // Ajusta tu nombre y correo electrónico
-        $mail->Subject = 'Correo de prueba para la plataforma ';
-        $mail->Body = 'Hola que tal, adjunto este correo con tus datos de acceso' . "\n Tu usuario es: " . $correoDestinatario . "\nTu contraseña de acceso es: " . $contrasena;
+        $mail->addReplyTo('ctrlescolar.software@upamozoc.edu.mx'); // Ajusta tu nombre y correo electrónico
+        $mail->Subject = 'DATOS DE ACCESO A LA PLATAFORMA ';
+        $mail->Body = 'Estimado alumno, por este medio te hacemos saber tu usuario y contraseña.' . "\nTU USUARIO ES: " . $correoDestinatario . "\nTU CONTRASEÑA DE ACCESO ES: " . $contrasena;
+
         $mail->CharSet = 'UTF-8';  // Configurar la codificación
-
-        //Activamos caracteres de latinos
-        $mail->CharSet = 'UTF-8';
-        //Enviamos correo
         $mail->send();
 
-        //Limpiamos y preparamos el segundo correo
-        $mail->clearAddresses();  // Limpiar direcciones antes de enviar otro correo
-        $mail->setFrom('luisraul.guadalupe.antonio03@gmail.com');
-        // Enviar correo a la dirección 'vinculacion@p.com'
-        $mail->addAddress('luisraul.guadalupe.antonio03@gmail.com');
-        // Cambiar el mensaje para la dirección 'vinculacion@p.com'
-        $mail->Subject = "NOTIFICACIÓN DE REGISTRO DE UN NUEVO ALUMNO DE MANERA MANUAL";
-        $mail->Body = "El alumno: " . $alumno ." ".$apellidoP." ".$apellidoM. ", con matricula: " . $matricula . ", de la carrera: " . $carrera . ", ha sido dado de alta de forma manual: ";
-        //Activamos caracteres de latinos
-        $mail->CharSet = 'UTF-8';
-        // Configurar la codificación
-        $mail->send();
-        //Correo para el wey de vinculacion
-        $mail->send();
+        // Obtener el nombre de la carrera
+        $consultaCarrera = $db->prepare("SELECT nombreCarrera FROM carrera WHERE IdCarrera = ?");
+        $consultaCarrera->bind_param("i", $carreraId);
+        $consultaCarrera->execute();
+        $resultadoCarrera = $consultaCarrera->get_result();
+
+        if ($filaCarrera = $resultadoCarrera->fetch_assoc()) {
+            $nombreCarrera = $filaCarrera['nombreCarrera'];
+
+            // Envío de correo a Vinculación
+            $mail->clearAddresses();  // Limpiar direcciones antes de enviar otro correo
+            $mail->setFrom('ctrlescolar.software@upamozoc.edu.mx');
+            $mail->addAddress('vinculacion.software@upamozoc.edu.mx');
+            $mail->Subject = "NOTIFICACIÓN DE REGISTRO DE UN NUEVO ALUMNO DE MANERA MANUAL";
+            $mail->Body = "El/la alumn@: " . $alumno . " " . $apellidoP . " " . $apellidoM . "\ncon matrícula: " . $matricula . "\nde la carrera en : " . $nombreCarrera . "\nha sido dado de alta de forma manual: ";
+            $mail->CharSet = 'UTF-8';
+            $mail->send();
+        } else {
+            echo "No se pudo obtener el nombre de la carrera.";
+        }
     } catch (Exception $e) {
         echo "Error al enviar el correo: {$mail->ErrorInfo}";
     }
 }
-
-?>

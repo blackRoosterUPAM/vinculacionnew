@@ -1,7 +1,4 @@
 <?php
-
-
-
 class UsuariosController
 {
     //Incuimos los modelos que vamos a utilizar
@@ -19,7 +16,7 @@ class UsuariosController
     public function iniciarSesion()
     {
         $correo = $_POST['correo'];
-        $contrasena= $_POST['contraseña'];
+        $contrasena = $_POST['contraseña'];
         $model = new UsuarioModel();
         $usuario = $model->validarUsuario($correo, $contrasena);
 
@@ -36,39 +33,40 @@ class UsuariosController
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 // Redirigir a la página de sedes
                 header('location:  index.php?c=sedes&a=index');
-            }elseif ($rol == 2) {
+            } elseif ($rol == 2) {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 header('location: index.php?c=escolars&a=index');
-            }elseif ($rol == 3) {
+            } elseif ($rol == 3) {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 $name = "vinculacion";
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de vinculación
                 header('location:  index.php?c=carreras&a=index');
-            }elseif ($rol == 4) {
+            } elseif ($rol == 4) {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 $name = "alumno";
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de vinculación
                 header('location:  index.php?c=alumno&a=index');
-            }elseif ($rol == 6) {
+            } elseif ($rol == 6) {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 $name = "director";
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de vinculación
                 header('location: director/index.php');
-            }elseif ($rol == 7) {
+            } elseif ($rol == 7) {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
+                $_SESSION['correo_ptc'] = $correo; // Almacena el correo del PTC en la sesión
                 $name = "ptc";
                 $_SESSION['name'] = $name;
-                // Redirigir a la página de vinculación
+                // Redirigir a la página de PTC
                 header('location: index.php?c=ptc&a=index');
-            }else{
+            } else {
                 header('location: index.php');
             }
         } else {
@@ -77,7 +75,8 @@ class UsuariosController
         }
     }
 
-    public function prueba(){
+    public function prueba()
+    {
         session_start();
         session_destroy();
         header('location: index.php');
