@@ -35,7 +35,7 @@ class ImportarModel
             return false;
             $message = "Error al cambiar el estado de los alumnos.";
         }
-    
+
         // Redirige o muestra el mensaje según tu lógica
     }
 
@@ -51,7 +51,7 @@ class ImportarModel
             return false;
             $message = "Error al cambiar el estado de los alumnos.";
         }
-    
+
         // Redirige o muestra el mensaje según tu lógica
     }
 
@@ -241,23 +241,24 @@ class ImportarModel
     }
 } */
     //funcion que obtiene el periodo 
-    public function getPeriodoId($periodo){
+    public function getPeriodoId($periodo)
+    {
         // Dividir el período en mes y año
         $parts = explode('-', $periodo);
-        
+
         if (count($parts) >= 2) {
             $mes = $parts[0];
             $anio = $parts[1];
-    
+
             // Consulta para buscar un período que coincida con el mes y año del Excel
             $consultaPeriodo = $this->mysqli->prepare("SELECT IdPeriodo FROM periodo WHERE Meses = ? AND Año = ?");
-            
+
             // Verificar que $mes sea una cadena y $año sea un valor numérico antes de usarlos en la consulta
             if (is_numeric($anio)) {
                 $consultaPeriodo->bind_param("si", $mes, $anio);
                 $consultaPeriodo->execute();
                 $resultadoPeriodo = $consultaPeriodo->get_result();
-    
+
                 if ($fila = $resultadoPeriodo->fetch_assoc()) {
                     return $fila['IdPeriodo'];
                 } else {
@@ -271,18 +272,42 @@ class ImportarModel
         }
     }
 
+    public function getPeriodo($mes, $año)
+    {
+        $sql = "SELECT * FROM periodo WHERE Meses LIKE ? AND Año = ? AND estatus = 1 limit 1";
+
+        // Utiliza una consulta preparada para evitar SQL injection
+        $stmt = $this->mysqli->prepare($sql);
+
+        // Modifica el patrón de vinculación de los parámetros
+        $mes = '%' . $mes . '%';  // Agrega los signos de porcentaje aquí para que se incluyan en la cadena LIKE
+        $stmt->bind_param("ss", $mes, $año);
+
+        // Ejecuta la consulta
+        $stmt->execute();
+
+        // Obtiene el resultado de la consulta
+        $result = $stmt->get_result();
+
+        // Obtiene la fila de la consulta
+        $periodo = $result->fetch_assoc();
+
+        // Retorna la fila
+        return $periodo;
+    }
+
     //funcion que permite registrar a los alumnos mediante un excel
     public function importarDesdeExcel($archivo)
     {
         $inputFileName = $archivo['tmp_name']; // Ruta del archivo Excel subido
-        require_once 'config/correoUserContra.php';//permite enviar el correo a los alumnos
+        require_once 'config/correoUserContra.php'; //permite enviar el correo a los alumnos
 
         try {
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFileName);
             $worksheet = $spreadsheet->getActiveSheet();
             $highestRow = $worksheet->getHighestRow();
             $duplicates = array();
-            
+
 
             // Crear arrays para acumular los datos
             $usuariosData = array();
@@ -297,16 +322,28 @@ class ImportarModel
                 $correo = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
                 $carrera = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
                 $proceso = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                $periodo = trim($worksheet->getCellByColumnAndRow(9, $row)->getValue());
+                $año = trim($worksheet->getCellByColumnAndRow(10, $row)->getValue());
 
                 // Convierte las carreras y procesos a minúsculas
                 $carrera = strtolower($carrera);
                 $proceso = strtolower($proceso);
 
                 // Validación para evitar campos vacíos
-                if (empty($matricula) || empty($nombre) || empty($apellidoP) || empty($apellidoM) || empty($telefono) || empty($correo) || empty($carrera) || empty($proceso)) {
+                if (empty($matricula) || empty($nombre) || empty($apellidoP) || empty($apellidoM) || empty($telefono) || empty($correo) || empty($carrera) || empty($proceso) || empty($periodo) || empty($año)) {
                     // Si alguno de los campos está vacío, omite esta fila y continúa con la siguiente
                     continue;
                 }
+
+                //Buscamos el id del periodo
+                $periodoId = $this->getPeriodo($periodo, $año);
+                if ($periodoId['IdPeriodo'] === null) {
+                    echo '<script>';
+                    echo 'alert("La carrera registrada en la fila ' . $row . ' no coincide con ninguna carrera en la base de datos. Matrícula: ' . $matricula . '");';
+                    echo '</script>';
+                    continue; // Omitir esta fila y continuar con la siguiente
+                }
+
 
                 // Verificar si la carrera registrada en el Excel coincide con algún ID de carrera en la base de datos
                 $carreraId = $this->getCarreraId($carrera);
@@ -342,9 +379,9 @@ class ImportarModel
 
                 // Agregar datos a los arrays de inserción
                 $usuariosData[] = "('$matricula', '$correo', '$passwordHash', '$idRol', '$nombre', '$apellidoP', '$apellidoM')";
-                $alumnosData[] = "('$matricula', '$nombre', '$apellidoP', '$apellidoM', '$telefono', '$correo', $carreraId, $procesoId)";
-                
-                enviarCorreo($correo, $password);//envio de correos
+                $alumnosData[] = "('$matricula', '$nombre', '$apellidoP', '$apellidoM', '$telefono', '$correo', $carreraId, $procesoId, ".$periodoId['IdPeriodo'] .")";
+
+                enviarCorreo($correo, $password); //envio de correos
             }
 
             // Realizar la inserción en la tabla de usuarios
@@ -353,7 +390,7 @@ class ImportarModel
                 if ($this->mysqli->query($usuariosSql)) {
                     // Realizar la inserción en la tabla de alumnos
                     if (!empty($alumnosData)) {
-                        $alumnosSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, idProceso) VALUES " . implode(",", $alumnosData);
+                        $alumnosSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, idProceso, idPeriodo) VALUES " . implode(",", $alumnosData);
                         if ($this->mysqli->query($alumnosSql)) {
                             // Éxito al importar los datos
                             // Resto del código para enviar correos y manejar registros duplicados
@@ -432,18 +469,22 @@ class ImportarModel
         return null;
     }
 
+    //Funcion que retorna el id del proceso dependiendo el nombre
+
+
     //funciòn que permite registrar al alumno de manra manual
-    public function insertarAlumnoIndividual($matricula, $nombre, $apellidoP, $apellidoM, $telefono, $correo, $carrera, $proceso, $periodo){
-        require_once 'config/correoUserContra.php';//permite enviar el correo a los alumnos
+    public function insertarAlumnoIndividual($matricula, $nombre, $apellidoP, $apellidoM, $telefono, $correo, $carrera, $proceso, $periodo)
+    {
+        require_once 'config/correoUserContra.php'; //permite enviar el correo a los alumnos
 
         // Generar la contraseña a partir de las iniciales del nombre y los últimos dígitos de la matrícula
         $inicialesNombre = substr($nombre, 0, 2); // Tomar las primeras 2 letras del nombre
         $ultimosDigitosMatricula = substr($matricula, -4); // Tomar los últimos 2 dígitos de la matrícula
         $password = $inicialesNombre . $ultimosDigitosMatricula;
 
-        $passwordHash = md5($password);// Encriptar la contraseña usando MD5
+        $passwordHash = md5($password); // Encriptar la contraseña usando MD5
 
-        $idRol = 4;// IdRol del estudiante
+        $idRol = 4; // IdRol del estudiante
 
         //valida que la matricula no se encuentre para poder realizar un nuevo registro
         $check_sql = "SELECT Matricula FROM alumnos WHERE Matricula = '$matricula'";
@@ -463,14 +504,13 @@ class ImportarModel
                     VALUES ('$matricula', '$nombre', '$apellidoP', '$apellidoM', '$telefono', '$correo', $carrera, $proceso, $periodo)";
 
                 if ($this->mysqli->query($alumnoSql)) {
-                enviarCorreo($correo, $password);// Envía un correo al alumno
-                        return true;
-                    } else {
-                        // Error al enviar el correo
-                        return false;
-                    }
-                 
-                }else {
+                    enviarCorreo($correo, $password); // Envía un correo al alumno
+                    return true;
+                } else {
+                    // Error al enviar el correo
+                    return false;
+                }
+            } else {
                 // Manejo de errores si la inserción en la tabla de usuarios falla
                 return false;
             }

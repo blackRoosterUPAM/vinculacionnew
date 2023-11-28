@@ -174,7 +174,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
                                                             echo "<tr>";
                                                             echo "<td>" . $row['Matricula'] . "</td>";
                                                             echo "<td>" . $row['fullName'] . "</td>";
-                                                            echo "<td>" . $row['nombreProceso'] . "</td>";
+                                                            echo "<td>" . $row['NombrePE'] . "</td>";
                                                             echo "<td class=" . "ps-0" . ">" . $row["NombreSede"] . "</td>";
                                                             echo "<td style=" . ">" . $row["CorreoContacto"] . "</td>";
                                                             echo "<td style=" . ">" . $row["Telefono"] . "</td>";
