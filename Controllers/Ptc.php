@@ -1,10 +1,17 @@
 <?php
+require 'vendor/autoload.php';
+// Asegúrate de incluir la librería PHPExcel en tu archivo
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class PtcController
 {
     //funcion principal
     public function __construct()
     {
         require_once "Models/PtcModel.php";
+        require_once "Models/CarreraModel.php";
     }
 
     //funcion que obtiene el pdf
@@ -55,5 +62,109 @@ class PtcController
         enviarCorreo($datos['CorreoE'], 'sss');
         header('location: index.php?c=ptc&a=index');
         exit();
+    }
+
+    //DATOS QUE OCUPA VINCULACION
+    public function show_ptc_carrera()
+    {
+        $idCarrera = $_POST['carrera'];
+        $Alim_carrera = new ptc();
+        $Alim_carrera->show_ptc($idCarrera);
+    }
+
+    public function mostrar_busqueda()
+    {
+        // Obtener el dato de búsqueda desde la solicitud POST
+        $datoBusqueda = $_POST['busqueda'];
+
+        // Validar si se ingresó un dato de búsqueda
+        if (!empty($datoBusqueda)) {
+            // Crear una instancia del modelo de búsqueda
+            $modeloBusqueda = new ptc();
+
+            // Llamar a la función en el modelo para realizar la búsqueda
+            $resultados = $modeloBusqueda->datos_busqueda($datoBusqueda);
+
+            // Mostrar los resultados (puedes implementar tu propia lógica para mostrar los resultados en la vista)
+            echo json_encode($resultados);
+        } else {
+            // Manejar el caso en el que no se proporcionó un dato de búsqueda
+            echo json_encode(["error" => "Por favor, ingresa un dato de búsqueda válido."]);
+        }
+    }
+
+
+    // Controlador
+    public function exportar($id)
+    {
+        $idCarrera = $id;
+        $Alim_carrera = new ptc();
+        $alumnosData = $Alim_carrera->show_ptc_($idCarrera);
+
+        if ($alumnosData) {
+            $alumnos = json_decode($alumnosData, true);
+
+            // Crear un objeto Spreadsheet
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+
+            // Agregar encabezados
+            $sheet->setCellValue('A1', 'Nombre de PTC');
+            $sheet->setCellValue('B1', 'Correo');  // Corregir la posición de la columna B
+            $sheet->setCellValue('C1', 'Carrera');
+
+            // Recorrer los datos y agregarlos a la hoja de cálculo
+            $row = 2; // Comenzar en la segunda fila
+            foreach ($alumnos as $alumno) {
+                $sheet->setCellValue('A' . $row, $alumno['Nombre de PTC']);
+                $sheet->setCellValue('B' . $row, $alumno['Correo']);  // Utilizar nombres de columna reales
+                $sheet->setCellValue('C' . $row, $alumno['Carrera']);
+                $row++;
+            }
+
+            ob_start();
+
+            // Crear un objeto Writer y guardar en el buffer de salida
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+
+            // Obtener el contenido del buffer
+            $content = ob_get_clean();
+
+            // Establecer cabeceras para descargar el archivo
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="alumnos_ptc_' . $idCarrera . '.xlsx"');
+            header('Cache-Control: max-age=0');
+
+            // Enviar el contenido descargado
+            echo $content;
+
+            exit();
+        } else {
+            echo json_encode(array("error" => "Error al obtener los datos de los alumnos"));
+        }
+    }
+
+    public function nuevo_ptc()
+    {
+        $matricula = $_POST["matricula"];
+        $nombre_ptc = $_POST["nombre_ptc"];
+        $apellidoPaterno = $_POST["ApellidoPaterno"];
+        $apellidoMaterno = $_POST["ApellidoMaterno"];
+        $correoPtc = $_POST["correo"];
+        $carrera = $_POST["carrera"];
+        $contraseña = $_POST["contraseña"];
+
+        if (empty($matricula) && empty($nombre_ptc) && empty($apellidoPaterno) && empty($apellidoMaterno) && empty($correoPtc) && empty($carrera) && empty($contraseña)) {
+            echo "Todos los campos están vacíos";
+        } else {
+            // Se realiza la insercion de datos en la tabla de ptc y usuarios
+            $ptc = new ptc();
+            $resultado = $ptc->insert_ptc($matricula, $nombre_ptc, $apellidoPaterno, $apellidoMaterno, $correoPtc, $carrera,$contraseña);
+
+            $carrera = new Carrera();
+            $result = $carrera->get_carreras();
+            include('views/vinculacion/ptc.php');
+        }
     }
 }

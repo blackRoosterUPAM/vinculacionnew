@@ -142,6 +142,13 @@ License: For each use you must have a valid license purchased only from above li
                                                 <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#">Periodos</a>
                                             </li>
                                             <!--end::Nav item-->
+
+                                            <!--begin::Nav item-->
+											<li class="nav-item mt-2">
+												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index_">PTC</a>
+											</li>
+											<!--end::Nav item-->
+                                            
                                             <!--begin::Nav item-->
 											<li class="nav-item mt-2">
 												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=vinculacion&a=index_">Validación de documentos</a>

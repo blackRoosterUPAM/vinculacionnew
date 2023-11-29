@@ -130,7 +130,7 @@ License: For each use you must have a valid license purchased only from above li
 										<ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
 											<!--begin::Nav item-->
 											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">Listas</a>
+												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index">Listas</a>
 											</li>
 											<!--end::Nav item-->
 											<!--begin::Nav item-->
@@ -355,7 +355,7 @@ License: For each use you must have a valid license purchased only from above li
 						<!--begin::Content-->
 						<div id="kt_account_settings_profile_details" class="collapse show">
 							<!--begin::Form-->
-							<form id="kt_account_profile_details_form" class="form" action="?c=sedes&a=nueva_sede" method="post" enctype="multipart/form-data">
+							<form id="kt_account_profile_details_form" class="form" action="?c=ptc&a=nuevo_ptc" method="post" enctype="multipart/form-data">
 								<!--begin::Card body-->
 								<div class="card-body border-top p-9">
 									<!--begin::Input group-->
@@ -390,7 +390,7 @@ License: For each use you must have a valid license purchased only from above li
 											<div class="row">
 												<!--begin::Col-->
 												<div class="col-lg-6 fv-row">
-													<input type="text" name="nombre_sede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+													<input type="text" name="nombre_ptc" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
 												</div>
 												<!--end::Col-->
 											</div>
@@ -411,7 +411,7 @@ License: For each use you must have a valid license purchased only from above li
 											<div class="row">
 												<!--begin::Col-->
 												<div class="col-lg-6 fv-row">
-													<input type="text" name="nombre_sede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+													<input type="text" name="ApellidoPaterno" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
 												</div>
 												<!--end::Col-->
 											</div>
@@ -432,7 +432,7 @@ License: For each use you must have a valid license purchased only from above li
 											<div class="row">
 												<!--begin::Col-->
 												<div class="col-lg-6 fv-row">
-													<input type="text" name="nombre_sede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+													<input type="text" name="ApellidoMaterno" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
 												</div>
 												<!--end::Col-->
 											</div>
@@ -464,7 +464,7 @@ License: For each use you must have a valid license purchased only from above li
 									<!--end::Input group-->
 									
 									<div class="row mb-6" style="margin-left:250px;">
-										<label class="col-lg-4 col-form-label fw-semibold fs-6">
+										<label class="col-lg-4 required col-form-label fw-semibold fs-6">
 											<span>Carrera:</span>
 										</label>
 										<!--begin::Col-->
@@ -473,13 +473,34 @@ License: For each use you must have a valid license purchased only from above li
 												<option value="">Seleccione una Carrera...</option>
 												<?php
 												foreach ($result as $row) {
-													echo "<option name="."carrera"." value=" . $row["IdCarrera"] . ">" . $row["nombreCarrera"] . "</option>";
+													echo "<option value=" . $row["IdCarrera"] . ">" . $row["nombreCarrera"] . "</option>";
 												}
 												?>
 											</select>
 										</div>
 										<!--end::Col-->
 									</div>
+
+									<!--begin::Input group-->
+									<div class="row mb-6" style="margin-left:250px;">
+										<!--begin::Label-->
+										<label class="col-lg-4 col-form-label required fw-semibold fs-6">Contraseña:</label>
+										<!--end::Label-->
+										<!--begin::Col-->
+										<div class="col-lg-8">
+											<!--begin::Row-->
+											<div class="row">
+												<!--begin::Col-->
+												<div class="col-lg-6 fv-row">
+													<input type="text" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+												</div>
+												<!--end::Col-->
+											</div>
+											<!--end::Row-->
+										</div>
+										<!--end::Col-->
+									</div>
+									<!--end::Input group-->
 
 
 								</div>

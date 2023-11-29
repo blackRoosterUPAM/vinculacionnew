@@ -208,13 +208,6 @@ class Sede
 			if ($query->num_rows > 0) {
 				while ($row = $query->fetch_assoc()) {
 					echo "<tr>";
-					echo "<td class='ps-9'>" . htmlentities($row["IdSede"]) . "</td>";
-					echo "<td class='ps-0'>" . htmlentities($row["NombreSede"]) . "</td>";
-					echo "<td style='margin-left: 10px;'>" . htmlentities($row["Dirección"]) . "</td>";
-					echo "<td style='margin-left: 10px;'>" . htmlentities($row["CorreoContacto"]) . "</td>";
-					echo "<td style='margin-left: 10px;'>" . htmlentities($row["Telefono"]) . "</td>";
-					echo "<td style='margin-left: 10px;'>" . htmlentities($row["tiposede"]) . "</td>";
-					// Verificamos si se obtuvo un logo desde la base de datos
 					echo "<td class='ps-9'>";
 					if (!empty($row["Logo"])) {
 						// Mostramos la imagen directamente desde la base de datos
@@ -227,6 +220,12 @@ class Sede
 						echo "<script>console.log('Sin imagen');</script>";
 					}
 					echo "</td>";
+					echo "<td class='ps-9'>" . htmlentities($row["IdSede"]) . "</td>";
+					echo "<td class='ps-0'>" . htmlentities($row["NombreSede"]) . "</td>";
+					echo "<td style='margin-left: 10px;'>" . htmlentities($row["Dirección"]) . "</td>";
+					echo "<td style='margin-left: 10px;'>" . htmlentities($row["CorreoContacto"]) . "</td>";
+					echo "<td style='margin-left: 10px;'>" . htmlentities($row["Telefono"]) . "</td>";
+					echo "<td style='margin-left: 10px;'>" . htmlentities($row["tiposede"]) . "</td>";
 					echo "<td style='margin-left: 10px;'><a href='index.php?c=sedes&a=edit_sede&id=" . $row["IdSede"] . "'>Editar Sede</a></td>";
 					echo "</tr>";
 
