@@ -213,7 +213,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Agregar Periodo</a>
                                             </div>
                                             <div class="d-flex my-4">
-                                                <a href="?c=alumno&a=exportarPeriodo" class="btn btn-sm btn-primary me-3">Exportar Periodo</a>
+                                                <a href="?c=alumno&a=exportarPeriodo" class="btn btn-sm btn-primary me-3">Exportar Excel</a>
                                             </div>
 
                                         </div>

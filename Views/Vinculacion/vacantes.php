@@ -258,7 +258,7 @@ License: For each use you must have a valid license purchased only from above li
 											</div>
 
 											<div class="d-flex my-4">
-												<a href="#" class="btn btn-sm btn-primary me-3" id="exportarPDF">Exportar PDF</a>
+												<a href="#" class="btn btn-sm btn-primary me-3" id="exportarPDF">Exportar Excel</a>
 											</div>
 
 											<script>
