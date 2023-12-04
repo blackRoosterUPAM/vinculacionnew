@@ -34,7 +34,7 @@ License: For each use you must have a valid license purchased only from above li
 
 	<base href="" />
 
-	<title>Metronic - The World's #1 Selling Bootstrap Admin Template by Keenthemes</title>
+	<title>UPAM Vinculación</title>
 
 	<meta charset="utf-8" />
 
@@ -53,6 +53,35 @@ License: For each use you must have a valid license purchased only from above li
 	<meta property="og:url" content="https://keenthemes.com/metronic" />
 
 	<meta property="og:site_name" content="Keenthemes | Metronic" />
+
+	<style>
+		body::-webkit-scrollbar{
+			-webkit-appearance: none;
+		}
+
+		body::-webkit-scrollbar:vertical {
+			width: 10px;
+		}
+
+		body::-webkit-scrollbar-button:increment,
+		body::-webkit-scrollbar-button{
+			display: none;
+		}
+
+		body::-webkit-scrollbar:horizontal {
+			height: 10px;
+		}
+
+		body::-webkit-scrollbar-thumb {
+			background: #002e79;
+			border-radius: 20px;
+			border: 2px solid #f1f2f3;
+		}
+
+		body::-webkit-scrollbar-track {
+			border-radius: 10px;
+		}
+	</style>
 
 	<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
 
@@ -152,7 +181,7 @@ License: For each use you must have a valid license purchased only from above li
 							<!--begin::Heading-->
 							<div class="text-center mb-11">
 								<!--begin::Title-->
-								<h1 class="text-dark fw-bolder mb-3">Iniciar sesión</h1>
+								<h1 class="text-dark fw-bolder mb-3">Iniciar Sesión</h1>
 								<!--end::Title-->
 							</div>
 
@@ -164,7 +193,7 @@ License: For each use you must have a valid license purchased only from above li
 
 								<!--begin::Email-->
 
-								<input type="text" placeholder="Email" name="correo" class="form-control bg-transparent" />
+								<input type="text" placeholder="Correo" name="correo" class="form-control bg-transparent" />
 
 								<!--end::Email-->
 
@@ -176,7 +205,7 @@ License: For each use you must have a valid license purchased only from above li
 
 								<!--begin::Password-->
 
-								<input type="password" placeholder="Password" name="contraseña" class="form-control bg-transparent" />
+								<input type="password" placeholder="Contraseña" name="contraseña" class="form-control bg-transparent" />
 
 								<!--end::Password-->
 
@@ -192,7 +221,7 @@ License: For each use you must have a valid license purchased only from above li
 
 								<!--begin::Link-->
 								<div class="d-flex my-4">
-									<a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Has olvidado tu contraseña?</a>
+									<a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal" style="color: #002e79 !important;">¿Has olvidado tu contraseña?</a>
 								</div>
 
 								<!--end::Link-->
@@ -205,11 +234,11 @@ License: For each use you must have a valid license purchased only from above li
 
 							<div class="d-grid mb-10">
 
-								<button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+								<button type="submit" id="kt_sign_in_submit" class="btn btn-primary" style="background-color: #002e79 !important;">
 
 									<!--begin::Indicator label-->
 
-									<span class="indicator-label">Iniciar sesión</span>
+									<span class="indicator-label">Iniciar Sesión</span>
 
 									<!--end::Indicator label-->
 
@@ -243,7 +272,7 @@ License: For each use you must have a valid license purchased only from above li
 							<!--begin::Modal header-->
 							<div class="modal-header py-7 d-flex justify-content-between">
 								<!--begin::Modal title-->
-								<h2 style="margin-left:36%;">Recuperacion de contraseña</h2>
+								<h2 style="margin-left:36%;">Recuperación de contraseña</h2>
 							</div>
 							<!--begin::Modal header-->
 							<!--begin::Modal body-->
@@ -259,7 +288,7 @@ License: For each use you must have a valid license purchased only from above li
 												<!--begin::Input group-->
 												<div class="row mb-6" style="margin-left:16%;">
 													<!--begin::Label-->
-													<label class="">Escribe tu correo electronico para obtener tu codigo para la restauranción de contraseña</label>
+													<label class="">Escribe tu correo electrónico para obtener tu código para la restauración de tu contraseña:</label>
 													<!--end::Label-->
 													<!--begin::Col-->
 													<div class="col-lg-8">
@@ -298,7 +327,7 @@ License: For each use you must have a valid license purchased only from above li
 											<!--end::Card body-->
 											<!--begin::Actions-->
 											<div class="card-footer d-flex justify-content-end py-6 px-9">
-												<button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Siguiente...</button>
+												<button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit" style="background-color: #002e79 !important;">Siguiente...</button>
 											</div>
 											<!--end::Actions-->
 										</form>
@@ -324,13 +353,13 @@ License: For each use you must have a valid license purchased only from above li
 
 				<!--begin::Content-->
 
-				<div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
+				<div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100" style="background-color: #002e79 !important;">
 
 					<!--begin::Logo-->
 
-					<a href="../../demo30/dist/index.php" class="mb-0 mb-lg-12">
+					<a href="https://www.upamozoc.edu.mx/" class="mb-0 mb-lg-12">
 
-						<img alt="Logo" src="assets/media/logos/custom-1.png" class="h-60px h-lg-75px" />
+						<img alt="Logo" src="assets/media/logos/upamLogoB.png" class="h-60px h-lg-75px" />
 
 					</a>
 
@@ -338,28 +367,20 @@ License: For each use you must have a valid license purchased only from above li
 
 					<!--begin::Image-->
 
-					<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="assets/media/misc/auth-screens.png" alt="" />
+					<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="assets/media/misc/fondoUpam5.png" alt="" />
 
 					<!--end::Image-->
 
 					<!--begin::Title-->
 
-					<h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Fast, Efficient and Productive</h1>
+					<h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Universidad Politécnica de Amozoc</h1>
 
 					<!--end::Title-->
 
 					<!--begin::Text-->
 
-					<div class="d-none d-lg-block text-white fs-base text-center">In this kind of post,
-
-						<a href="#" class="opacity-75-hover text-warning fw-bold me-1">the blogger</a>introduces a person they’ve interviewed
-
-						<br />and provides some background information about
-
-						<a href="#" class="opacity-75-hover text-warning fw-bold me-1">the interviewee</a>and their
-
-						<br />work following this is a transcript of the interview.
-
+					<div class="d-none d-lg-block text-white fs-base text-center">La UPAM es una excelente opción para alcanzar metas y <br>contribuir al desarrollo de todos los vinculados a nuestra comunidad.
+						<br />¡Tu sueño, nuestra misión!
 					</div>
 
 					<!--end::Text-->
