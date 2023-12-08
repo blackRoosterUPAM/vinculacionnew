@@ -235,6 +235,10 @@
                                                     });
                                                     </script>';
                                                 };
+
+                                                //dfsd
+                                                
+                                                //zdfd
                                                 foreach ($alumnos as $row) {
                                                     $estatus = $row['Estatus'] == 1 ? 'Activo' : 'Inactivo';
                                                     $color = $row['Estatus'] == 1 ? 'green' : 'red';
@@ -254,31 +258,31 @@
                                                     echo "<td style='margin-left: 10px;'><a href='?c=registro&a=estatus_editado&matricula=$matricula' class='btn btn-sm btn-primary me-3'>Activar/Desactivar</a></td>";
                                                     echo "<td style='margin-left: 10px;'>";
 
+                                                    // Verificar si todos los documentos están validados
+                                                    $todosDocumentosValidados = true;
+
                                                     foreach ($resultAlumno as $doc) {
                                                         $estatus_ptc = $doc["EstatusPtc"];
                                                         $estatus_vin = $doc["EstatusVinc"];
                                                         $matricula = $doc["Matricula"];
 
-                                                        if($row['Matricula'] == $matricula){
-                                                            if($estatus_ptc == '1'){
-                                                                if($estatus_vin == '1'){
-                                                                    echo " <a class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#exampleModal" . $matricula . "'>
-                                                                    Editar
-                                                                    </a>";
-                                                                }else{
-                                                                    
-                                                                }
-                                                            }else{
-                                                                
+                                                        if ($row['Matricula'] == $matricula) {
+                                                            if ($estatus_ptc !== '1' || $estatus_vin !== '1') {
+                                                                $todosDocumentosValidados = false;
+                                                                break;  // Si al menos un documento no está validado, no es necesario seguir verificando
                                                             }
-                                                        }else{
-                                                            
                                                         }
+                                                    }
 
-                                                    }                                                    
-                                                    
+                                                    // Imprimir el enlace solo si todos los documentos están validados
+                                                    if ($todosDocumentosValidados) {
+                                                        echo "<a class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#exampleModal" . $row['Matricula'] . "'>
+                Editar
+              </a>";
+                                                    }
+
                                                     echo form($row['Matricula'], $resultProcesos, $resultPeriodo);
-                                                   
+
                                                     echo "</td>";
                                                     echo "</tr>";
                                                 }

@@ -257,7 +257,7 @@ class Alumno
 	}
 
 	public function get_estatus() {
-        $sql = "SELECT * FROM docalumnoperiodo";
+        $sql = "SELECT doc.* FROM docalumnoperiodo as doc inner join alumnos as a on doc.Matricula = a.Matricula";
         
         $resultado = $this->db->query($sql);
         $alumnos = [];
