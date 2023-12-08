@@ -151,12 +151,56 @@
                                                     <th class="textoTabla min-w-25px">Periodo</th>
                                                     <th class="textoTabla min-w-25px">Estatus</th>
                                                     <th class="textoTabla min-w-25px">Acciones</th>
+                                                    <th>Cambiar proceso</th>
 
                                                 </tr>
                                             </thead>
 
                                             <tbody class="fw-semibold text-gray-800">
                                                 <?php
+                                                function form($m, $resultProcesos, $resultPeriodo)
+                                                {
+                                                    echo '
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proceso y Periodo ' . $m . '</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario -->
+                <form id="changePP"">
+                    <input type="hidden" name="idp" value="' . $m . '">
+                    <div class="mb-3">
+                        <label for="select1" class="form-label">Proceso</label>
+                        <select class="form-select" id="idProceso" name="idProcesop">';
+                                                    foreach ($resultProcesos as $p) {
+                                                        echo '<option value="' . $p['IdProceso'] . '">' . $p['NombrePE'] . '</option>';
+                                                    }
+                                                    echo '
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="select2" class="form-label">Periodo</label>
+                        <select class="form-select" id="idPeriodo" name="idPeriodop">';
+                                                    foreach ($resultPeriodo as $p) {
+                                                        if ($p['estatus'] == 0) {
+                                                            echo '<option value="' . $p['IdPeriodo'] . '">' . $p['Meses'] . ' ' . $p['Año'] . '</option>';
+                                                        }
+                                                    }
+                                                    echo '
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+';
+                                                };
                                                 foreach ($alumnos as $row) {
                                                     $estatus = $row['Estatus'] == 1 ? 'Activo' : 'Inactivo';
                                                     $color = $row['Estatus'] == 1 ? 'green' : 'red';
@@ -174,6 +218,14 @@
                                                     echo "<td class='status-cell' style='color: $color;'>$estatus</td>"; // Mostrar el estado aquí
                                                     $matricula = $row['Matricula'];
                                                     echo "<td style='margin-left: 10px;'><a href='?c=registro&a=estatus_editado&matricula=$matricula' class='btn btn-sm btn-primary me-3'>Activar/Desactivar</a></td>";
+                                                    echo "<td style='margin-left: 10px;'>";
+                                                    echo " <a class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#exampleModal'>
+                                                        Editar
+                                                        </a>";
+                                                    
+                                                    echo form($row['Matricula'], $resultProcesos, $resultPeriodo);
+                                                   
+                                                    echo "</td>";
                                                     echo "</tr>";
                                                 }
                                                 ?>
@@ -571,6 +623,40 @@
         </script>
         <!--end::Custom Javascript-->
         <!--end::Javascript-->
+        <!-- scrip para modificar alumno -->
+        <script>
+            // Agregar un evento al botón con id "prueba" cuando se haga clic
+            $("#changePP").submit(function(event) {
+                event.preventDefault();
+
+                var formData = $("#changePP").serialize();
+
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "?c=escolars&a=editAlumno",
+                    data: formData,
+                    success: function(response) {
+                        Swal.fire({
+                            title: 'Cambio Realizado',
+                            text: '¡OK!',
+                            icon: 'success'
+                        }).then((result) => {
+                            location.href = "index.php?c=escolars&a=index";
+                        });
+                    },
+                    error: function() {
+                        console.log("Entro al error funcion");
+                        Swal.fire({
+                            title: 'Error',
+                            text: '¡Error al enviar la solicitud!',
+                            icon: 'error'
+                        });
+                    }
+                });
+            });
+        </script>
 </body>
 <!--end::Body-->
 

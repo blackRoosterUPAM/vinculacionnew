@@ -24,7 +24,7 @@ class SedeAlumno
     {
         //Consulta sql para recuperar todos los datos postudados en una sede
         $sql =
-            "SELECT a.*, ad.*, al.* , c.NombrePE as nombreCarrera
+            "SELECT a.*, ad.*, al.* , c.nombreCarrera as nombreCarrera
             FROM alumnosede AS a
             INNER JOIN alumnodocs AS ad ON a.Matricula = ad.Matricula
             INNER JOIN alumnos AS al ON a.Matricula = al.Matricula
@@ -58,7 +58,7 @@ class SedeAlumno
     {
         //Agregar el id de la sede para que solo en esa busque
         $sql =
-            "SELECT a.*, ad.*, al.* ,  c.NombrePE as nombreCarrera
+            "SELECT a.*, ad.*, al.* ,  c.nombreCarrera as nombreCarrera
         FROM alumnosede AS a
         INNER JOIN alumnodocs AS ad ON a.Matricula = ad.Matricula
         INNER JOIN alumnos AS al ON a.Matricula = al.Matricula
@@ -78,7 +78,7 @@ class SedeAlumno
     {
         //Agregar el id de la sede para que solo en esa busque
         $sql =
-        "SELECT a.*, ad.*, al.* , c.NombrePE as nombreCarrera, p.NombrePE
+        "SELECT a.*, ad.*, al.* , c.nombreCarrera as nombreCarrera, p.NombrePE
         FROM alumnosede AS a
         INNER JOIN alumnodocs AS ad ON a.Matricula = ad.Matricula
         INNER JOIN alumnos AS al ON a.Matricula = al.Matricula

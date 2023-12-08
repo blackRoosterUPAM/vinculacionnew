@@ -56,221 +56,37 @@ class ImportarModel
     }
 
 
-    /*public function getPeriodoId($periodo)
-    {
-        // Mapeo de formatos de mes
-        $meses = [
-            'Enero' => 'Enero',
-            'Febrero' => 'Febrero',
-            'Marzo' => 'Marzo',
-            'Abril' => 'Abril',
-            'Mayo' => 'Mayo',
-            'Junio' => 'Junio',
-            'Julio' => 'Julio',
-            'Agosto' => 'Agosto',
-            'Septiembre' => 'Septiembre',
-            'Octubre' => 'Octubre',
-            'Noviembre' => 'Noviembre',
-            'Diciembre' => 'Diciembre',
-        ];
+    // //funcion que obtiene el periodo 
+    // public function getPeriodoId($periodo)
+    // {
+    //     // Dividir el período en mes y año
+    //     $parts = explode('-', $periodo);
 
-        // Dividir el período en mes y año
-        $parts = explode('-', $periodo);
+    //     if (count($parts) >= 2) {
+    //         $mes = $parts[0];
+    //         $anio = $parts[1];
 
-        if (count($parts) === 2) {
-            $mes = trim($parts[0]);
-            $anio = intval(trim($parts[1]));
+    //         // Consulta para buscar un período que coincida con el mes y año del Excel
+    //         $consultaPeriodo = $this->mysqli->prepare("SELECT IdPeriodo FROM periodo WHERE Meses = ? AND Año = ?");
 
-            // Validar si el mes está en el mapeo
-            if (!array_key_exists($mes, $meses)) {
-                echo '<script>';
-                echo 'alert("El mes registrado en el período no es válido. Período: ' . $periodo . '");';
-                echo '</script>';
-                return null; // Omitir esta fila y continuar con la siguiente
-            }
+    //         // Verificar que $mes sea una cadena y $año sea un valor numérico antes de usarlos en la consulta
+    //         if (is_numeric($anio)) {
+    //             $consultaPeriodo->bind_param("si", $mes, $anio);
+    //             $consultaPeriodo->execute();
+    //             $resultadoPeriodo = $consultaPeriodo->get_result();
 
-            // Consulta para buscar un período que coincida con el mes y año del Excel
-            $consultaPeriodo = $this->mysqli->prepare("SELECT IdPeriodo FROM periodo WHERE Meses = ? AND Año = ?");
-            $consultaPeriodo->bind_param("si", $mes, $anio);
-            $consultaPeriodo->execute();
-            $resultadoPeriodo = $consultaPeriodo->get_result();
-
-            if ($fila = $resultadoPeriodo->fetch_assoc()) {
-                return $fila['IdPeriodo'];
-            } else {
-                // Manejo de error si no se encuentra el período en la base de datos
-                return null;
-            }
-        } else {
-            // Manejar el caso en el que la cadena no se dividió como se esperaba
-            echo '<script>';
-            echo 'alert("El período registrado no tiene el formato esperado. Período: ' . $periodo . '");';
-            echo '</script>';
-            return null;
-        }
-    }
-
-    //funcion que permite registrar a los alumnos mediante un excel
-    public function importarDesdeExcel($archivo)
-{
-    $inputFileName = $archivo['tmp_name']; // Ruta del archivo Excel subido
-    require_once 'config/correoUserContra.php'; // Permite enviar el correo a los alumnos
-
-    try {
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFileName);
-        $worksheet = $spreadsheet->getActiveSheet();
-        $highestRow = $worksheet->getHighestRow();
-        $duplicates = array();
-
-        // Crear arrays para acumular los datos
-        $usuariosData = array();
-        $alumnosData = array();
-
-        for ($row = 9; $row <= $highestRow; $row++) {
-            $matricula = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-            $nombre = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-            $apellidoP = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-            $apellidoM = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-            $telefono = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
-            $correo = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
-            $carrera = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-            $proceso = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
-            $periodoExcel = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
-
-            // Convierte las carreras y procesos a minúsculas
-            $carrera = strtolower($carrera);
-            $proceso = strtolower($proceso);
-
-            // Validación para evitar campos vacíos
-            if (empty($matricula) || empty($nombre) || empty($apellidoP) || empty($apellidoM) || empty($telefono) || empty($correo) || empty($carrera) || empty($proceso) || empty($periodoExcel)) {
-                // Si alguno de los campos está vacío, omite esta fila y continúa con la siguiente
-                continue;
-            }
-
-            // Verificar si la carrera registrada en el Excel coincide con algún ID de carrera en la base de datos
-            $carreraId = $this->getCarreraId($carrera);
-            if ($carreraId === null) {
-                // La carrera no coincide con ninguna registrada en la base de datos
-                echo '<script>';
-                echo 'alert("La carrera registrada en la fila ' . $row . ' no coincide con ninguna carrera en la base de datos. Matrícula: ' . $matricula . '");';
-                echo '</script>';
-                continue; // Omitir esta fila y continuar con la siguiente
-            }
-
-            // Verificar si el proceso registrado en el Excel coincide con algún ID de proceso en la base de datos
-            $procesoId = $this->getProcesoId($proceso);
-            if ($procesoId === null) {
-                // El proceso no coincide con ninguno registrado en la base de datos
-                echo '<script>';
-                echo 'alert("El proceso registrado en la fila ' . $row . ' no coincide con ningún proceso en la base de datos. Matrícula: ' . $matricula . '");';
-                echo '</script>';
-                continue; // Omitir esta fila y continuar con la siguiente
-            }
-
-            // Obtener el ID del periodo desde el Excel
-            $idPeriodo = $this->getPeriodoId($periodoExcel);
-            if ($idPeriodo === null) {
-                // Manejar el caso en el que el periodo no coincide con ninguno registrado en la base de datos
-                echo '<script>';
-                echo 'alert("El periodo registrado en la fila ' . $row . ' no coincide con ninguno en la base de datos. Matrícula: ' . $matricula . '");';
-                echo '</script>';
-                continue; // Omitir esta fila y continuar con la siguiente
-            }
-
-            // Generar la contraseña a partir de las iniciales del nombre y los últimos dígitos de la matrícula
-            $inicialesNombre = substr($nombre, 0, 2); // Tomar las primeras 2 letras del nombre
-            $ultimosDigitosMatricula = substr($matricula, -4); // Tomar los últimos 4 dígitos de la matrícula
-            $password = $inicialesNombre . $ultimosDigitosMatricula;
-
-            // Encriptar la contraseña usando MD5
-            $passwordHash = md5($password);
-
-            // Obtener el ID del rol "Alumno"
-            $idRol = 4; // Se debe modificar de acuerdo al rol almacenado
-
-            // Agregar datos a los arrays de inserción
-            $usuariosData[] = "('$matricula', '$correo', '$passwordHash', '$idRol', '$nombre', '$apellidoP', '$apellidoM')";
-            $alumnosData[] = "('$matricula', '$nombre', '$apellidoP', '$apellidoM', '$telefono', '$correo', $carreraId, $procesoId, $idPeriodo)";
-            
-            // Enviar correo
-            enviarCorreo($correo, $password);
-        }
-        
-        // Realizar la inserción en la tabla de usuarios
-        if (!empty($usuariosData)) {
-            $usuariosSql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES " . implode(",", $usuariosData);
-            if ($this->mysqli->query($usuariosSql)) {
-                // Realizar la inserción en la tabla de alumnos
-                if (!empty($alumnosData)) {
-                    $alumnosSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, idProceso, IdPeriodo) VALUES " . implode(",", $alumnosData);
-                    if ($this->mysqli->query($alumnosSql)) {
-                        // Confirmar la transacción
-                        $this->mysqli->commit();
-
-                        // Éxito al importar los datos
-                        // Resto del código para manejar registros duplicados
-                        return true;
-                    } else {
-                        // Manejo de errores si la inserción en la tabla de alumnos falla
-                        // Revertir la transacción
-                        $this->mysqli->rollback();
-                        return false;
-                    }
-                }
-            } else {
-                // Manejo de errores si la inserción en la tabla de usuarios falla
-                // Revertir la transacción
-                $this->mysqli->rollback();
-                return false;
-            }
-        }
-
-
-        // Resto del código para manejar registros duplicados
-        $this->mysqli->commit();
-
-        return true; // Éxito al importar los datos
-    } catch (\Exception $e) {
-        // Revertir la transacción en caso de error
-        $this->mysqli->rollback();
-
-        // Manejo de errores
-        echo '<script>alert("Error al importar datos. Redirigiendo al índice...");</script>';
-        echo '<script>window.location.href = "../index.php?c=escolars&a=index";</script>';
-        return false;
-    }
-} */
-    //funcion que obtiene el periodo 
-    public function getPeriodoId($periodo)
-    {
-        // Dividir el período en mes y año
-        $parts = explode('-', $periodo);
-
-        if (count($parts) >= 2) {
-            $mes = $parts[0];
-            $anio = $parts[1];
-
-            // Consulta para buscar un período que coincida con el mes y año del Excel
-            $consultaPeriodo = $this->mysqli->prepare("SELECT IdPeriodo FROM periodo WHERE Meses = ? AND Año = ?");
-
-            // Verificar que $mes sea una cadena y $año sea un valor numérico antes de usarlos en la consulta
-            if (is_numeric($anio)) {
-                $consultaPeriodo->bind_param("si", $mes, $anio);
-                $consultaPeriodo->execute();
-                $resultadoPeriodo = $consultaPeriodo->get_result();
-
-                if ($fila = $resultadoPeriodo->fetch_assoc()) {
-                    return $fila['IdPeriodo'];
-                } else {
-                    return null; // Manejo de error si no se encuentra el período en la base de datos
-                }
-            } else {
-                return null; // Manejo de error si $anio no es un valor numérico
-            }
-        } else {
-            return null; // Manejar el caso en el que la cadena no se dividió como se esperaba
-        }
-    }
+    //             if ($fila = $resultadoPeriodo->fetch_assoc()) {
+    //                 return $fila['IdPeriodo'];
+    //             } else {
+    //                 return null; // Manejo de error si no se encuentra el período en la base de datos
+    //             }
+    //         } else {
+    //             return null; // Manejo de error si $anio no es un valor numérico
+    //         }
+    //     } else {
+    //         return null; // Manejar el caso en el que la cadena no se dividió como se esperaba
+    //     }
+    // }
 
     public function getPeriodo($mes, $año)
     {
@@ -378,33 +194,62 @@ class ImportarModel
                 $idRol = 4; // Se debe modificar de acuerdo al rol almacenado
 
                 // Agregar datos a los arrays de inserción
-                $usuariosData[] = "('$matricula', '$correo', '$passwordHash', '$idRol', '$nombre', '$apellidoP', '$apellidoM')";
-                $alumnosData[] = "('$matricula', '$nombre', '$apellidoP', '$apellidoM', '$telefono', '$correo', $carreraId, $procesoId, ".$periodoId['IdPeriodo'] .")";
+                $usuariosData[$row] = "('$matricula', '$correo', '$passwordHash', '$idRol', '$nombre', '$apellidoP', '$apellidoM')";
+                $alumnosData[$row] = "('$matricula', '$nombre', '$apellidoP', '$apellidoM', '$telefono', '$correo', $carreraId, $procesoId, " . $periodoId['IdPeriodo'] . ")";
 
                 enviarCorreo($correo, $password); //envio de correos
             }
 
+
+            // print_r($usuariosData);
+
+            // echo $usuariosData[14];
+
             // Realizar la inserción en la tabla de usuarios
-            if (!empty($usuariosData)) {
-                $usuariosSql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES " . implode(",", $usuariosData);
-                if ($this->mysqli->query($usuariosSql)) {
-                    // Realizar la inserción en la tabla de alumnos
-                    if (!empty($alumnosData)) {
-                        $alumnosSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, idProceso, idPeriodo) VALUES " . implode(",", $alumnosData);
-                        if ($this->mysqli->query($alumnosSql)) {
-                            // Éxito al importar los datos
-                            // Resto del código para enviar correos y manejar registros duplicados
-                            return true;
-                        } else {
-                            // Manejo de errores si la inserción en la tabla de alumnos falla
-                            return false;
-                        }
+            foreach ($usuariosData as $usuario) {
+                // Remover los paréntesis y las comillas simples
+                $usuarioE = str_replace(array("(", ")", "'"), "", $usuario);
+                // Dividir la cadena en un arreglo
+                $datos = explode(",", $usuarioE);
+                // El primer elemento del arreglo debería ser matricula
+                $matricula = $datos[0];
+                $checkUserSql = "SELECT * FROM usuarios WHERE IdUsuario = '$matricula'";
+                $result = $this->mysqli->query($checkUserSql);
+                if ($result->num_rows == 0) {
+                    // Si el usuario no existe, entonces inserta el nuevo usuario
+                    $usuariosSql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES $usuario";
+                    $resultado = $this->mysqli->query($usuariosSql);
+                    if ($resultado === TRUE) {
+                        
+                       // echo "El usuario se insertó correctamente.";
+                    } else {
+                        //echo "Hubo un error al insertar el usuario: " . $this->mysqli->error;
                     }
-                } else {
-                    // Manejo de errores si la inserción en la tabla de usuarios falla
-                    return false;
                 }
             }
+
+
+            foreach ($alumnosData as $alumno) {
+                $alumnoE = str_replace(array("(", ")", "'"), "", $alumno);
+                // Dividir la cadena en un arreglo
+                $datos = explode(",", $alumnoE);
+                // El primer elemento del arreglo debería ser matricula
+                $matricula = $datos[0];
+                $checkAlumnoSql = "SELECT * FROM alumnos WHERE Matricula = '$matricula'";
+                $result = $this->mysqli->query($checkAlumnoSql);
+                if ($result->num_rows == 0) {
+                    // Si el alumno no existe, entonces inserta el nuevo alumno
+                    $alumnosSql = "INSERT INTO alumnos (Matricula, NombreA, ApellidoP, ApellidoM, Telefono, CorreoE, Carrera, idProceso, idPeriodo) VALUES $alumno";
+                    $resultado = $this->mysqli->query($alumnosSql);
+                    if ($resultado === TRUE) {
+                        //echo "El alumno se insertó correctamente.";
+                    } else {
+                        //echo "Hubo un error al insertar el alumno: " . $this->mysqli->error;
+                    }
+                }
+            }
+
+
 
             // Resto del código para manejar registros duplicados
 

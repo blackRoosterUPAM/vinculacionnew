@@ -16,11 +16,11 @@ function enviarCorreo($correoDestinatario, $contrasena)
     $consultaCarrera->bind_param("i", $carreraId);
     $consultaCarrera->execute();
     $resultadoCarrera = $consultaCarrera->get_result();
-    $alumno = $_POST['nombre_alumno'];
-    $apellidoP = $_POST['apellidoP'];
-    $apellidoM = $_POST['apellidoM'];
-    $matricula = $_POST['matricula'];
-    $carreraId = $_POST['carrera'];
+    $alumno = isset($_POST['nombre_alumno']) ? $_POST['nombre_alumno'] : '';
+    $apellidoP = isset($_POST['apellidoP']) ? $_POST['apellidoP'] : '';
+    $apellidoM = isset($_POST['apellidoM']) ? $_POST['apellidoM'] : '';
+    $matricula = isset($_POST['matricula']) ? $_POST['matricula'] : '';
+    $carreraId = isset($_POST['carreraId']) ? $_POST['carreraId'] : '';
 
     try {
         $mail->isSMTP();

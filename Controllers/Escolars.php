@@ -10,6 +10,7 @@ class EscolarsController
         require_once "Models/ProcesoModel.php";
         require_once "Models/ImportarModel.php";
         require_once "Models/PeriodoModel.php";
+        require_once "Models/AlumnoModel.php";
     }
 
     public function index()
@@ -26,7 +27,8 @@ class EscolarsController
         $periodo = new Periodo();
         $resultPeriodo = $periodo->get_periodos();
 
-        include('views/escolares/carga.php');
+
+        require_once('views/escolares/carga.php');
     }
 
     //funcion que cambia el estado de activo de todos los alumnos
@@ -97,5 +99,28 @@ class EscolarsController
             $resultPeriodo = $periodo->get_periodos();
             include 'Views/Escolares/carga.php';
         }
+    }
+
+
+
+
+    //LüBú 
+    //Funcion para modificar el proceso y periodo del esclavo
+    public function showAlumno($id){
+        $alumno = new Alumno();
+
+        $dataAlumno = $alumno->get_alumno($id);
+
+        return $dataAlumno;
+    }
+
+    public function editAlumno(){
+        $id = $_POST['idp'];
+        $idPeriodo = $_POST['idPeriodop'];
+        $idProceso = $_POST['idProcesop'];
+
+        $alumno = new Alumno();
+        $change = $alumno->cambiarPP($id, $idProceso, $idPeriodo);
+        return $change;
     }
 }

@@ -13,48 +13,48 @@ class SedesController
     //Funcion principal que retorna los alumnos que se postularon a una emperesa en especifico
     public function index()
     {
-
         // Utilizaremos una sesión para que al volver a llamar se actualice y no pierda el contador
         session_start();
 
+        if (isset($_SESSION['id_usuario'])) {
+            $id = $_SESSION['id_usuario'];
+            // Aquí va el código que se ejecutará si la sesión está iniciada
 
-        $id = $_SESSION['id_usuario'];
+            // Creamos modelo para sede
+            $Sede = new Sede();
+            // Hacemos consulta para recuperar con su ID los datos de la sede en la que se inició sesión            
+            $sede = $Sede->get_sede($id);
+            $alumno = new SedeAlumno();
+            $alumnos = $alumno->getAlumnos($id);
+            $vacante = $alumno->getVacantes($id);
 
+            // Verifica si la variable de sesión 'contador' está definida
+            if (!isset($_SESSION['contador']) || $_SESSION['contador'] >= count($alumnos)) {
+                // Si no está definida o si ya se han mostrado todos los alumnos, inicialízala en 0
+                $_SESSION['contador'] = 0;
+            }
 
-        // Creamos modelo para sede
-        $Sede = new Sede();
-        // Hacemos consulta para recuperar con su ID los datos de la sede en la que se inició sesión            
-        $sede = $Sede->get_sede($id);
+            // Obtiene el valor actual del contador
+            $contador = $_SESSION['contador'];
 
+            // Comprueba si hay datos disponibles y configura $data["alumno"] en consecuencia
+            if ($contador < count($alumnos)) {
+                $data["alumno"] = $alumnos[$contador]; // No resta 1 para obtener el índice correcto
 
+                $data["fullName"] = $data["alumno"]["NombreA"] . ' ' . $data["alumno"]["ApellidoP"] . ' ' . $data["alumno"]["ApellidoM"];
+            } else {
+                $data["alumno"] = null;
+                // No necesitas establecer $_SESSION["contador"] en null
+            }
 
-        $alumno = new SedeAlumno();
-        $alumnos = $alumno->getAlumnos($id);
-        $vacante = $alumno->getVacantes($id);
+            // Incrementa el contador en 1
+            $_SESSION['contador']++;
 
-        // Verifica si la variable de sesión 'contador' está definida
-        if (!isset($_SESSION['contador']) || $_SESSION['contador'] >= count($alumnos)) {
-            // Si no está definida o si ya se han mostrado todos los alumnos, inicialízala en 0
-            $_SESSION['contador'] = 0;
-        }
-
-        // Obtiene el valor actual del contador
-        $contador = $_SESSION['contador'];
-
-        // Comprueba si hay datos disponibles y configura $data["alumno"] en consecuencia
-        if ($contador < count($alumnos)) {
-            $data["alumno"] = $alumnos[$contador]; // No resta 1 para obtener el índice correcto
-
-            $data["fullName"] = $data["alumno"]["NombreA"] . ' ' . $data["alumno"]["ApellidoP"] . ' ' . $data["alumno"]["ApellidoM"];
+            require_once "views/Sede/index.php";
         } else {
-            $data["alumno"] = null;
-            // No necesitas establecer $_SESSION["contador"] en null
+            // Si la sesión no está iniciada, redirige al usuario a index.php
+            header("Location: index.php");
         }
-
-        // Incrementa el contador en 1
-        $_SESSION['contador']++;
-
-        require_once "views/Sede/index.php";
     }
 
     //Funcion que descarta a un alumno para que este pueda volver a postularse y manda un correo
@@ -90,33 +90,42 @@ class SedesController
         session_start();
 
 
-        $id = $_SESSION['id_usuario'];
-        $Sede = new Sede();
-        // Hacemos consulta para recuperar con su ID los datos de la sede en la que se inició sesión            
-        $sede = $Sede->get_sede($id);
+        if (isset($_SESSION['id_usuario'])) {
+
+            $id = $_SESSION['id_usuario'];
+            $Sede = new Sede();
+            // Hacemos consulta para recuperar con su ID los datos de la sede en la que se inició sesión            
+            $sede = $Sede->get_sede($id);
 
 
-        $alumnos = new SedeAlumno();
-        $data = $alumnos->alumnoPorConfirmar($id);
-        require_once 'views/Sede/pendientes.php';
+            $alumnos = new SedeAlumno();
+            $data = $alumnos->alumnoPorConfirmar($id);
+            require_once 'views/Sede/pendientes.php';
+        } else {
+            // Si la sesión no está iniciada, redirige al usuario a index.php
+            header("Location: index.php");
+        }
     }
 
     //Alumnos confirmados por la sede
     public function confirmados()
     {
-        // Utilizaremos una sesión para que al volver a llamar se actualice y no pierda el contador
         session_start();
 
+        if (isset($_SESSION['id_usuario'])) {
+            $id = $_SESSION['id_usuario'];
+            $Sede = new Sede();
+            // Hacemos consulta para recuperar con su ID los datos de la sede en la que se inició sesión            
+            $sede = $Sede->get_sede($id);
 
-        $id = $_SESSION['id_usuario'];
-        $Sede = new Sede();
-        // Hacemos consulta para recuperar con su ID los datos de la sede en la que se inició sesión            
-        $sede = $Sede->get_sede($id);
 
-
-        $alumnos = new SedeAlumno();
-        $data = $alumnos->alumnoConfirmado($id);
-        require_once 'views/Sede/confirmados.php';
+            $alumnos = new SedeAlumno();
+            $data = $alumnos->alumnoConfirmado($id);
+            require_once 'views/Sede/confirmados.php';
+        } else {
+            // Si la sesión no está iniciada, redirige al usuario a index.php
+            header("Location: index.php");
+        }
     }
 
     //Aceptar al alumno una vez que ya se entrevisto
@@ -165,7 +174,7 @@ class SedesController
         $data = $sedes->get_sedes();
         require_once "Views/Vinculacion/sedes.php";
     }
-    
+
     public function edit_sede($id)
     {
         $sede = new Sede();

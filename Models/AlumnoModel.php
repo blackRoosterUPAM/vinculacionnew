@@ -238,4 +238,21 @@ class Alumno
             echo "<script>alert('Hubo un problema con la búsqueda');</script>";
         }
     }
+
+	//Lubu
+	//funcion para cambiar el proceso y perido del alumno
+	public function cambiarPP($id, $proceso, $periodo){
+		$sqlUpdate = "UPDATE alumnos SET idProceso= ?, idPeriodo= ? WHERE Matricula = ?";
+        $stmtUpdate = $this->db->prepare($sqlUpdate);
+        $stmtUpdate->bind_param("sss", $proceso, $periodo, $id);
+        $updateSuccess = $stmtUpdate->execute();
+    
+        // Verificar si ambas operaciones se realizaron con éxito
+        if ($updateSuccess) {
+            return true; // Ambas operaciones fueron exitosas
+        } else {
+            return false; // Al menos una de las operaciones falló
+        }
+
+	}
 }
