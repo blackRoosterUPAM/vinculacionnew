@@ -255,4 +255,17 @@ class Alumno
         }
 
 	}
+
+	public function get_estatus() {
+        $sql = "SELECT * FROM docalumnoperiodo";
+        
+        $resultado = $this->db->query($sql);
+        $alumnos = [];
+        
+        while ($row = $resultado->fetch_assoc()) {
+            $alumnos[] = $row;
+        }
+        
+        return $alumnos;
+    }
 }

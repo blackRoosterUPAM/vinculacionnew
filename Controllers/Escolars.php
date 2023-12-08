@@ -27,6 +27,9 @@ class EscolarsController
         $periodo = new Periodo();
         $resultPeriodo = $periodo->get_periodos();
 
+        $alumno = new Alumno();
+        $resultAlumno = $alumno->get_estatus();
+
 
         require_once('views/escolares/carga.php');
     }
