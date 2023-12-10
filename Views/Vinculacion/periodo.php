@@ -103,6 +103,18 @@ License: For each use you must have a valid license purchased only from above li
                     <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex align-items-start">
                         <!--begin::Toolbar container-->
                         <div class="d-flex flex-column flex-row-fluid">
+                            <div class="d-flex flex-stack flex-wrap flex-lg-nowrap gap-4 gap-lg-10 pt-6 pb-18 py-lg-13">
+                                <!--begin::Page title-->
+                                <div class="page-title d-flex align-items-center me-3">
+                                    <img alt="Logo" src="assets/media/svg/misc/layer.svg" class="h-60px me-5" />
+                                    <!--begin::Title-->
+                                    <h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Listado de Periodos
+                                    </h1>
+
+                                    <!--end::Title-->
+                                </div>
+                            </div>
+                            <!--end::Toolbar wrapper=-->
                         </div>
                         <!--end::Toolbar container=-->
                     </div>
@@ -144,16 +156,16 @@ License: For each use you must have a valid license purchased only from above li
                                             <!--end::Nav item-->
 
                                             <!--begin::Nav item-->
-											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index_">PTC</a>
-											</li>
-											<!--end::Nav item-->
-                                            
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index_">PTC</a>
+                                            </li>
+                                            <!--end::Nav item-->
+
                                             <!--begin::Nav item-->
-											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=vinculacion&a=index_">Validación de documentos</a>
-											</li>
-											<!--end::Nav item-->
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=vinculacion&a=index_">Validación de documentos</a>
+                                            </li>
+                                            <!--end::Nav item-->
                                         </ul>
                                         <!--begin::Navs-->
                                     </div>

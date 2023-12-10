@@ -90,7 +90,7 @@ class Vacantes
             $idCarrera = (int)$idCarrera;
 
             $query = "SELECT v.IdSede, v.IdCarrera, v.IdProceso, v.IdPeriodo, v.Perfil, v.Beneficios, v.NumVacantes, v.NumPostulados, v.totalVacantes,
-              c.NombreSede, car.NombrePE as NombreCarrera, p.NombrePE as NombreProceso, per.Meses, per.Año
+              c.NombreSede, car.nombreCarrera as NombreCarrera, p.NombrePE as NombreProceso, per.Meses, per.Año
               FROM vacantes v
               INNER JOIN sede c ON v.IdSede = c.IdSede
               INNER JOIN carrera car ON v.IdCarrera = car.IdCarrera

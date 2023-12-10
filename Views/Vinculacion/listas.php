@@ -101,19 +101,31 @@ License: For each use you must have a valid license purchased only from above li
 			<!--end::Header-->
 			<!--begin::Wrapper-->
 			<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-				<!--begin::Toolbar-->
 				<div id="kt_app_toolbar" class="app-toolbar py-6">
 					<!--begin::Toolbar container-->
 					<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex align-items-start">
 						<!--begin::Toolbar container-->
 						<div class="d-flex flex-column flex-row-fluid">
+							<div class="d-flex flex-stack flex-wrap flex-lg-nowrap gap-4 gap-lg-10 pt-6 pb-18 py-lg-13">
+								<!--begin::Page title-->
+								<div class="page-title d-flex align-items-center me-3">
+									<img alt="Logo" src="assets/media/svg/misc/layer.svg" class="h-60px me-5" />
+									<!--begin::Title-->
+									<h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Listado General
+										<!--begin::Description-->
+										<span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Alumnos</span>
+										<!--end::Description-->
+									</h1>
 
+									<!--end::Title-->
+								</div>
+							</div>
+							<!--end::Toolbar wrapper=-->
 						</div>
 						<!--end::Toolbar container=-->
 					</div>
 					<!--end::Toolbar container-->
 				</div>
-				<br><br>
 				<!--end::Toolbar-->
 				<!--begin::Wrapper container-->
 				<div class="app-container container-xxl">
@@ -235,11 +247,6 @@ License: For each use you must have a valid license purchased only from above li
 									<div class="card-header card-header-stretch">
 										<div class="d-flex my-4">
 											<button type="submit" class="btn btn-sm btn-primary me-3" id="mostrarDatos">Mostrar Datos</button>
-										</div>
-
-										<!--begin::Title-->
-										<div class="card-title">
-											<h3 class="m-0 text-gray-800">Listas de Alumnos</h3>
 										</div>
 										<!--end::Title-->
 										<div class="d-flex my-4">

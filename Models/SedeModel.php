@@ -194,7 +194,7 @@ class Sede
 
 		// Crear condiciones para cada palabra clave
 		foreach ($palabrasClave as $palabra) {
-			$condiciones[] = "LOWER(CONCAT(IdSede,NombreSede, Dirección, CorreoContacto, Telefono, tiposede, Logo)) LIKE '%$palabra%'";
+			$condiciones[] = "LOWER(CONCAT(IdSede,NombreSede, Dirección, CorreoContacto, Telefono, tiposede)) LIKE '%$palabra%'";
 		}
 
 		// Unir condiciones con operador OR

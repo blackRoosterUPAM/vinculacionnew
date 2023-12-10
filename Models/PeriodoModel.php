@@ -89,8 +89,13 @@ class Periodo
 					echo "<tr>";
 					echo "<td class='ps-9'>" . htmlentities($row["Meses"]) . "</td>";
 					echo "<td class='ps-0'>" . htmlentities($row["Año"]) . "</td>";
-					echo "<td style=" . "margin-left: 10px;" . "><a href=" . "?c=periodo&a=periodo_editado&id=" . $row["IdPeriodo"] . ">Eliminar</a></td>";
-					echo "</tr>";
+					if($row['estatus'] == '0'){
+						echo "<td style=" . "margin-left: 10px;" . "><a href=" . "?c=periodo&a=periodo_editado&id=" . $row["IdPeriodo"] . ">Eliminar</a></td>";
+						echo "</tr>";
+					}else{
+						echo "</tr>";
+					}
+					
 
 					// Imprimimos información sobre la imagen directamente
 					echo "<script>console.log('Datos binarios de la imagen:', '" . base64_encode($row["Logo"]) . "');</script>";

@@ -103,7 +103,21 @@ License: For each use you must have a valid license purchased only from above li
                     <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex align-items-start">
                         <!--begin::Toolbar container-->
                         <div class="d-flex flex-column flex-row-fluid">
+                            <div class="d-flex flex-stack flex-wrap flex-lg-nowrap gap-4 gap-lg-10 pt-6 pb-18 py-lg-13">
+                                <!--begin::Page title-->
+                                <div class="page-title d-flex align-items-center me-3">
+                                    <img alt="Logo" src="assets/media/svg/misc/layer.svg" class="h-60px me-5" />
+                                    <!--begin::Title-->
+                                    <h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Listado de Sedes
+                                        <!--begin::Description-->
+                                        <span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Sedes registradas</span>
+                                        <!--end::Description-->
+                                    </h1>
 
+                                    <!--end::Title-->
+                                </div>
+                            </div>
+                            <!--end::Toolbar wrapper=-->
                         </div>
                         <!--end::Toolbar container=-->
                     </div>
@@ -145,10 +159,10 @@ License: For each use you must have a valid license purchased only from above li
                                             <!--end::Nav item-->
 
                                             <!--begin::Nav item-->
-											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index_">PTC</a>
-											</li>
-											<!--end::Nav item-->
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index_">PTC</a>
+                                            </li>
+                                            <!--end::Nav item-->
 
                                             <!--begin::Nav item-->
                                             <li class="nav-item mt-2">
@@ -207,7 +221,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <div class="card-header card-header-stretch">
                                         <!--begin::Title-->
                                         <div class="card-title">
-                                            <h3>Sedes Registradas</h3>
+                                            <h3></h3>
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">

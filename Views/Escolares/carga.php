@@ -237,7 +237,7 @@
                                                 };
 
                                                 //dfsd
-                                                
+
                                                 //zdfd
                                                 foreach ($alumnos as $row) {
                                                     $estatus = $row['Estatus'] == 1 ? 'Activo' : 'Inactivo';
@@ -258,7 +258,7 @@
                                                     echo "<td style='margin-left: 10px;'><a href='?c=registro&a=estatus_editado&matricula=$matricula' class='btn btn-sm btn-primary me-3'>Activar/Desactivar</a></td>";
                                                     echo "<td style='margin-left: 10px;'>";
 
-                                                    // Verificar si todos los documentos están validados
+                                                    $existeMatricula = false; // Variable para verificar si la matrícula del alumno existe
                                                     $todosDocumentosValidados = true;
 
                                                     foreach ($resultAlumno as $doc) {
@@ -267,6 +267,8 @@
                                                         $matricula = $doc["Matricula"];
 
                                                         if ($row['Matricula'] == $matricula) {
+                                                            $existeMatricula = true; // La matrícula del alumno existe
+
                                                             if ($estatus_ptc !== '1' || $estatus_vin !== '1') {
                                                                 $todosDocumentosValidados = false;
                                                                 break;  // Si al menos un documento no está validado, no es necesario seguir verificando
@@ -274,12 +276,15 @@
                                                         }
                                                     }
 
-                                                    // Imprimir el enlace solo si todos los documentos están validados
-                                                    if ($todosDocumentosValidados) {
-                                                        echo "<a class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#exampleModal" . $row['Matricula'] . "'>
-                Editar
-              </a>";
-                                                    }
+                                                    // Verificar si la matrícula del alumno existe
+                                                    if ($existeMatricula) {
+                                                        // Imprimir el enlace solo si todos los documentos están validados
+                                                        if ($todosDocumentosValidados) {
+                                                            echo "<a class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#exampleModal" . $row['Matricula'] . "'>Editar</a>";
+                                                        } else {}
+                                                    } else {}
+
+
 
                                                     echo form($row['Matricula'], $resultProcesos, $resultPeriodo);
 

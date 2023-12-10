@@ -107,13 +107,22 @@ License: For each use you must have a valid license purchased only from above li
 					<div id="kt_app_toolbar_container" class="app-container container-xxl d-flex align-items-start">
 						<!--begin::Toolbar container-->
 						<div class="d-flex flex-column flex-row-fluid">
+							<div class="d-flex flex-stack flex-wrap flex-lg-nowrap gap-4 gap-lg-10 pt-6 pb-18 py-lg-13">
+								<!--begin::Page title-->
+								<div class="page-title d-flex align-items-center me-3">
+									<img alt="Logo" src="assets/media/svg/misc/layer.svg" class="h-60px me-5" />
+									<!--begin::Title-->
+									<h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Listado de PTC</h1>
 
+									<!--end::Title-->
+								</div>
+							</div>
+							<!--end::Toolbar wrapper=-->
 						</div>
 						<!--end::Toolbar container=-->
 					</div>
 					<!--end::Toolbar container-->
 				</div>
-				<br><br>
 				<!--end::Toolbar-->
 				<!--begin::Wrapper container-->
 				<div class="app-container container-xxl">
@@ -239,7 +248,7 @@ License: For each use you must have a valid license purchased only from above li
 
 										<!--begin::Title-->
 										<div class="card-title">
-											<h3 class="m-0 text-gray-800">Listas de Ptc</h3>
+											<h3 class="m-0 text-gray-800"></h3>
 										</div>
 										<!--end::Title-->
 										<div class="d-flex my-4">
@@ -462,7 +471,7 @@ License: For each use you must have a valid license purchased only from above li
 										<!--end::Col-->
 									</div>
 									<!--end::Input group-->
-									
+
 									<div class="row mb-6" style="margin-left:250px;">
 										<label class="col-lg-4 required col-form-label fw-semibold fs-6">
 											<span>Carrera:</span>
@@ -492,7 +501,7 @@ License: For each use you must have a valid license purchased only from above li
 											<div class="row">
 												<!--begin::Col-->
 												<div class="col-lg-6 fv-row">
-													<input type="text" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+													<input type="password" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
 												</div>
 												<!--end::Col-->
 											</div>

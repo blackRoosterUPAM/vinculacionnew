@@ -16,7 +16,7 @@ class VacantesController
     {
         $carrera = new Carrera();
         $result = $carrera->get_carreras();
-        require_once "views/Vinculacion/vacantes.php";
+        require_once "Views/Vinculacion/vacantes.php";
     }
 
     public function show_vacantes_carrera()
@@ -39,7 +39,7 @@ class VacantesController
 
         $periodo = new Vacantes();
         $peri = $proceso->get_periodo();
-        require_once "views/Vinculacion/Selec_cupos.php";
+        require_once "Views/Vinculacion/Selec_cupos.php";
     }
 
     public function new_vacante()
@@ -58,7 +58,7 @@ class VacantesController
 
         $carrera = new Carrera();
         $result = $carrera->get_carreras();
-        require_once "views/Vinculacion/vacantes.php";
+        require_once "Views/Vinculacion/vacantes.php";
     }
 
     public function mostrar_busqueda()

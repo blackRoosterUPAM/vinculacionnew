@@ -88,70 +88,85 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
                 <div id="kt_app_toolbar" class="app-toolbar py-6">
                     <!--begin::Toolbar container-->
                     <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex align-items-start">
+                        <!--begin::Toolbar container-->
+                        <div class="d-flex flex-column flex-row-fluid">
+                            <div class="d-flex flex-stack flex-wrap flex-lg-nowrap gap-4 gap-lg-10 pt-6 pb-18 py-lg-13">
+                                <!--begin::Page title-->
+                                <div class="page-title d-flex align-items-center me-3">
+                                    <img alt="Logo" src="assets/media/svg/misc/layer.svg" class="h-60px me-5" />
+                                    <!--begin::Title-->
+                                    <h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Validación de documentos</h1>
+
+                                    <!--end::Title-->
+                                </div>
+                            </div>
+                            <!--end::Toolbar wrapper=-->
+                        </div>
+                        <!--end::Toolbar container=-->
                     </div>
                     <!--end::Toolbar container-->
                 </div>
                 <!--end::Toolbar-->
-                
-				<!--begin::Wrapper container-->
-				<div class="app-container container-xxl">
-					<!--begin::Main-->
-					<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-						<!--begin::Content wrapper-->
-						<div class="d-flex flex-column flex-column-fluid">
-							<!--begin::Content-->
-							<div id="kt_app_content" class="app-content">
-								<!--begin::Navbar-->
-								<div class="card mb-5 mb-xl-10">
-									<div class="card-body pt-9 pb-0">
-										<!--begin::Navs-->
-										<ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
-											<!--begin::Nav item-->
-											<li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index">Listas</a>
-											</li>
-											<!--end::Nav item-->
-											<!--begin::Nav item-->
-											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=sedes&a=show_sede">Sedes</a>
-											</li>
-											<!--end::Nav item-->
-											<!--begin::Nav item-->
-											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=vacantes&a=index_2">Vacantes</a>
-											</li>
-											<!--end::Nav item-->
 
-											<!--begin::Nav item-->
-											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=periodo&a=show_periodos">Periodos</a>
-											</li>
-											<!--end::Nav item-->
+                <!--begin::Wrapper container-->
+                <div class="app-container container-xxl">
+                    <!--begin::Main-->
+                    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                        <!--begin::Content wrapper-->
+                        <div class="d-flex flex-column flex-column-fluid">
+                            <!--begin::Content-->
+                            <div id="kt_app_content" class="app-content">
+                                <!--begin::Navbar-->
+                                <div class="card mb-5 mb-xl-10">
+                                    <div class="card-body pt-9 pb-0">
+                                        <!--begin::Navs-->
+                                        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                                            <!--begin::Nav item-->
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index">Listas</a>
+                                            </li>
+                                            <!--end::Nav item-->
+                                            <!--begin::Nav item-->
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=sedes&a=show_sede">Sedes</a>
+                                            </li>
+                                            <!--end::Nav item-->
+                                            <!--begin::Nav item-->
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=vacantes&a=index_2">Vacantes</a>
+                                            </li>
+                                            <!--end::Nav item-->
 
                                             <!--begin::Nav item-->
-											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index_">PTC</a>
-											</li>
-											<!--end::Nav item-->
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=periodo&a=show_periodos">Periodos</a>
+                                            </li>
+                                            <!--end::Nav item-->
 
-											<!--begin::Nav item-->
-											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="?c=vinculacion&a=index_">Validación de documentos</a>
-											</li>
-											<!--end::Nav item-->
-										</ul>
-										<!--begin::Navs-->
-									</div>
-								</div>
-								<!--end::Navbar-->
+                                            <!--begin::Nav item-->
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index_">PTC</a>
+                                            </li>
+                                            <!--end::Nav item-->
+
+                                            <!--begin::Nav item-->
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="?c=vinculacion&a=index_">Validación de documentos</a>
+                                            </li>
+                                            <!--end::Nav item-->
+                                        </ul>
+                                        <!--begin::Navs-->
+                                    </div>
+                                </div>
+                                <!--end::Navbar-->
                                 <br><br><br><br><br>
-							</div>
-							<!--end::Content-->
-						</div>
-					</div>
-					<!--end:::Main-->
-				</div>
-				<!--end::Wrapper container-->
+                            </div>
+                            <!--end::Content-->
+                        </div>
+                    </div>
+                    <!--end:::Main-->
+                </div>
+                <!--end::Wrapper container-->
                 <!--begin::Wrapper container-->
                 <div class="app-container container-xxl">
                     <!--begin::Main-->
@@ -215,8 +230,8 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
                                                     // </form>
 
                                                     // ';
-                                                     echo ' <a href="?c=vinculacion&a=validarDoc_&id='.$row['Matricula'].'&id2='.$row['IdDocumento'],'" class="btn btn-sm btn-success me-0.3" id="openPdfButton">Validar</a>
-                                                    <a href="?c=vinculacion&a=descartarDoc_&id='.$row['Matricula'].'&id2='.$row['IdDocumento'],'" class="btn btn-sm btn-danger me-0.3" id="openPdfButton">Anular</a>
+                                                    echo ' <a href="?c=vinculacion&a=validarDoc_&id=' . $row['Matricula'] . '&id2=' . $row['IdDocumento'], '" class="btn btn-sm btn-success me-0.3" id="openPdfButton">Validar</a>
+                                                    <a href="?c=vinculacion&a=descartarDoc_&id=' . $row['Matricula'] . '&id2=' . $row['IdDocumento'], '" class="btn btn-sm btn-danger me-0.3" id="openPdfButton">Anular</a>
                                                      ';
 
                                                     echo "</tr>";
@@ -360,32 +375,32 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
     </script> -->
 
     <script>
-    $(document).ready(function() {
-        // Agregar un evento al botón "validarDocumento"
-        $("#validard").click(function() {
-            // Obtener la matrícula y el ID del documento
-            var matricula = $("#matricula").val();
-            var idDoc = $("#idDoc").val();
-            var email = $("#email").val();
+        $(document).ready(function() {
+            // Agregar un evento al botón "validarDocumento"
+            $("#validard").click(function() {
+                // Obtener la matrícula y el ID del documento
+                var matricula = $("#matricula").val();
+                var idDoc = $("#idDoc").val();
+                var email = $("#email").val();
 
-            // Crear la URL de la solicitud GET
-            var url = "index.php?c=ptc&a=validarDoc&id=" + matricula + "&id2=" + idDoc;
+                // Crear la URL de la solicitud GET
+                var url = "index.php?c=ptc&a=validarDoc&id=" + matricula + "&id2=" + idDoc;
 
-            // Realizar la solicitud AJAX GET
-            $.get(url, function(response) {
-                // Manejar la respuesta de la solicitud
-                console.log("Se modificó");
+                // Realizar la solicitud AJAX GET
+                $.get(url, function(response) {
+                    // Manejar la respuesta de la solicitud
+                    console.log("Se modificó");
 
-                // Mostrar una alerta de éxito
-                Swal.fire({
-                    title: 'Éxito',
-                    text: '¡Envío exitoso!',
-                    icon: 'success'
+                    // Mostrar una alerta de éxito
+                    Swal.fire({
+                        title: 'Éxito',
+                        text: '¡Envío exitoso!',
+                        icon: 'success'
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 
 
 

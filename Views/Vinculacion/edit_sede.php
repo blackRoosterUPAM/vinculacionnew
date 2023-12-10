@@ -1,3 +1,22 @@
+<?php
+session_start(); // Asegúrate de iniciar la sesión en cada vista que utilice sesiones
+
+// Verifica si la variable de sesión existe antes de mostrarla
+if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
+    $idUsuario = $_SESSION['id_usuario'];
+    $name = $_SESSION['name'];
+    if ($name == 'vinculacion') {
+    } else {
+        // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
+        header('location: index.php');
+        exit; // Detener la ejecución del script
+    }
+} else {
+    // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
+    header('location: index.php');
+    exit; // Detener la ejecución del script
+}
+?>
 <!DOCTYPE html>
 <!--
 Author: Keenthemes
@@ -15,28 +34,28 @@ License: For each use you must have a valid license purchased only from above li
 <!--begin::Head-->
 
 <head>
-<base href="" />
-	<title>UPAM - Vinculación</title>
-	<meta charset="utf-8" />
-	<meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
-	<meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta property="og:locale" content="en_US" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content="Metronic - Bootstrap Admin Template, HTML, VueJS, React, Angular. Laravel, Asp.Net Core, Ruby on Rails, Spring Boot, Blazor, Django, Express.js, Node.js, Flask Admin Dashboard Theme & Template" />
-	<meta property="og:url" content="https://keenthemes.com/metronic" />
-	<meta property="og:site_name" content="Keenthemes | Metronic" />
-	<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-	<link rel="shortcut icon" href="assets/media/logos/upam.ico" />
-	<!--begin::Fonts(mandatory for all pages)-->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-	<!--end::Fonts-->
-	<!--begin::Vendor Stylesheets(used for this page only)-->
-	<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-	<!--end::Vendor Stylesheets-->
-	<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-	<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-	<link href="assets/css/style.bundle_2.css" rel="stylesheet" type="text/css" />
+    <base href="" />
+    <title>UPAM - Vinculación</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
+    <meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Metronic - Bootstrap Admin Template, HTML, VueJS, React, Angular. Laravel, Asp.Net Core, Ruby on Rails, Spring Boot, Blazor, Django, Express.js, Node.js, Flask Admin Dashboard Theme & Template" />
+    <meta property="og:url" content="https://keenthemes.com/metronic" />
+    <meta property="og:site_name" content="Keenthemes | Metronic" />
+    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+    <link rel="shortcut icon" href="assets/media/logos/upam.ico" />
+    <!--begin::Fonts(mandatory for all pages)-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Vendor Stylesheets(used for this page only)-->
+    <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Vendor Stylesheets-->
+    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.bundle_2.css" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     <script>
         // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
@@ -84,31 +103,19 @@ License: For each use you must have a valid license purchased only from above li
                     <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex align-items-start">
                         <!--begin::Toolbar container-->
                         <div class="d-flex flex-column flex-row-fluid">
-                            <!--begin::Toolbar wrapper-->
-                            <div class="d-flex align-items-center pt-1">
-                                <!--begin::Breadcrumb-->
-                                <ul class="breadcrumb breadcrumb-separatorless fw-semibold">
-                                    <!--begin::Item-->
-                                    <li class="breadcrumb-item text-white fw-bold lh-1">
-                                        <a href="../../demo30/dist/index.php" class="text-white text-hover-primary">
-                                            <i class="ki-outline ki-home text-white fs-3"></i>
-                                        </a>
-                                    </li>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="breadcrumb-item">
-                                        <i class="ki-outline ki-right fs-4 text-white mx-n1"></i>
-                                    </li>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="breadcrumb-item text-white fw-bold lh-1">Account</li>
-                                    <!--end::Item-->
-                                </ul>
-                                <!--end::Breadcrumb-->
-                            </div>
-                            <!--end::Toolbar wrapper=-->
-                            <!--begin::Toolbar wrapper=-->
                             <div class="d-flex flex-stack flex-wrap flex-lg-nowrap gap-4 gap-lg-10 pt-6 pb-18 py-lg-13">
+                                <!--begin::Page title-->
+                                <div class="page-title d-flex align-items-center me-3">
+                                    <img alt="Logo" src="assets/media/svg/misc/layer.svg" class="h-60px me-5" />
+                                    <!--begin::Title-->
+                                    <h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Listado de Sedes
+                                        <!--begin::Description-->
+                                        <span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Sedes registradas</span>
+                                        <!--end::Description-->
+                                    </h1>
+
+                                    <!--end::Title-->
+                                </div>
                             </div>
                             <!--end::Toolbar wrapper=-->
                         </div>
@@ -152,10 +159,10 @@ License: For each use you must have a valid license purchased only from above li
                                             </li>
                                             <!--end::Nav item-->
                                             <!--begin::Nav item-->
-											<li class="nav-item mt-2">
-												<a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=vinculacion&a=index_">Validación de documentos</a>
-											</li>
-											<!--end::Nav item-->
+                                            <li class="nav-item mt-2">
+                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=vinculacion&a=index_">Validación de documentos</a>
+                                            </li>
+                                            <!--end::Nav item-->
                                         </ul>
                                         <!--begin::Navs-->
                                     </div>
@@ -176,7 +183,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <div id="kt_account_settings_profile_details" class="collapse show">
                                         <!--begin::Form-->
                                         <form action="index.php?c=sedes&a=sede_editado" method="post">
-                                        <?php
+                                            <?php
 
                                             ?>
                                             <input type="hidden" name="id_sede" value="<?php echo $id ?>">
@@ -193,7 +200,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="identificador" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["IdSede"] ?>" required/>
+                                                                <input type="text" name="identificador" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["IdSede"] ?>" required />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
@@ -214,7 +221,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="nombre_sede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["NombreSede"] ?>" required/>
+                                                                <input type="text" name="nombre_sede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["NombreSede"] ?>" required />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
@@ -235,7 +242,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="direccion" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["Dirección"] ?>" required/>
+                                                                <input type="text" name="direccion" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["Dirección"] ?>" required />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
@@ -256,7 +263,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="correo" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["CorreoContacto"] ?>" required/>
+                                                                <input type="text" name="correo" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["CorreoContacto"] ?>" required />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
@@ -277,7 +284,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="telefono" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["Telefono"] ?>" required maxlength="10"/>
+                                                                <input type="text" name="telefono" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["Telefono"] ?>" required maxlength="10" />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
@@ -298,7 +305,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="tiposede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["tiposede"] ?>" required/>
+                                                                <input type="text" name="tiposede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["tiposede"] ?>" required />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
