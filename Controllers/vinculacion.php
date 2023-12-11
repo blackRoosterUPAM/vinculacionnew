@@ -28,7 +28,7 @@ class VinculacionController {
         $modelo = new Vinculacion();
         $solicitudes = $modelo->getSolicitudes();
 
-        include('Views/vinculacion/validacion.php');
+        include('Views/vinculacion/Validacion.php');
     }
 
     public function validarDoc_($matricula, $idDoc){

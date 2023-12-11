@@ -164,7 +164,7 @@ class PtcController
 
             $carrera = new Carrera();
             $result = $carrera->get_carreras();
-            include('Views/vinculacion/ptc.php');
+            include('Views/vinculacion/Ptc.php');
         }
     }
 }
