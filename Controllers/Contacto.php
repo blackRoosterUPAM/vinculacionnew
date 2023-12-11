@@ -2,7 +2,7 @@
 
 class ContactoController
 {
-
+    //LRGA03
     //Incuimos los modelos que vamos a utilizar
     public function __construct()
     {
@@ -14,21 +14,7 @@ class ContactoController
     {
         $sedes = new ContactoSede();
         $data = $sedes->getSolicitudes();
-        require_once "Views/ptc/ContactoSede.php";
+        require_once "Views/Ptc/ContactoSede.php";
     }
-
-    /* public function show_sede()
-{
-    $sedes = new ContactoSede();
-    session_start();
-    // Obtener el correo del PTC de la sesión
-    $correoPtc = $_SESSION['correo_ptc'] ?? null;
-
-    if ($correoPtc) {
-        $solicitudes = $sedes->getSolicitudes($correoPtc);
-        require_once "Views/ptc/ContactoSede.php";
-    }
-}
-    */
 }
 ?>

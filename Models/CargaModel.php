@@ -1,5 +1,6 @@
 <?php
 class Escolares{
+    //LRGA03
     private $db;
     private $escolare;
 

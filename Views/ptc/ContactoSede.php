@@ -81,7 +81,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
         <!--begin::Page-->
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             <!--begin::Header-->
-            <?php include 'header.php'; ?>
+            <?php include 'Header.php'; ?>
             <!--end::Header-->
             <!--begin::Wrapper-->
             <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
@@ -197,7 +197,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
                         </div>
                         <!--end::Content wrapper-->
                         <!--begin::Footer-->
-                        <?php include 'footer.php'; ?>
+                        <?php include 'Footer.php'; ?>
                         <!--end::Footer-->
                     </div>
                     <!--end:::Main-->
@@ -238,5 +238,6 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
     <!--end::Javascript-->
 </body>
 <!--end::Body-->
+<!--LRGA03-->
 
 </html>

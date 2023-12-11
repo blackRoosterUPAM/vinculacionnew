@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
 $mail = new PHPMailer(true);
-
+    //LRGA03
      function enviarCorreo($correoDestinatario, $tipoD) {
         $mail = new PHPMailer(true);
 

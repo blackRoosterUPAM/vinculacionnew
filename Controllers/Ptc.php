@@ -7,6 +7,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class PtcController
 {
+    //LRGA03
     //funcion principal
     public function __construct()
     {
@@ -42,7 +43,7 @@ class PtcController
 
         if ($correoPtc) {
             $solicitudes = $modelo->getSolicitudes($correoPtc);
-            include('views/ptc/ptc.php');
+            include('Views/Ptc/Ptc.php');
         }
     }
 
@@ -57,7 +58,7 @@ class PtcController
     {
         $modelo = new Ptc();
         $doc = $modelo->updateStatusDocInactivo($matricula, $idDoc);
-        require_once 'config/correoPTC.php';
+        require_once 'config/CorreoPTC.php';
         $datos = $modelo->getCorreo($matricula);
         enviarCorreo($datos['CorreoE'], 'sss');
         header('location: index.php?c=ptc&a=index');
@@ -164,7 +165,7 @@ class PtcController
 
             $carrera = new Carrera();
             $result = $carrera->get_carreras();
-            include('Views/vinculacion/Ptc.php');
+            include('Views/Vinculacion/Ptc.php');
         }
     }
 }

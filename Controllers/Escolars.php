@@ -2,6 +2,7 @@
 
 class EscolarsController
 {
+    //LRGA03
 
     public function __construct()
     {
@@ -31,7 +32,7 @@ class EscolarsController
         $resultAlumno = $alumno->get_estatus();
 
 
-        require_once('views/escolares/carga.php');
+        require_once('Views/Escolares/Carga.php');
     }
 
     //funcion que cambia el estado de activo de todos los alumnos
@@ -100,7 +101,7 @@ class EscolarsController
 
             $periodo = new Periodo();
             $resultPeriodo = $periodo->get_periodos();
-            include 'Views/Escolares/carga.php';
+            include 'Views/Escolares/Carga.php';
         }
     }
 

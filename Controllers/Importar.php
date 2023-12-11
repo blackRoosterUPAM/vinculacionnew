@@ -3,6 +3,7 @@ require_once('Models/ImportarModel.php'); // Ajusta la ruta según tu estructura
 
 class ImportarController
 {
+    //LRGA03
     public function importar()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo'])) {

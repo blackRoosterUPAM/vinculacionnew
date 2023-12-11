@@ -9,6 +9,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xls\MD5;
 
 class ImportarModel
 {
+    //LRGA03
     private $mysqli;
     private $carrerasDisponibles;
     private $procesosDisponibles;
@@ -56,38 +57,6 @@ class ImportarModel
     }
 
 
-    // //funcion que obtiene el periodo 
-    // public function getPeriodoId($periodo)
-    // {
-    //     // Dividir el período en mes y año
-    //     $parts = explode('-', $periodo);
-
-    //     if (count($parts) >= 2) {
-    //         $mes = $parts[0];
-    //         $anio = $parts[1];
-
-    //         // Consulta para buscar un período que coincida con el mes y año del Excel
-    //         $consultaPeriodo = $this->mysqli->prepare("SELECT IdPeriodo FROM periodo WHERE Meses = ? AND Año = ?");
-
-    //         // Verificar que $mes sea una cadena y $año sea un valor numérico antes de usarlos en la consulta
-    //         if (is_numeric($anio)) {
-    //             $consultaPeriodo->bind_param("si", $mes, $anio);
-    //             $consultaPeriodo->execute();
-    //             $resultadoPeriodo = $consultaPeriodo->get_result();
-
-    //             if ($fila = $resultadoPeriodo->fetch_assoc()) {
-    //                 return $fila['IdPeriodo'];
-    //             } else {
-    //                 return null; // Manejo de error si no se encuentra el período en la base de datos
-    //             }
-    //         } else {
-    //             return null; // Manejo de error si $anio no es un valor numérico
-    //         }
-    //     } else {
-    //         return null; // Manejar el caso en el que la cadena no se dividió como se esperaba
-    //     }
-    // }
-
     public function getPeriodo($mes, $año)
     {
         $sql = "SELECT * FROM periodo WHERE Meses LIKE ? AND Año = ? AND estatus = 1 limit 1";
@@ -116,7 +85,7 @@ class ImportarModel
     public function importarDesdeExcel($archivo)
     {
         $inputFileName = $archivo['tmp_name']; // Ruta del archivo Excel subido
-        require_once 'config/correoUserContra.php'; //permite enviar el correo a los alumnos
+        require_once 'config/CorreoUserContra.php'; //permite enviar el correo a los alumnos
 
         try {
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFileName);
@@ -200,11 +169,6 @@ class ImportarModel
                 enviarCorreo($correo, $password); //envio de correos
             }
 
-
-            // print_r($usuariosData);
-
-            // echo $usuariosData[14];
-
             // Realizar la inserción en la tabla de usuarios
             foreach ($usuariosData as $usuario) {
                 // Remover los paréntesis y las comillas simples
@@ -248,10 +212,6 @@ class ImportarModel
                     }
                 }
             }
-
-
-
-            // Resto del código para manejar registros duplicados
 
             return true; // Éxito al importar los datos
         } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
@@ -314,13 +274,10 @@ class ImportarModel
         return null;
     }
 
-    //Funcion que retorna el id del proceso dependiendo el nombre
 
-
-    //funciòn que permite registrar al alumno de manra manual
     public function insertarAlumnoIndividual($matricula, $nombre, $apellidoP, $apellidoM, $telefono, $correo, $carrera, $proceso, $periodo)
     {
-        require_once 'config/correoUserContra.php'; //permite enviar el correo a los alumnos
+        require_once 'config/CorreoUserContra.php'; //permite enviar el correo a los alumnos
 
         // Generar la contraseña a partir de las iniciales del nombre y los últimos dígitos de la matrícula
         $inicialesNombre = substr($nombre, 0, 2); // Tomar las primeras 2 letras del nombre

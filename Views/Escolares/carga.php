@@ -61,7 +61,7 @@
         <!--begin::Page-->
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             <!--begin::Header-->
-            <?php include('header.php'); ?>
+            <?php include('Header.php'); ?>
             <!--end::Header-->
             <!--begin::Wrapper-->
             <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
@@ -136,6 +136,7 @@
                                         </form>
                                     </div>
                                     <!--begin::Table-->
+                                    <!--LRGA03-->
                                     <div class="table table-striped">
                                         <table class="table-responsive table align-middle table-row-dashed fs-8 gy-5" id="kt_customers_table">
                                             <thead class="bg-primary">
@@ -235,10 +236,6 @@
                                                     });
                                                     </script>';
                                                 };
-
-                                                //dfsd
-
-                                                //zdfd
                                                 foreach ($alumnos as $row) {
                                                     $estatus = $row['Estatus'] == 1 ? 'Activo' : 'Inactivo';
                                                     $color = $row['Estatus'] == 1 ? 'green' : 'red';
@@ -281,11 +278,10 @@
                                                         // Imprimir el enlace solo si todos los documentos están validados
                                                         if ($todosDocumentosValidados) {
                                                             echo "<a class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#exampleModal" . $row['Matricula'] . "'>Editar</a>";
-                                                        } else {}
-                                                    } else {}
-
-
-
+                                                        } else {
+                                                        }
+                                                    } else {
+                                                    }
                                                     echo form($row['Matricula'], $resultProcesos, $resultPeriodo);
 
                                                     echo "</td>";
@@ -296,8 +292,6 @@
                                         </table>
                                     </div>
                                     <!--end::Table-->
-
-
                                     <div>
                                         <a href="?c=escolars&a=statusA" id="activarDesactivarTodos" class="btn btn-sm btn-primary me-3">
                                             Activar Todos
@@ -307,6 +301,7 @@
                                         </a>
                                     </div>
                                 </div>
+                                <!--LRGA03-->
                             </div>
                             <!--end::Content wrapper-->
                         </div>
@@ -573,6 +568,9 @@
                 </div>
             </div>
         </div>
+        <!--begin::Footer-->
+        <?php include 'Footer.php'; ?>
+        <!--end::Footer-->
         <!--end::Modal - Offer A Deal-->
 
         <!--begin::Scrolltop-->
@@ -686,39 +684,6 @@
         <!--end::Custom Javascript-->
         <!--end::Javascript-->
         <!-- scrip para modificar alumno -->
-        <!-- <script>
-            // Agregar un evento al botón con id "prueba" cuando se haga clic
-            $("#changePP").submit(function(event) {
-                event.preventDefault();
-
-                var formData = $("#changePP").serialize();
-
-
-
-                $.ajax({
-                    type: "POST",
-                    url: "?c=escolars&a=editAlumno",
-                    data: formData,
-                    success: function(response) {
-                        Swal.fire({
-                            title: 'Cambio Realizado',
-                            text: '¡OK!',
-                            icon: 'success'
-                        }).then((result) => {
-                            location.href = "index.php?c=escolars&a=index";
-                        });
-                    },
-                    error: function() {
-                        console.log("Entro al error funcion");
-                        Swal.fire({
-                            title: 'Error',
-                            text: '¡Error al enviar la solicitud!',
-                            icon: 'error'
-                        });
-                    }
-                });
-            });
-        </script> -->
 </body>
 <!--end::Body-->
 

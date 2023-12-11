@@ -1,6 +1,7 @@
 <?php
 class ContactoSede
 {
+	//LRGA03
 	private $db;
 	private $sede;
 

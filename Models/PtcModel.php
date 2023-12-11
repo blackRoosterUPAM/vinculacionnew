@@ -1,5 +1,7 @@
 <?php
 class ptc{
+
+    //LRGA03
     private $db;
     private $ptc;
     private $estatus;
