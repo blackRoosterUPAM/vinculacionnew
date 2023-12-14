@@ -367,7 +367,7 @@ License: For each use you must have a valid license purchased only from above li
 
 					<!--begin::Image-->
 
-					<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="assets/media/misc/fondoUpam5.png" alt="" />
+					<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="assets/media/misc/fondoUPAM5.png" alt="" />
 
 					<!--end::Image-->
 
