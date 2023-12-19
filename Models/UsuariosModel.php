@@ -15,7 +15,7 @@ class UsuarioModel
     {
         $contrasena = md5($contrasena);
 
-        $query = "SELECT * FROM usuarios WHERE CorreoE = '$correo' AND Contraseña = '$contrasena'";
+        $query = "SELECT * FROM usuarios inner join roles on usuarios.idRol = roles.idRol WHERE CorreoE = '$correo' AND Contraseña = '$contrasena'";
         $resultado = mysqli_query($this->db, $query);
 
         if (mysqli_num_rows($resultado) > 0) {

@@ -24,6 +24,7 @@ class UsuariosController
             // Inicio de sesión exitoso
             $id = $usuario['IdUsuario'];
             $rol = $usuario['idRol'];
+            $nombreRol = $usuario['nombreRol'];
 
             // Puedes realizar operaciones adicionales aquí si es necesario
             if ($rol == 5) {
@@ -66,7 +67,14 @@ class UsuariosController
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de PTC
                 header('location: index.php?c=ptc&a=index');
-            } else {
+            } elseif ($nombreRol == "Graficas") {
+                session_start();
+                $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
+                $_SESSION['name'] = 'Graficas';                
+                header('location: index.php?c=estad&a=index');
+
+            }
+            else {
                 header('location: index.php');
             }
         } else {
