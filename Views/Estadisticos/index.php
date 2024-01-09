@@ -13,6 +13,10 @@
     <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -64,7 +68,7 @@
                                     <!--begin::Title-->
                                     <h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Estadísticas
                                         <!--begin::Description-->
-                                        <span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Alumnos</span>
+                                        <span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Usuarios</span>
                                         <!--end::Description-->
                                     </h1>
                                     <!--end::Title-->
@@ -79,6 +83,7 @@
                 </div>
                 <!--end::Toolbar-->
                 <!--begin::Wrapper container-->
+                <!--begin::Wrapper container-->
                 <div class="app-container container-xxl">
                     <!--begin::Main-->
                     <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -86,42 +91,325 @@
                         <div class="d-flex flex-column flex-column-fluid">
                             <!--begin::Content-->
                             <div id="kt_app_content" class="app-content">
-                                <!-- Contenido de la pagina -->
-                                <!-- Dropdown para seleccionar la carrera -->
-                                <label for="carreraSelect">Selecciona una carrera:</label>
-                                <select id="carreraSelect" class="form-control"></select>
+                            <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+									<!--begin::Input group-->
+									<div class="row mb-6">
+										<div class="d-flex my-4">
+											<label class="col-lg-4 col-form-label fw-semibold fs-6">
+												<span>Buscar:</span>
+											</label>
+											<input type="text" id="busqueda" name="busqueda" class="form-control bg-transparent" required style="width: 70%; margin-left: -18%;">
+											<button type="button" id="buscarDatos" class="btn btn-sm btn-primary me-3" style="margin-left: 2%;">Buscar</button>
+										</div>
+									</div>
+								</div>
 
-                                <!-- Contenedor para la gráfica de alumnos activos e inactivos -->
-                                <div style="width: 70%; margin: 20px auto;">
-                                    <canvas id="graficaAlumnos"></canvas>
+								<script>
+									// Cuando se hace clic en el botón "Buscar", hacer una solicitud AJAX para obtener los datos de los alumnos
+									$('#buscarDatos').click(function() {
+										var searchText = $('#busqueda').val();
+
+										// Verificar si se ha ingresado un texto de búsqueda
+										if (searchText !== '') {
+											// Realizar una solicitud AJAX al servidor para obtener los datos de los alumnos
+											$.ajax({
+												url: "index.php?c=estad&a=mostrar_busqueda", // Reemplaza 'buscar_alumnos.php' con la ruta correcta a tu archivo PHP que realiza la búsqueda
+												method: 'POST',
+												data: {
+													busqueda: searchText
+												},
+												success: function(response) {
+													// Rellenar la tabla de alumnos con los datos recibidos
+													$('#alumnos').html(response);
+												},
+												error: function(xhr, status, error) {
+													console.error(error);
+												}
+											});
+										} else {
+											alert("Por favor, ingresa un texto de búsqueda antes de buscar.");
+										}
+									});
+								</script>
+
+                                <!--begin::Referred users-->
+                                <div class="card">
+                                    <!--begin::Header-->
+                                    <div class="card-header card-header-stretch">
+                                        <!--begin::Title-->
+                                        <div class="card-title">
+                                            <h3></h3>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                            <!--begin::Actions-->
+                                            <div class="d-flex my-4">
+                                                <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Agregar usuario</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end::Header-->
+                                    <!--begin::Tab content-->
+                                    <div id="kt_referred_users_tab_content" class="tab-content">
+                                        <!--begin::Tab panel-->
+                                        <div id="kt_referrals_1" class="card-body p-0 tab-pane fade show active" role="tabpanel">
+                                            <div class="table-responsive">
+                                                <!--begin::Table-->
+                                                <table class="table align-middle table-row-bordered table-row-solid gy-4 gs-9">
+                                                    <thead class="border-gray-200 fs-5 fw-semibold bg-lighten">
+                                                        <tr>
+                                                            <th class="min-w-175px ps-9">Matricula</th>
+                                                            <th class="min-w-150px px-0">Nombre</th>
+                                                            <th class="min-w-150px px-0">Correo</th>
+                                                            <th class="min-w-150px px-0">Rol</th>
+                                                            <th class="min-w-150px px-0">Acción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="alumnos" class="fs-6 fw-semibold text-gray-600">
+                                                        <?php
+
+                                                        foreach ($usuarios as $row) {
+                                                            echo "<tr>";
+                                                            echo "<td class='ps-9'>" . $row["IdUsuario"] . "</td>";
+                                                            echo "<td class='ps-0'>" . $row["NombreU"] . " " . $row["APaternoU"] . " " . $row["AMaternoU"] . "</td>";
+                                                            echo "<td class='ps-0'>" . $row["CorreoE"] . "</td>";
+                                                            echo "<td class='ps-0'>" . $row["nombreRol"] . "</td>";
+                                                            echo "<td class='ps-0'>
+                                                            <a href='index.php?c=estad&a=edit_usuario&id=" . $row["IdUsuario"] . "'>Editar Usuario</a> /
+                                                            <a href='index.php?c=estad&a=eli_usuario&id=" . $row["IdUsuario"] . "'>Eliminar</a>
+                                                            </td>";
+                                                            echo "</tr>";
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                    <!--end::Tbody-->
+                                                </table>
+                                                <!--end::Table-->
+                                            </div>
+                                        </div>
+                                        <!--end::Tab panel-->
+                                    </div>
+                                    <!--end::Tab content-->
                                 </div>
-        <br>
-                                <!-- Dropdown para seleccionar la sede -->
-                                <label for="sedeSelect">Selecciona una sede:</label>
-                                <select id="sedeSelect" class="form-control">
-                                    <!-- Las opciones se llenarán dinámicamente al cargar la página -->
-                                </select>
-
-                                <!-- Contenedor para la gráfica de alumnos aceptados, pendientes y rechazados -->
-                                <div style="width: 70%; margin: 20px auto;">
-                                    <canvas id="graficaAlumnosAP"></canvas>
-                                </div>
-
-
-
+                                <!--end::Referred users-->
                             </div>
                             <!--end::Content-->
                         </div>
                         <!--end::Content wrapper-->
+                        <!--begin::Footer-->
+                        <?php include 'footer.php'; ?>
+                        <!--end::Footer-->
                     </div>
                     <!--end:::Main-->
                 </div>
+                <!--end::Wrapper container-->
                 <!--end::Wrapper container-->
             </div>
             <!--end::Wrapper-->
         </div>
         <!--end::Page-->
     </div>
+
+    <!--begin::Modal - Offer A Deal-->
+    <div class="modal fade" id="kt_modal_offer_a_deal" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-1000px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header py-7 d-flex justify-content-between">
+                    <!--begin::Modal title-->
+                    <h2>Agrega una nuevo usario</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <i class="ki-outline ki-cross fs-1"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--begin::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y m-5">
+                    <!--begin::Stepper-->
+                    <div class="stepper stepper-links d-flex flex-column" id="kt_modal_offer_a_deal_stepper">
+                        <!--begin::Content-->
+                        <div id="kt_account_settings_profile_details" class="collapse show">
+                            <!--begin::Form-->
+                            <form id="kt_account_profile_details_form" class="form" action="?c=estad&a=nuevo_usuario" method="post" enctype="multipart/form-data">
+                                <!--begin::Card body-->
+                                <div class="card-body border-top p-9">
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6" style="margin-left:250px;">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Matricula</label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8">
+                                            <!--begin::Row-->
+                                            <div class="row">
+                                                <!--begin::Col-->
+                                                <div class="col-lg-6 fv-row">
+                                                    <input type="text" name="matricula" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                </div>
+                                                <!--end::Col-->
+                                            </div>
+                                            <!--end::Row-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6" style="margin-left:250px;">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nombre del usuario:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8">
+                                            <!--begin::Row-->
+                                            <div class="row">
+                                                <!--begin::Col-->
+                                                <div class="col-lg-6 fv-row">
+                                                    <input type="text" name="nombre" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                </div>
+                                                <!--end::Col-->
+                                            </div>
+                                            <!--end::Row-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6" style="margin-left:250px;">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Apellido Paterno:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8">
+                                            <!--begin::Row-->
+                                            <div class="row">
+                                                <!--begin::Col-->
+                                                <div class="col-lg-6 fv-row">
+                                                    <input type="text" name="apellidoP" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                </div>
+                                                <!--end::Col-->
+                                            </div>
+                                            <!--end::Row-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6" style="margin-left:250px;">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Apellido Materno:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8">
+                                            <!--begin::Row-->
+                                            <div class="row">
+                                                <!--begin::Col-->
+                                                <div class="col-lg-6 fv-row">
+                                                    <input type="text" name="apellidoM" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                </div>
+                                                <!--end::Col-->
+                                            </div>
+                                            <!--end::Row-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6" style="margin-left:250px;">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                            <span class="required">Tipo de rol:</span>
+                                            <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
+                                                <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                            </span>
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8 fv-row">
+                                            <!--begin::Input-->
+                                            <select name="rol" aria-label="Seleccione un periodo" data-control="select2" data-placeholder="Seleccione un rol..." class="form-select form-select-solid form-select-lg">
+                                                <option value="">Seleccione un rol...</option>
+                                                <?php
+                                                foreach ($roles as $row) {
+                                                    echo "<option" . " value=" . $row["idRol"] . ">" . $row["nombreRol"] . "</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                            <!--end::Input-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6" style="margin-left:250px;">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Correo:</label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8">
+                                            <!--begin::Row-->
+                                            <div class="row">
+                                                <!--begin::Col-->
+                                                <div class="col-lg-6 fv-row">
+                                                    <input type="text" name="correo" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                </div>
+                                                <!--end::Col-->
+                                            </div>
+                                            <!--end::Row-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+
+                                    <!--begin::Input group-->
+                                    <div class="row mb-6" style="margin-left:250px;">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Contraseña</label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8">
+                                            <!--begin::Row-->
+                                            <div class="row">
+                                                <!--begin::Col-->
+                                                <div class="col-lg-6 fv-row">
+                                                    <input type="password" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                </div>
+                                                <!--end::Col-->
+                                            </div>
+                                            <!--end::Row-->
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+                                    <!--end::Input group-->
+                                </div>
+                                <!--end::Card body-->
+                                <!--begin::Actions-->
+                                <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                    <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Guardar</button>
+                                </div>
+                                <!--end::Actions-->
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                        <!--end::Content-->
+                    </div>
+                    <!--end::Stepper-->
+                </div>
+                <!--begin::Modal body-->
+            </div>
+        </div>
+    </div>
+    <!--end::Modal - Offer A Deal-->
+
     <!--end::App-->
     <!--begin::Drawers-->
     <!--begin::Scrolltop-->
@@ -406,7 +694,7 @@
                     // Llena el dropdown con las carreras
                     var dropdown = $('#carreraSelect');
                     dropdown.empty();
-                    
+
                     dropdown.append($('<option></option>').attr('value', 0).text("Seleccione"));
                     $.each(data, function(key, entry) {
                         dropdown.append($('<option></option>').attr('value', entry.idCarrera).text(entry.nombreCarrera));
@@ -545,7 +833,7 @@
                 success: function(sedes) {
                     var dropdown = $('#sedeSelect');
                     dropdown.empty();
-                        dropdown.append($('<option></option>').attr('value', 0).text("Seleccione"));
+                    dropdown.append($('<option></option>').attr('value', 0).text("Seleccione"));
                     $.each(sedes, function(key, sede) {
                         dropdown.append($('<option></option>').attr('value', sede.IdSede).text(sede.NombreSede));
                     });

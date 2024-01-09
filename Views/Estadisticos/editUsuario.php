@@ -1,22 +1,3 @@
-<?php
-session_start(); // Asegúrate de iniciar la sesión en cada vista que utilice sesiones
-
-// Verifica si la variable de sesión existe antes de mostrarla
-if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
-	$idUsuario = $_SESSION['id_usuario'];
-	$name = $_SESSION['name'];
-	if ($name == 'Vinculacion') {
-	} else {
-		// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-		header('location: index.php');
-		exit; // Detener la ejecución del script
-	}
-} else {
-	// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-	header('location: index.php');
-	exit; // Detener la ejecución del script
-}
-?>
 <!DOCTYPE html>
 <!--
 Author: Keenthemes
@@ -55,7 +36,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/style.bundle_2.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     <script>
         // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
@@ -108,12 +89,11 @@ License: For each use you must have a valid license purchased only from above li
                                 <div class="page-title d-flex align-items-center me-3">
                                     <img alt="Logo" src="assets/media/svg/misc/layer.svg" class="h-60px me-5" />
                                     <!--begin::Title-->
-                                    <h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Listado de Sedes
+                                    <h1 class="page-heading d-flex text-white fw-bolder fs-2 flex-column justify-content-center my-0">Estadísticas
                                         <!--begin::Description-->
-                                        <span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Sedes registradas</span>
+                                        <span class="page-desc text-white opacity-50 fs-6 fw-bold pt-4">Usuarios</span>
                                         <!--end::Description-->
                                     </h1>
-
                                     <!--end::Title-->
                                 </div>
                             </div>
@@ -132,49 +112,13 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="d-flex flex-column flex-column-fluid">
                             <!--begin::Content-->
                             <div id="kt_app_content" class="app-content">
-                                <!--begin::Navbar-->
-                                <div class="card mb-5 mb-xl-10">
-                                    <div class="card-body pt-9 pb-0">
-                                        <!--begin::Navs-->
-                                        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
-                                            <!--begin::Nav item-->
-                                            <!--begin::Nav item-->
-                                            <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=carreras&a=index">Listas</a>
-                                            </li>
-                                            <!--end::Nav item-->
-                                            <!--begin::Nav item-->
-                                            <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="?c=sedes&a=show_sede">Sedes</a>
-                                            </li>
-                                            <!--end::Nav item-->
-                                            <!--begin::Nav item-->
-                                            <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=vacantes&a=index_2">Vacantes</a>
-                                            </li>
-                                            <!--end::Nav item-->
-                                            <!--begin::Nav item-->
-                                            <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=periodo&a=show_periodos">Periodos</a>
-                                            </li>
-                                            <!--end::Nav item-->
-                                            <!--begin::Nav item-->
-                                            <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="?c=vinculacion&a=index_">Validación de documentos</a>
-                                            </li>
-                                            <!--end::Nav item-->
-                                        </ul>
-                                        <!--begin::Navs-->
-                                    </div>
-                                </div>
-                                <!--end::Navbar-->
                                 <!--begin::Basic info-->
                                 <div class="card mb-5 mb-xl-10">
                                     <!--begin::Card header-->
                                     <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
                                         <!--begin::Card title-->
                                         <div class="card-title m-0">
-                                            <h3 class="fw-bold m-0">Edita la sede</h3>
+                                            <h3 class="fw-bold m-0">Editar Usuario</h3>
                                         </div>
                                         <!--end::Card title-->
                                     </div>
@@ -182,17 +126,13 @@ License: For each use you must have a valid license purchased only from above li
                                     <!--begin::Content-->
                                     <div id="kt_account_settings_profile_details" class="collapse show">
                                         <!--begin::Form-->
-                                        <form action="index.php?c=sedes&a=sede_editado" method="post">
-                                            <?php
-
-                                            ?>
-                                            <input type="hidden" name="id_sede" value="<?php echo $id ?>">
+                                        <form action="index.php?c=estad&a=usuario_editado" method="post">
                                             <!--begin::Card body-->
                                             <div class="card-body border-top p-9">
                                                 <!--begin::Input group-->
                                                 <div class="row mb-6" style="margin-left:250px;">
                                                     <!--begin::Label-->
-                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Identificador</label>
+                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Matricula</label>
                                                     <!--end::Label-->
                                                     <!--begin::Col-->
                                                     <div class="col-lg-8">
@@ -200,7 +140,8 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="identificador" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["IdSede"] ?>" required />
+                                                                <input type="hidden" name="idReal" value="<?php echo $data["IdUsuario"] ?>">
+                                                                <input type="text" name="matricula" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["IdUsuario"] ?>" required />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
@@ -213,7 +154,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Input group-->
                                                 <div class="row mb-6" style="margin-left:250px;">
                                                     <!--begin::Label-->
-                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nombre de la Sede</label>
+                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Nombre del usuario:</label>
                                                     <!--end::Label-->
                                                     <!--begin::Col-->
                                                     <div class="col-lg-8">
@@ -221,7 +162,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="nombre_sede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["NombreSede"] ?>" required />
+                                                                <input type="text" name="nombre" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["NombreU"] ?>" required />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
@@ -234,7 +175,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Input group-->
                                                 <div class="row mb-6" style="margin-left:250px;">
                                                     <!--begin::Label-->
-                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Dirrección</label>
+                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Apellido Paterno</label>
                                                     <!--end::Label-->
                                                     <!--begin::Col-->
                                                     <div class="col-lg-8">
@@ -242,7 +183,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="direccion" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["Dirección"] ?>" required />
+                                                                <input type="text" name="apellidop" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["APaternoU"] ?>" required />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
@@ -255,7 +196,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Input group-->
                                                 <div class="row mb-6" style="margin-left:250px;">
                                                     <!--begin::Label-->
-                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Correo o contacto</label>
+                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Apellido Materno</label>
                                                     <!--end::Label-->
                                                     <!--begin::Col-->
                                                     <div class="col-lg-8">
@@ -263,7 +204,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="correo" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["CorreoContacto"] ?>" required />
+                                                                <input type="text" name="apellidom" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["AMaternoU"] ?>" required />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
@@ -276,7 +217,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Input group-->
                                                 <div class="row mb-6" style="margin-left:250px;">
                                                     <!--begin::Label-->
-                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Telefono</label>
+                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Correo:</label>
                                                     <!--end::Label-->
                                                     <!--begin::Col-->
                                                     <div class="col-lg-8">
@@ -284,7 +225,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="telefono" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["Telefono"] ?>" required maxlength="10" />
+                                                                <input type="text" name="correo" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["CorreoE"] ?>" />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
@@ -297,7 +238,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--begin::Input group-->
                                                 <div class="row mb-6" style="margin-left:250px;">
                                                     <!--begin::Label-->
-                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tipo de sede</label>
+                                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Tipo de rol ya asignado</label>
                                                     <!--end::Label-->
                                                     <!--begin::Col-->
                                                     <div class="col-lg-8">
@@ -305,11 +246,38 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="tiposede" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["tiposede"] ?>" required />
+                                                                <input type="text" id="rol_t" name="rol_t" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data['nombreRol']; ?>" readonly>
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>
                                                         <!--end::Row-->
+                                                    </div>
+                                                    <!--end::Col-->
+                                                </div>
+                                                <!--end::Input group-->
+
+                                                <!--begin::Input group-->
+                                                <div class="row mb-6" style="margin-left:250px;">
+                                                    <!--begin::Label-->
+                                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                                        <span class="required">Cambio de rol(Opcional):</span>
+                                                        <span class="ms-1" data-bs-toggle="tooltip" title="Country of origination">
+                                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                                        </span>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Col-->
+                                                    <div class="col-lg-8 fv-row">
+                                                        <!--begin::Input-->
+                                                        <select name="tipo_rol" aria-label="Seleccione un periodo" data-control="select2" data-placeholder="Seleccione un rol..." class="form-select form-select-solid form-select-lg">
+                                                            <option value="">Seleccione un rol...</option>
+                                                            <?php
+                                                            foreach ($roles as $row) {
+                                                                echo "<option" . " value=" . $row["idRol"] . ">" . $row["nombreRol"] . "</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                        <!--end::Input-->
                                                     </div>
                                                     <!--end::Col-->
                                                 </div>
