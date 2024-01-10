@@ -10,7 +10,7 @@ class RegistroController{
     public function index() {
         $matricula = $_POST["matricula"];
         echo $matricula;        
-        //require_once "views/Escolares/carga.php";
+        //require_once "Views/Escolares/carga.php";
     }
 
 
@@ -19,7 +19,7 @@ class RegistroController{
             $matricula = $_GET['matricula'];
             $alumnos = new registro();
             $alumnos->estatus_editado($matricula);
-            require_once "views/Escolares/carga.php";
+            require_once "Views/Escolares/carga.php";
         }
     }
 
@@ -28,7 +28,7 @@ class RegistroController{
             $documento = $_GET['idDocumento'];
             $documento = new registro();
             $documento->estatus_documento($documento);
-            require_once "views/ptc/ptc.php";
+            require_once "Views/ptc/ptc.php";
         }
     }
 }

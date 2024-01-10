@@ -24,7 +24,7 @@ class AlumnoController
 		$data["titulo"] = "alumno";
 		$data["alumno"] = $alumno->get_alumnos();
 
-		require_once "views/Alumno/index.php";
+		require_once "Views/Alumno/index.php";
 	}
 
 	public function index()
@@ -164,7 +164,7 @@ class AlumnoController
             // Incrementa el contador en 1
             $_SESSION['contador']++;*/
 
-		require_once "views/Alumno/listado.php";
+		require_once "Views/Alumno/listado.php";
 	}
 
 	public function detsede($id_sede)
@@ -236,7 +236,7 @@ class AlumnoController
             // Incrementa el contador en 1
             $_SESSION['contador']++;*/
 
-		require_once "views/Alumno/detalle.php";
+		require_once "Views/Alumno/detalle.php";
 	}
 
 	/*
@@ -262,7 +262,7 @@ class AlumnoController
 		$data["matricula"] = $id;
 		$data["alumno"] = $alumno->get_alumno($id);
 		$data["titulo"] = "alumno";
-		require_once "views/Alumno/detalle.php";
+		require_once "Views/Alumno/detalle.php";
 	}
 
 	public function siguiente()
@@ -292,7 +292,7 @@ class AlumnoController
 		// Incrementa el contador en 1
 		$_SESSION['contador']++;
 
-		require_once "views/Alumno/detalle.php";
+		require_once "Views/Alumno/detalle.php";
 	}
 
 

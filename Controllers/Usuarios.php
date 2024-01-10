@@ -10,7 +10,7 @@ class UsuariosController
 
     public function index()
     {
-        require_once "views/login/index.php";
+        require_once "Views/login/index.php";
     }
 
     public function iniciarSesion()
