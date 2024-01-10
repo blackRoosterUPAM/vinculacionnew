@@ -10,7 +10,7 @@
 		<!--end::Header mobile toggle-->
 		<!--begin::Logo-->
 		<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15">
-			<a href="index.php?c=sedes&a=index">
+			<a href="index.php?c=estad&a=index">
 				<img alt="Logo" src="assets/media/logos/upam.ico" class="h-50px d-lg-none" />
 				<img alt="Logo" src="assets/media/logos/upamh.png" class="h-50px d-none d-lg-inline app-sidebar-logo-default theme-light-show" />
 				<img alt="Logo" src="assets/media/logos/upamh.png" class="h-50px d-none d-lg-inline app-sidebar-logo-default theme-dark-show" />
@@ -28,7 +28,7 @@
 					<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" data-kt-menu-offset="-50,0" class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
 						<!--begin:Menu link-->
 						<span class="menu-link">
-							<span class="menu-title">Postulados</span>
+							<span class="menu-title">Modulo</span>
 							<span class="menu-arrow d-lg-none"></span>
 						</span>
 						<!--end:Menu link-->
@@ -43,12 +43,12 @@
 											<!--begin:Menu item-->
 											<div class="menu-item p-0 m-0">
 												<!--begin:Menu link-->
-												<a href="?c=sedes&a=confirmados" class="menu-link ">
+												<a href="?c=estad&a=sede" class="menu-link ">
 													<span class="menu-custom-icon d-flex flex-center flex-shrink-0 rounded w-40px h-40px me-3">
 														<i class="ki-outline ki-element-11 text-primary fs-1"></i>
 													</span>
 													<span class="d-flex flex-column">
-														<span class="fs-6 fw-bold text-gray-800">Aceptados</span>
+														<span class="fs-6 fw-bold text-gray-800">Sedes</span>
 													</span>
 												</a>
 												<!--end:Menu link-->
@@ -61,12 +61,12 @@
 											<!--begin:Menu item-->
 											<div class="menu-item p-0 m-0">
 												<!--begin:Menu link-->
-												<a href="?c=sedes&a=pendientes" class="menu-link">
+												<a href="?c=estad&a=alumno" class="menu-link">
 													<span class="menu-custom-icon d-flex flex-center flex-shrink-0 rounded w-40px h-40px me-3">
 														<i class="ki-outline ki-element-11 text-primary fs-1"></i>
 													</span>
 													<span class="d-flex flex-column">
-														<span class="fs-6 fw-bold text-gray-800">Pendientes</span>
+														<span class="fs-6 fw-bold text-gray-800">Alumnos</span>
 													</span>
 												</a>
 												<!--end:Menu link-->

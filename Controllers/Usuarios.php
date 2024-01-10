@@ -24,41 +24,42 @@ class UsuariosController
             // Inicio de sesión exitoso
             $id = $usuario['IdUsuario'];
             $rol = $usuario['idRol'];
+            $nombreRol = $usuario['nombreRol'];
+            
 
             // Puedes realizar operaciones adicionales aquí si es necesario
-            if ($rol == 5) {
+            if ($nombreRol == 'Sede') {
                 session_start();
                 $name = "sedes";
                 $_SESSION['name'] = $name;
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 // Redirigir a la página de sedes
                 header('location:  index.php?c=sedes&a=index');
-            } elseif ($rol == 2) {
+            } elseif ($nombreRol == 'Escolares') {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 header('location: index.php?c=escolars&a=index');
-            } elseif ($rol == 3) {
+            } elseif ($nombreRol == 'Vinculacion') {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
-                $name = "vinculacion";
-                $_SESSION['name'] = $name;
+                $_SESSION['name'] = $nombreRol;
                 // Redirigir a la página de vinculación
                 header('location:  index.php?c=carreras&a=index');
-            } elseif ($rol == 4) {
+            } elseif ($nombreRol == 'Estudiante') {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 $name = "alumno";
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de vinculación
                 header('location:  index.php?c=alumno&a=index');
-            } elseif ($rol == 6) {
+            } elseif ($nombreRol == 'Director') {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 $name = "director";
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de vinculación
                 header('location: director/index.php');
-            } elseif ($rol == 7) {
+            } elseif ($nombreRol == 'PTC') {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 $_SESSION['correo_ptc'] = $correo; // Almacena el correo del PTC en la sesión
@@ -66,7 +67,14 @@ class UsuariosController
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de PTC
                 header('location: index.php?c=ptc&a=index');
-            } else {
+            } elseif ($nombreRol == "Graficas") {
+                session_start();
+                $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
+                $_SESSION['name'] = 'Graficas';                
+                header('location: index.php?c=estad&a=index');
+
+            }
+            else {
                 header('location: index.php');
             }
         } else {

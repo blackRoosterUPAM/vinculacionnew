@@ -12,6 +12,7 @@
 	require_once "controllers/Registro.php";
 	require_once "controllers/vinculacion.php";
 	require_once "controllers/Rcontraseña.php";
+	require_once "controllers/Estadisticos.php";
 
 	
 	//Mediante la url vamos a saber que controlador se usa

@@ -3,18 +3,18 @@ session_start(); // Asegúrate de iniciar la sesión en cada vista que utilice s
 
 // Verifica si la variable de sesión existe antes de mostrarla
 if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
-    $idUsuario = $_SESSION['id_usuario'];
-    $name = $_SESSION['name'];
-    if ($name == 'vinculacion') {
-    } else {
-        // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-        header('location: index.php');
-        exit; // Detener la ejecución del script
-    }
+	$idUsuario = $_SESSION['id_usuario'];
+	$name = $_SESSION['name'];
+	if ($name == 'Vinculacion') {
+	} else {
+		// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
+		header('location: index.php');
+		exit; // Detener la ejecución del script
+	}
 } else {
-    // Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
-    header('location: index.php');
-    exit; // Detener la ejecución del script
+	// Si no existe la variable de sesión, puede redirigir al usuario a la página de inicio de sesión o realizar otra acción.
+	header('location: index.php');
+	exit; // Detener la ejecución del script
 }
 ?>
 <!DOCTYPE html>

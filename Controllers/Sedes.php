@@ -50,7 +50,7 @@ class SedesController
             // Incrementa el contador en 1
             $_SESSION['contador']++;
 
-            require_once "views/Sede/index.php";
+            require_once "Views/Sede/index.php";
         } else {
             // Si la sesión no está iniciada, redirige al usuario a index.php
             header("Location: index.php");
@@ -64,7 +64,7 @@ class SedesController
         $alumno = new SedeAlumno();
         $result = $alumno->borraAlumno($matricula);
 
-        require_once "views/Sede/index.php";
+        require_once "Views/Sede/index.php";
     }
 
     //Funcion que descarta a un alumno para que este pueda volver a postularse y manda un correo
@@ -81,7 +81,7 @@ class SedesController
         $alumno = new SedeAlumno();
         $result = $alumno->updateAlumnoCita($matricula);
 
-        require_once "views/Sede/index.php";
+        require_once "Views/Sede/index.php";
     }
 
     public function pendientes()
@@ -100,7 +100,7 @@ class SedesController
 
             $alumnos = new SedeAlumno();
             $data = $alumnos->alumnoPorConfirmar($id);
-            require_once 'views/Sede/pendientes.php';
+            require_once 'Views/Sede/pendientes.php';
         } else {
             // Si la sesión no está iniciada, redirige al usuario a index.php
             header("Location: index.php");
@@ -121,7 +121,7 @@ class SedesController
 
             $alumnos = new SedeAlumno();
             $data = $alumnos->alumnoConfirmado($id);
-            require_once 'views/Sede/confirmados.php';
+            require_once 'Views/Sede/confirmados.php';
         } else {
             // Si la sesión no está iniciada, redirige al usuario a index.php
             header("Location: index.php");
