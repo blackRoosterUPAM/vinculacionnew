@@ -14,7 +14,7 @@ class Estadistico
     // Función para obtener las carreras disponibles
     public function obtenerCarreras()
     {
-        $sql = "SELECT * FROM Carrera";
+        $sql = "SELECT * FROM carrera";
         $resultado = $this->db->query($sql);
         $carreras = array();
 
@@ -32,7 +32,7 @@ class Estadistico
             SUM(CASE WHEN a.Estatus = 1 THEN 1 ELSE 0 END) AS active,
             SUM(CASE WHEN a.Estatus = 0 THEN 1 ELSE 0 END) AS inactive
         FROM alumnos AS a
-        INNER JOIN Carrera AS c ON a.Carrera = c.IdCarrera
+        INNER JOIN carrera AS c ON a.Carrera = c.IdCarrera
         WHERE c.nombreCarrera = ?
         GROUP BY c.nombreCarrera";
 
@@ -76,7 +76,7 @@ class Estadistico
                 COUNT(CASE WHEN asd.Aceptado = 2 THEN 1 END) AS aceptados,
                 COUNT(CASE WHEN asd.Aceptado = 0 AND (asd.FechaInicio IS NULL OR asd.FechaInicio = 0) THEN 1 END) AS pendientes,
                 COUNT(CASE WHEN a.Proceso = 0 THEN 1 END) AS rechazados
-            FROM alumnoSede asd
+            FROM alumnosede asd
             JOIN alumnos a ON asd.Matricula = a.Matricula
             WHERE asd.IdSede = ? AND a.idPeriodo = ?";
 
@@ -92,7 +92,7 @@ class Estadistico
             $datosSede = array(
                 'aceptados' => 0,
                 'pendientes' => 0,
-                'rechazados' => 0
+                'rechazados' => 10
             );
         }
 

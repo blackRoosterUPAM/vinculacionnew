@@ -1,5 +1,5 @@
 <?php
-$conexion = new mysqli("localhost", "root", "", "vinculacion");
+$conexion = new mysqli("localhost", "root", "galloUPAM2023.", "vinculacion");
 if ($_FILES["file"]["error"] === UPLOAD_ERR_OK) {
   $nombreArchivo = $_FILES['file']['name'];
   $archivoTemporal = $_FILES['file']['tmp_name'];

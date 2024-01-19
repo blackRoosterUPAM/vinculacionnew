@@ -63,7 +63,7 @@ class AlumnoController
 		$estatusAlumno = $alumno["Estatus"];
 		$procesoAlumno = $alumno["idProceso"];
 		$periodoAlumno = $alumno["idPeriodo"];
-
+		$nombreProceso = $alumno["NombrePE"];
 		$cv_docs = $Alumno->get_alumnodocs($id_alumno);
 		if (!empty($cv_docs)) {
 			$fechaCreacion = $cv_docs->FechaCreación;
@@ -75,8 +75,14 @@ class AlumnoController
 
 		//$data["docs"] = $Alumno->get_docsvinculacion($id_alumno);
 		$docs = $Alumno->get_docsvinculacion($id_alumno, $periodoAlumno);
-
+		
 		$procesos = $Alumno->get_procesos($id_alumno);
+		
+		$estatusRVIN = $Alumno->get_estatusRVIN($id_alumno, $periodoAlumno, $procesoAlumno);
+		$estatusAceptacion = $Alumno->get_estatusAceptacion($id_alumno, $periodoAlumno, $procesoAlumno);
+		$estatusEvaluacion = $Alumno->get_estatusEvaluacion($id_alumno, $periodoAlumno, $procesoAlumno);
+		$estatusLiberacion = $Alumno->get_estatusLiberacion($id_alumno, $periodoAlumno, $procesoAlumno);
+		$estatusPresentacion = $Alumno->get_estatusPresentacion($id_alumno, $periodoAlumno, $procesoAlumno);
 		// Verifica si la variable de sesión 'contador' está definida
 		if (!isset($_SESSION['contador'])) {
 			// Si no está definida, inicialízala en 1

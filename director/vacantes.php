@@ -171,7 +171,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 											<tbody class="fw-semibold text-gray-600">
 												<?php
 
-												$sql = "select v.IdSede,v.Perfil,v.Beneficios,v.NumVacantes,s.NombreSede,s.tiposede,p.NombrePE,c.NombrePE,pd.Meses,pd.Año
+												$sql = "select v.IdSede,v.Perfil,v.Beneficios,v.NumVacantes,s.NombreSede,s.tiposede,p.NombrePE,c.nombreCarrera,pd.Meses,pd.Año
 												from vacantes as v
 												INNER JOIN sede as s on v.IdSede = s.IdSede
 												INNER JOIN proceso as p on v.IdProceso = p.IdProceso
@@ -190,12 +190,12 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 														echo "<td align='center'>" . $row["NombreSede"] . "</td>";
 														echo "<td align='center'>" . $row["tiposede"] . "</td>";
 														echo "<td align='center'>" . $row["NombrePE"] . "</td>";
-														echo "<td align='center'>" . $row["NombrePE"] . "</td>";
+														echo "<td align='center'>" . $row["nombreCarrera"] . "</td>";
 														echo "<td align='center'>" . $row["Meses"] . "</td>";
 														echo "<td align='center'>" . $row["Año"] . "</td></tr>";
 													} 
 												} else {
-													echo "Error";
+													
 												}
 												$conn->close();
 												?>

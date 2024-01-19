@@ -24,7 +24,7 @@ class ptc{
 
     //funcion que procesa las solicitudes
     public function getSolicitudes($correoPtc) {
-        $sql = "SELECT da.IdDocumento, da.Matricula, CONCAT(a.NombreA, ' ', a.ApellidoP, ' ', a.ApellidoM) AS fullName, pr.NombrePE AS nombreProceso, d.NombreDoc AS nombreDocumento, da.DocumentoPDF AS doc, da.EstatusPtc, CONCAT(COALESCE(pa.Meses, ''), ' ', COALESCE(pa.Año, '')) AS periodo FROM docalumnoperiodo AS da INNER JOIN alumnos AS a ON a.Matricula = da.Matricula LEFT JOIN documentacion AS d ON d.IdDocumento = da.IdDocumento LEFT JOIN periodo AS pa ON pa.IdPeriodo = a.idPeriodo LEFT JOIN proceso AS pr ON pr.IdProceso = da.IdProceso INNER JOIN Ptc AS ptc ON ptc.idCarrera = a.Carrera WHERE ptc.Correo = ?";
+        $sql = "SELECT da.IdDocumento, da.Matricula, CONCAT(a.NombreA, ' ', a.ApellidoP, ' ', a.ApellidoM) AS fullName, pr.NombrePE AS nombreProceso, d.NombreDoc AS nombreDocumento, da.DocumentoPDF AS doc, da.EstatusPtc, CONCAT(COALESCE(pa.Meses, ''), ' ', COALESCE(pa.Año, '')) AS periodo FROM docalumnoperiodo AS da INNER JOIN alumnos AS a ON a.Matricula = da.Matricula LEFT JOIN documentacion AS d ON d.IdDocumento = da.IdDocumento LEFT JOIN periodo AS pa ON pa.IdPeriodo = a.idPeriodo LEFT JOIN proceso AS pr ON pr.IdProceso = da.IdProceso INNER JOIN ptc AS ptc ON ptc.idCarrera = a.Carrera WHERE ptc.Correo = ?";
         
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("s", $correoPtc);

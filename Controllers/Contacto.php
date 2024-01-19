@@ -14,7 +14,7 @@ class ContactoController
     {
         $sedes = new ContactoSede();
         $data = $sedes->getSolicitudes();
-        require_once "Views/Ptc/ContactoSede.php";
+        require_once "Views/ptc/ContactoSede.php";
     }
 }
 ?>

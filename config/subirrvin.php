@@ -1,5 +1,5 @@
 <?php
-$conexion = new mysqli("localhost", "root", "", "vinculacion");
+$conexion = new mysqli("localhost", "root", "galloUPAM2023.", "vinculacion");
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($_FILES["file_rvin"]["error"] === UPLOAD_ERR_OK) {

@@ -43,7 +43,7 @@ class PtcController
 
         if ($correoPtc) {
             $solicitudes = $modelo->getSolicitudes($correoPtc);
-            include('Views/Ptc/Ptc.php');
+            include('Views/ptc/ptc.php');
         }
     }
 
@@ -58,7 +58,7 @@ class PtcController
     {
         $modelo = new Ptc();
         $doc = $modelo->updateStatusDocInactivo($matricula, $idDoc);
-        require_once 'config/CorreoPTC.php';
+        require_once 'config/correoPTC.php';
         $datos = $modelo->getCorreo($matricula);
         enviarCorreo($datos['CorreoE'], 'sss');
         header('location: index.php?c=ptc&a=index');
@@ -165,7 +165,7 @@ class PtcController
 
             $carrera = new Carrera();
             $result = $carrera->get_carreras();
-            include('Views/Vinculacion/Ptc.php');
+            include('Views/Vinculacion/ptc.php');
         }
     }
 }

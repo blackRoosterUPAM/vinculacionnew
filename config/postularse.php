@@ -1,5 +1,5 @@
 <?php
-$conexion = new mysqli("localhost", "root", "", "vinculacion");
+$conexion = new mysqli("localhost", "root", "galloUPAM2023.", "vinculacion");
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     //$val = $_POST["Matricula"];
@@ -7,9 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nombreSede = $_POST["nombreSede"];
     $id_alumno = $_POST["matricula"];
     $id_carrera = $_POST["idCarrera"];
-    $id_proceso = $_POST["idProceso"];
-    $fechaInicio = "";
-
+    $id_proceso = $_POST["idProceso"];	
+    $fechaInicio = null;
     // Conectar a la base de datos
     //include "../conexion.php";
     if ($conexion->connect_error) {
@@ -17,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     //Realizando registro alumnosede con fecha vacía
-    $consulta = $conexion->prepare('INSERT INTO alumnosede (IdSede, NombreSede, Matricula, NombrePE, FechaInicio, idProceso) VALUES (?,?,?,?,?,?)');
-    $consulta->bind_param('ssssss', $id_sede, $nombreSede, $id_alumno, $id_carrera, $fechaInicio, $id_proceso);
+    $consulta = $conexion->prepare('INSERT INTO alumnosede (IdSede, NombreSede, Matricula, NombrePE, idProceso, fechaInicio) VALUES (?,?,?,?,?,?)');
+    $consulta->bind_param('ssssss', $id_sede, $nombreSede, $id_alumno, $id_carrera, $id_proceso, $fechaInicio);
 
     if ($consulta->execute()) {
         echo json_encode(["message" => "Actualizacion al-se realizada correctamente."]);

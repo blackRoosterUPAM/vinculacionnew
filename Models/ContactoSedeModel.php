@@ -26,7 +26,7 @@ class ContactoSede
 	//funcion para procesar las solicitudes de la vista
 
 	public function getSolicitudes() {
-		$sql = "SELECT a.Matricula, CONCAT(a.NombreA,' ', a.ApellidoP, ' ', a.ApellidoM) as fullName, p.NombrePE, s.NombreSede, s.CorreoContacto, s.Telefono from alumnos as a INNER JOIN Proceso as p on a.idProceso = p.IdProceso INNER JOIN alumnosede as ass on ass.Matricula = a.Matricula INNER JOIN sede as s on s.IdSede = ass.IdSede INNER JOIN ptc on ptc.IdCarrera = a.Carrera WHERE a.Carrera = 3;"; // Agregar la condición de postulación a la misma sede
+		$sql = "SELECT a.Matricula, CONCAT(a.NombreA,' ', a.ApellidoP, ' ', a.ApellidoM) as fullName, p.NombrePE, s.NombreSede, s.CorreoContacto, s.Telefono from alumnos as a INNER JOIN proceso as p on a.idProceso = p.IdProceso INNER JOIN alumnosede as ass on ass.Matricula = a.Matricula INNER JOIN sede as s on s.IdSede = ass.IdSede INNER JOIN ptc on ptc.IdCarrera = a.Carrera WHERE a.Carrera = 3;"; // Agregar la condición de postulación a la misma sede
 	
 		$resultado = $this->db->query($sql);
 		$solicitudes = [];

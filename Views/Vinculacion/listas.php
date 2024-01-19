@@ -179,7 +179,7 @@ License: For each use you must have a valid license purchased only from above li
 								</div>
 
 
-								index.php?c=usuarios&a=mostrar_busqueda
+								<!--index.php?c=usuarios&a=mostrar_busqueda-->
 
 
 								<div class="d-flex justify-content-between align-items-start flex-wrap mb-2">

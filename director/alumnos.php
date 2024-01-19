@@ -135,7 +135,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 											<!--begin::Search-->
 											<div class="d-flex align-items-center position-relative my-1">
 												<i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i>
-												<input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Busqueda especifica" />
+												<input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Búsqueda Específica" />
 											</div>
 											<!--end::Search-->
 										</div>
@@ -186,7 +186,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 													}
 												}
 
-												$sql = "select al.Matricula,al.NombreA,al.ApellidoP,al.ApellidoM,al.Telefono,al.CorreoE,al.Estatus,al.Proceso,c.NombrePE
+												$sql = "select al.Matricula,al.NombreA,al.ApellidoP,al.ApellidoM,al.Telefono,al.CorreoE,al.Estatus,al.Proceso,c.nombreCarrera
 												from alumnos as al 
 												INNER JOIN carrera as c on al.Carrera = c.IdCarrera;
 												";
@@ -203,10 +203,10 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 														echo "<td align='center'>" . $row["CorreoE"] . "</td>";
 														echo "<td align='center'>" . ($row["Estatus"] == 1 ? "Activo" : "Inactivo") . "</td>";
 														echo "<td align='center'>" . proceso($row["Proceso"]) . "</td>";
-														echo "<td align='center'>" . $row["NombrePE"] . "</td></tr>";
+														echo "<td align='center'>" . $row["nombreCarrera"] . "</td></tr>";
 													}
 												} else {
-													echo "Error";
+										
 												}
 												$conn->close();
 												?>

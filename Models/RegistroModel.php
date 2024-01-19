@@ -51,15 +51,16 @@ class registro{
         if ($status == 0) {
             $sql = "UPDATE alumnos SET Estatus = 1 WHERE Matricula = $matricula";
             $resultado = $this->db->query($sql);
-            $message = "El alumno ha sido activado de manera exitosa.";
+           // $message = "El alumno ha sido activado de manera exitosa.";
         } elseif ($status == 1) {
             $sql = "UPDATE alumnos SET Estatus = 0 WHERE Matricula = $matricula";
             $resultado = $this->db->query($sql);
-            $message = "El alumno ha sido desactivado de manera exitosa.";
+           // $message = "El alumno ha sido desactivado de manera exitosa.";
         }
     
         // Envía el mensaje al navegador usando JavaScript
-        echo "<script>alert('$message'); window.location.href = 'index.php?c=escolars&a=index';</script>";
+        //echo "<script alert('$message'); window.location.href = 'index.php?c=escolars&a=index';</script>";
+	header('Location: index.php?c=escolars&a=index');
     }
 
     //obtiene el estatus del documento
@@ -82,15 +83,16 @@ class registro{
         if ($status == 0) {
             $sql = "UPDATE docalumnoperiodo SET EstatusPtc = 1 WHERE IdDocumento = $idDocumento";
             $resultado = $this->db->query($sql);
-            $message = "El documento ha sido validado de manera exitosa.";
+            //$message = "El documento ha sido validado de manera exitosa.";
         } elseif ($status == 1) {
             $sql = "UPDATE docalumnoperiodo SET EstatusPtc = 0 WHERE IdDocumento = $idDocumento";
             $resultado = $this->db->query($sql);
-            $message = "El documento no cumple con las características adecuadas.";
+           // $message = "El documento no cumple con las características adecuadas.";
         }
     
         // Envía el mensaje al navegador usando JavaScript
-        echo "<script>alert('$message'); window.location.href = 'index.php?c=ptcs&a=index';</script>";
+        //echo "<script> alert('$message'); window.location.href = 'index.php?c=ptcs&a=index';</script>";
+	header('Location: index.php?c=escolars&a=index');
     }
 }
 ?>

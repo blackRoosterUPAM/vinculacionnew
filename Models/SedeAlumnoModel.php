@@ -29,7 +29,7 @@ class SedeAlumno
             INNER JOIN alumnodocs AS ad ON a.Matricula = ad.Matricula
             INNER JOIN alumnos AS al ON a.Matricula = al.Matricula
             INNER JOIN carrera as c on al.Carrera = c.IdCarrera
-            WHERE (a.FechaInicio = '0000-00-00 00:00:00' OR a.FechaInicio = '' OR a.FechaInicio IS NULL)  AND a.Aceptado = 0 AND a.IdSede = $id";
+            WHERE a.FechaInicio IS NULL AND a.Aceptado = 0 AND a.IdSede = $id";
         //resultado del query		
         $resultado = $this->db->query($sql);
         //Recorre el arreglo sacando los datos de la consulta
@@ -64,7 +64,7 @@ class SedeAlumno
         INNER JOIN alumnos AS al ON a.Matricula = al.Matricula
         
         INNER JOIN carrera as c on al.Carrera = c.IdCarrera
-        WHERE (a.FechaInicio IS NULL OR a.FechaInicio = '') AND a.Aceptado = 1 AND a.IdSede = $id";
+        WHERE a.FechaInicio IS NULL  AND a.Aceptado = 1 AND a.IdSede = $id";
         //1 Significa que esta pendiente por confirmar		
         $resultado = $this->db->query($sql);
         while ($row = $resultado->fetch_assoc()) {

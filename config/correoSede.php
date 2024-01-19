@@ -79,7 +79,7 @@ try {
     
     $mail->addReplyTo('sedes.software@upamozoc.edu.mx', $correoSede);
     // Enviar correo a la dirección 'vinculacion@p.com'
-    $mail->addAddress('dieguitohernan68@gmail.com');
+    $mail->addAddress('b.rodriguezt@upam.edu.mx');
     // Cambiar el mensaje para la dirección 'vinculacion@p.com'
     //Agregar un switch-case tambien
     $mail->Subject = "Respuesta a postulación del alumno";

@@ -12,14 +12,14 @@
 		public function index() {
 			$carrera = new Carrera();
             $result = $carrera->get_carreras();
-            require_once "Views/Vinculacion/Listas.php";
+            require_once "Views/Vinculacion/listas.php";
         }
 
 		//Funcion principal que retorna los alumnos que se postularon a una emperesa en especifico
 		public function index_() {
 			$carrera = new Carrera();
             $result = $carrera->get_carreras();
-            require_once "Views/Vinculacion/Ptc.php";
+            require_once "Views/Vinculacion/ptc.php";
         }
         
 		public function registro() {

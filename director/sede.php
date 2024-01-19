@@ -133,7 +133,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 											<!--begin::Search-->
 											<div class="d-flex align-items-center position-relative my-1">
 												<i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i>
-												<input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Busqueda especifica" />
+												<input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Búsqueda Específica" />
 											</div>
 											<!--end::Search-->
 										</div>
@@ -186,16 +186,15 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 														echo "<td align='center'>" . "</td></tr>";
 													}
 												} else {
-													echo "Error";
+												
 												}
-												$conn->close();
+												
 												?>
 											</tbody>
 										</table>
 										<!--end::Table-->
 									</div>
 									<!--end::Card body-->
-
 								</div>
 								<!--end::Card-->
 							</div>

@@ -2,7 +2,7 @@
 $servername = "localhost";
 $database = "vinculacion";
 $username = "root";
-$password = "";
+$password = "galloUPAM2023.";
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $database);
 // Check connection

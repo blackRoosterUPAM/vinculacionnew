@@ -16,7 +16,6 @@
 </head>
 <!--end::Head-->
 <!--begin::Body-->
-
 <body id="kt_app_body" data-kt-app-header-fixed-mobile="true" data-kt-app-toolbar-enabled="true" class="app-default">
     <!--begin::Theme mode setup on page load-->
     <script>
@@ -45,6 +44,7 @@
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             <!--begin::Header-->
             <?php
+            $periodo = 4;
             include('header.php');
             ?>
             <!--end::Header-->
@@ -87,25 +87,39 @@
                             <!--begin::Content-->
                             <div id="kt_app_content" class="app-content">
                                 <!-- Contenido de la pagina -->
-                                <!-- Dropdown para seleccionar la carrera -->
-                                <label for="carreraSelect">Selecciona una carrera:</label>
-                                <select id="carreraSelect" class="form-control"></select>
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <!-- Dropdown para seleccionar la carrera -->
+                                        <div class="form-group">
+                                            <label for="carreraSelect">Selecciona una carrera:</label>
+                                            <select id="carreraSelect" class="form-control"></select>
+                                        </div>
 
-                                <!-- Contenedor para la gráfica de alumnos activos e inactivos -->
-                                <div style="width: 70%; margin: 20px auto;">
-                                    <canvas id="graficaAlumnos"></canvas>
+                                        <!-- Contenedor para la gráfica de alumnos activos e inactivos -->
+                                        <div class="chart-container" style="width: 70%; margin: 20px auto;">
+                                            <canvas id="graficaAlumnos"></canvas>
+                                        </div>
+                                    </div>
                                 </div>
-        <br>
-                                <!-- Dropdown para seleccionar la sede -->
-                                <label for="sedeSelect">Selecciona una sede:</label>
-                                <select id="sedeSelect" class="form-control">
-                                    <!-- Las opciones se llenarán dinámicamente al cargar la página -->
-                                </select>
 
-                                <!-- Contenedor para la gráfica de alumnos aceptados, pendientes y rechazados -->
-                                <div style="width: 70%; margin: 20px auto;">
-                                    <canvas id="graficaAlumnosAP"></canvas>
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- Dropdown para seleccionar la sede -->
+                                        <div class="form-group">
+                                            <label for="sedeSelect">Selecciona una sede:</label>
+                                            <select id="sedeSelect" class="form-control">
+                                                <!-- Las opciones se llenarán dinámicamente al cargar la página -->
+                                            </select>
+                                        </div>
+
+                                        <!-- Contenedor para la gráfica de alumnos aceptados, pendientes y rechazados -->
+                                        <div class="chart-container" style="width: 70%; margin: 20px auto;">
+                                            <canvas id="graficaAlumnosSede"></canvas>
+                                        </div>
+                                    </div>
                                 </div>
+
 
 
 
@@ -128,6 +142,10 @@
     <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
         <i class="ki-outline ki-arrow-up"></i>
     </div>
+
+    <footer>
+        <?php include('footer.php') ?>
+    </footer>
     <!--end::Scrolltop-->
     <!--begin::Javascript-->
     <script>
@@ -138,257 +156,13 @@
     <script src="assets/js/scripts.bundle.js"></script>
     <!--end::Custom Javascript-->
     <!-- Grafica alumnos activos e inactivos -->
-    <!-- <script>
-        // Al cargar la página, obtén las carreras y llénalas en el dropdown
-        $(document).ready(function() {
-            obtenerCarreras();
-        });
-
-        // Guardar la instancia de la gráfica actual
-        var myChart;
-
-        // Función para obtener las carreras y llenar el dropdown
-        function obtenerCarreras() {
-            $.ajax({
-                url: 'index.php?c=estad&a=obtenerCarreras',
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    // Llena el dropdown con las carreras
-                    var dropdown = $('#carreraSelect');
-                    dropdown.empty();
-                    $.each(data, function(key, entry) {
-                        dropdown.append($('<option></option>').attr('value', entry.idCarrera).text(entry.nombreCarrera));
-                    });
-
-                    // Asigna un evento al cambio en el dropdown
-                    dropdown.change(function() {
-                        var nombreCarrera = $(this).val();
-                        obtenerDatosCarrera(nombreCarrera);
-                    });
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
-
-        // Función para obtener y mostrar los datos de la carrera seleccionada
-        function obtenerDatosCarrera(nombreCarrera) {
-            $.ajax({
-                url: 'index.php?c=estad&a=obtenerDatosCarrera',
-                type: 'POST',
-                data: {
-                    nombreCarrera: nombreCarrera
-                },
-                dataType: 'json',
-                success: function(data) {
-                    // Llama a la función para dibujar la gráfica con los datos
-                    dibujarGrafica(data);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
-        // Función para dibujar la gráfica con los datos recibidos
-        function dibujarGrafica(datos) {
-            // Destruir la instancia de la gráfica actual si existe
-            if (myChart) {
-                myChart.destroy();
-            }
-
-            var ctx = document.getElementById('graficaAlumnos').getContext('2d');
-
-            if (datos.length === 0) {
-                // No hay datos, dibuja una gráfica vacía con animación y colores sólidos
-                myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Activos', 'Inactivos'],
-                        datasets: [{
-                            label: 'Número de Alumnos',
-                            data: [0, 0],
-                            backgroundColor: [
-                                'rgba(75, 192, 192, 0.7)',
-                                'rgba(255, 99, 132, 0.7)',
-                            ],
-                            borderColor: [
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(255, 99, 132, 1)',
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        },
-                        plugins: {
-                            animation: {
-                                duration: 1500, // Duración de la animación en milisegundos
-                                easing: 'easeInOutQuad', // Tipo de animación (puedes ajustarlo según tus preferencias)
-                                onProgress: function(animation) {
-                                    // Agregar efecto de crecimiento de las barras
-                                    for (var datasetIndex = 0; datasetIndex < myChart.data.datasets.length; datasetIndex++) {
-                                        var meta = myChart.getDatasetMeta(datasetIndex);
-                                        for (var index = 0; index < meta.data.length; index++) {
-                                            var model = meta.data[index]._model;
-                                            model.scaleTop = animation.currentStep / animation.numSteps;
-                                            model.y = Math.min(animation.currentStep / animation.numSteps, 1) * model.base;
-                                            model.height = model.base - model.y;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            } else {
-                // Hay datos, dibuja la gráfica con animación y colores sólidos
-                myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Activos', 'Inactivos'],
-                        datasets: [{
-                            label: datos[0].country,
-                            data: [datos[0].active, datos[0].inactive],
-                            backgroundColor: [
-                                'rgba(75, 192, 192, 0.7)',
-                                'rgba(255, 99, 132, 0.7)',
-                            ],
-                            borderColor: [
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(255, 99, 132, 1)',
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        },
-                        plugins: {
-                            animation: {
-                                duration: 1500, // Duración de la animación en milisegundos
-                                easing: 'easeInOutQuad' // Tipo de animación (puedes ajustarlo según tus preferencias)
-                            }
-                        }
-                    }
-                });
-            }
-        }
-    </script> -->
-    <!-- grafica alumnos aceptados y pendientes  -->
-
-    <!-- <script>
-        // Al cargar la página, obtén las sedes y llénalas en el dropdown
-        $(document).ready(function() {
-            obtenerSedes();
-        });
-
-        var myChart2; // Variable para almacenar la instancia de la gráfica
-
-        // Función para obtener las sedes y llenar el dropdown
-        function obtenerSedes() {
-            $.ajax({
-                url: 'index.php?c=estad&a=obtenerSedes',
-                type: 'GET',
-                dataType: 'json',
-                success: function(sedes) {
-                    var dropdown = $('#sedeSelect');
-                    dropdown.empty();
-                    $.each(sedes, function(key, sede) {
-                        dropdown.append($('<option></option>').attr('value', sede.IdSede).text(sede.NombreSede));
-                    });
-
-                    // Asigna un evento al cambio en el dropdown
-                    dropdown.change(function() {
-                        var idSede = $(this).val();
-                        obtenerDatosSede(idSede);
-                    });
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
-
-        // Función para obtener y mostrar los datos de la sede seleccionada
-        function obtenerDatosSede(idSede) {
-            $.ajax({
-                url: 'index.php?c=estad&a=obtenerDatosSede',
-                type: 'POST',
-                data: {
-                    idSede: idSede,
-                    idPeriodo: 10 // Filtro de idPeriodo
-                },
-                dataType: 'json',
-                success: function(data) {
-                    // Llama a la función para dibujar la gráfica con los datos
-                    dibujarGrafica(data);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
-
-        // Función para dibujar la gráfica con los datos recibidos
-        function dibujarGrafica(datos) {
-            var ctx = document.getElementById('graficaAlumnosAP').getContext('2d');
-
-            // Destruir la instancia anterior de la gráfica si existe
-            if (myChart2) {
-                myChart2.destroy();
-            }
-
-            // Verificamos si hay datos
-            if (datos && Object.keys(datos).length > 0) {
-                // Configuración de la gráfica
-                var options = {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                };
-
-                // Crea la gráfica de pastel
-                myChart2 = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Aceptados', 'Pendientes', 'Rechazados'],
-                        datasets: [{
-                            data: [datos.aceptados, datos.pendientes, datos.rechazados],
-                            backgroundColor: [
-                                'rgba(75, 192, 192, 0.7)',
-                                'rgba(255, 206, 86, 0.7)',
-                                'rgba(255, 99, 132, 0.7)',
-                            ],
-                            borderColor: [
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(255, 99, 132, 1)',
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: options
-                });
-            } else {
-                // Si no hay datos, muestra una gráfica vacía
-                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            }
-        }
-    </script> -->
-    <!--end::Javascript-->
-
     <script>
         // Al cargar la página, obtén las carreras y llénalas en el dropdown
         $(document).ready(function() {
             obtenerCarreras();
+        });
+
+        $(document).ready(function() {
             obtenerSedes();
         });
 
@@ -406,17 +180,18 @@
                     // Llena el dropdown con las carreras
                     var dropdown = $('#carreraSelect');
                     dropdown.empty();
-                    
                     dropdown.append($('<option></option>').attr('value', 0).text("Seleccione"));
                     $.each(data, function(key, entry) {
                         dropdown.append($('<option></option>').attr('value', entry.idCarrera).text(entry.nombreCarrera));
                     });
-
+                    dropdown.val(data[3].nombreCarrera);
                     // Asigna un evento al cambio en el dropdown
                     dropdown.change(function() {
                         var nombreCarrera = $(this).val();
                         obtenerDatosCarrera(nombreCarrera);
                     });
+                    // Desencadenar el evento change
+                    dropdown.trigger('change');
                 },
                 error: function(error) {
                     console.log(error);
@@ -545,16 +320,25 @@
                 success: function(sedes) {
                     var dropdown = $('#sedeSelect');
                     dropdown.empty();
-                        dropdown.append($('<option></option>').attr('value', 0).text("Seleccione"));
+                    dropdown.append($('<option></option>').attr('value', 0).text("Seleccione"));
                     $.each(sedes, function(key, sede) {
                         dropdown.append($('<option></option>').attr('value', sede.IdSede).text(sede.NombreSede));
                     });
+
 
                     // Asigna un evento al cambio en el dropdown
                     dropdown.change(function() {
                         var idSede = $(this).val();
                         obtenerDatosSede(idSede);
                     });
+
+
+                    // Seleccionar la segunda opción por defecto
+                    dropdown.val(sedes[0].IdSede);
+
+                    // Desencadenar el evento change
+                    dropdown.trigger('change');
+
                 },
                 error: function(error) {
                     console.log(error);
@@ -569,13 +353,14 @@
                 type: 'POST',
                 data: {
                     idSede: idSede,
-                    idPeriodo: 10 // Filtro de idPeriodo
+                    idPeriodo: 4 // Filtro de idPeriodo
                 },
                 dataType: 'json',
                 success: function(data) {
                     // Llama a la función para dibujar la gráfica con los datos
                     dibujarGraficaAP(data);
                     console.log(data);
+                    console.log(<?= $periodo ?>);
                 },
                 error: function(error) {
                     console.log(error);
@@ -589,7 +374,11 @@
                 myChart2.destroy();
             }
 
-            var ctx = document.getElementById('graficaAlumnosAP').getContext('2d');
+console.log("entro a dibujar grafica");
+console.log(datos.aceptados);
+console.log(datos);
+
+            var ctx = document.getElementById('graficaAlumnosSede').getContext('2d');
             // Resto de tu código...
             // Verificamos si hay datos
             if (datos && Object.keys(datos).length > 0) {
@@ -628,9 +417,6 @@
         }
     </script>
 </body>
-<footer>
-    <?php include('footer.php') ?>
-</footer>
 <!--end::Body-->
 
 </html>

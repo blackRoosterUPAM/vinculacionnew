@@ -50,7 +50,7 @@
 					<!--begin:Menu item-->
 					<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
 						<!--begin:Menu link-->
-						<a href="Vacantes.php">
+						<a href="vacantes.php">
 						<span class="menu-link">
 							<span class="menu-title">Vacantes</span>
 							<span class="menu-arrow d-lg-none"></span>
@@ -63,7 +63,7 @@
 					<!--begin:Menu item-->
 					<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
 						<!--begin:Menu link-->
-						<a href="Docs.php">
+						<a href="docs.php">
 						<span class="menu-link">
 							<span class="menu-title">Documentos</span>
 							<span class="menu-arrow d-lg-none"></span>

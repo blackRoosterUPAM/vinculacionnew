@@ -183,8 +183,10 @@ License: For each use you must have a valid license purchased only from above li
                                                                 <i class="ki-outline ki-book-square fs-4 me-1"></i><?php echo $carrera; ?></a>
                                                             <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                                                 <i class="ki-outline ki-phone fs-4 me-1"></i><?php echo $telefono; ?></a>
-                                                            <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                                            <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                                                 <i class="ki-outline ki-sms fs-4"></i><?php echo $correoE; ?></a>
+							   <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                                                <i class="ki-outline ki-book-square fs-4"></i><?php echo $nombreProceso; ?></a>
                                                         </div>
                                                         <!--end::Info-->
                                                     </div>
@@ -449,7 +451,7 @@ License: For each use you must have a valid license purchased only from above li
                                                             <!--end::Content-->
                                                             <!--begin::Action-->
                                                             <?php
-                                                            if ($estatusAlumno == 1) {
+                                                            if ($estatusAlumno == 1 && $estatusRVIN != 1) {
                                                             ?>
                                                                 <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_rvin">Añadir</a>
                                                             <?php
@@ -481,7 +483,7 @@ License: For each use you must have a valid license purchased only from above li
                                                             <!--end::Content-->
                                                             <!--begin::Action-->
                                                             <?php
-                                                            if ($estatusAlumno == 1) {
+                                                            if ($estatusAlumno == 1 && $estatusPresentacion != 1) {
                                                             ?>
                                                                 <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_cartaPresentacion">Añadir</a>
                                                             <?php
@@ -513,7 +515,7 @@ License: For each use you must have a valid license purchased only from above li
                                                             <!--end::Content-->
                                                             <!--begin::Action-->
                                                             <?php
-                                                            if ($estatusAlumno == 1) {
+                                                            if ($estatusAlumno == 1 && $estatusAceptacion != 1) {
                                                             ?>
                                                                 <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_cartaAceptacion">Añadir</a>
                                                             <?php
@@ -544,7 +546,7 @@ License: For each use you must have a valid license purchased only from above li
                                                             <!--end::Content-->
                                                             <!--begin::Action-->
                                                             <?php
-                                                            if ($estatusAlumno == 1) {
+                                                            if ($estatusAlumno == 1 && $estatusEvaluacion != 1) {
                                                             ?>
                                                                 <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_evaluacion">Añadir</a>
                                                             <?php
@@ -575,7 +577,7 @@ License: For each use you must have a valid license purchased only from above li
                                                             <!--end::Content-->
                                                             <!--begin::Action-->
                                                             <?php
-                                                            if ($estatusAlumno == 1) {
+                                                            if ($estatusAlumno == 1 && $estatusLiberacion != 1) {
                                                             ?>
                                                                 <a href="#" class="btn btn-primary px-6 align-self-center text-nowrap" data-bs-toggle="modal" data-bs-target="#kt_modal_new_cartaliberacion">Añadir</a>
                                                             <?php
@@ -607,6 +609,8 @@ License: For each use you must have a valid license purchased only from above li
                                                             <th class="min-w-125px">Documento</th>
                                                             <th class="min-w-125px">Estado PTC</th>
                                                             <th class="min-w-125px">Estado Vinculación</th>
+							    <th class="min-w-125px">Periodo</th>
+                                                            <th class="min-w-125px">Proceso</th>
 
                                                         </tr>
                                                     </thead>
@@ -641,6 +645,12 @@ License: For each use you must have a valid license purchased only from above li
                                                                             ?><div class="badge badge-light-danger">No válido</div><?php
                                                                         }
                                                                             ?>
+                                                                    </td>
+								    <td>
+                                                                        <a href="#" class="text-gray-800 text-hover-primary mb-1"><?php echo $d["Meses"]." ".$d["Año"]; ?></a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" class="text-gray-800 text-hover-primary mb-1"><?php echo $d["NombrePE"]; ?></a>
                                                                     </td>
                                                                 </tr>
                                                         <?php

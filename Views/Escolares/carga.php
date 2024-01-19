@@ -61,7 +61,7 @@
         <!--begin::Page-->
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             <!--begin::Header-->
-            <?php include('Header.php'); ?>
+            <?php include('header.php'); ?>
             <!--end::Header-->
             <!--begin::Wrapper-->
             <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
@@ -137,7 +137,7 @@
                                     </div>
                                     <!--begin::Table-->
                                     <!--LRGA03-->
-                                    <div class="table table-striped">
+                                    <div class="table table-responsive">
                                         <table class="table-responsive table align-middle table-row-dashed fs-8 gy-5" id="kt_customers_table">
                                             <thead class="bg-primary">
                                                 <tr class=" text-start text-gray-100 fw-bold fs-7  gs-0">
@@ -569,7 +569,7 @@
             </div>
         </div>
         <!--begin::Footer-->
-        <?php include 'Footer.php'; ?>
+        <?php include 'footer.php'; ?>
         <!--end::Footer-->
         <!--end::Modal - Offer A Deal-->
 
@@ -638,7 +638,7 @@
                             // Actualiza el estado del botón y muestra un mensaje de éxito
                             $('[data-alumno-id="' + alumnoId + '"]').find('.btn-activar').data('alumno-estatus', 1);
                             $('[data-alumno-id="' + alumnoId + '"]').find('.status-cell').text('Activo').removeClass('text-danger').addClass('text-success');
-                            alert('Alumno activado con éxito.');
+                           // alert('Alumno activado con éxito.');
                         }
                     });
                 }
@@ -655,7 +655,7 @@
                             // Actualiza el estado del botón y muestra un mensaje de éxito
                             $('[data-alumno-id="' + alumnoId + '"]').find('.btn-activar').data('alumno-estatus', 0);
                             $('[data-alumno-id="' + alumnoId + '"]').find('.status-cell').text('Inactivo').removeClass('text-success').addClass('text-danger');
-                            alert('Alumno desactivado con éxito.');
+                            //alert('Alumno desactivado con éxito.');
                         }
                     });
                 }
@@ -674,7 +674,7 @@
                             } else {
                                 $('.status-cell').text('Inactivo').removeClass('text-success').addClass('text-danger');
                             }
-                            alert('Todos los alumnos fueron ' + (accion === 'activar' ? 'activados' : 'desactivados') + ' con éxito.');
+                            //alert('Todos los alumnos fueron ' + (accion === 'activar' ? 'activados' : 'desactivados') + ' con éxito.');
                         }
                     });
                 }

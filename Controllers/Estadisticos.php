@@ -162,7 +162,7 @@ class EstadController
     public function obtenerDatosSede()
     {
         $idSede = $_POST['idSede'];
-        $idPeriodo = 10; // Filtro de idPeriodo
+        $idPeriodo = $_POST['idPeriodo']; // Filtro de idPeriodo
 
         $modelo = new Estadistico();
         $datosSede = $modelo->obtenerDatosSede($idSede, $idPeriodo);

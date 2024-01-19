@@ -146,7 +146,7 @@ class SedesController
     {
         $sedes = new Sede();
         $data = $sedes->get_sedes();
-        require_once "Views/Vinculacion/Sedes.php";
+        require_once "Views/Vinculacion/sedes.php";
     }
 
     public function nueva_sede()
@@ -172,14 +172,14 @@ class SedesController
 
         $sedes = new Sede();
         $data = $sedes->get_sedes();
-        require_once "Views/Vinculacion/Sedes.php";
+        require_once "Views/Vinculacion/sedes.php";
     }
 
     public function edit_sede($id)
     {
         $sede = new Sede();
         $data = $sede->get_sede($id);
-        require_once "Views/Vinculacion/Edit_sede.php";
+        require_once "Views/Vinculacion/edit_sede.php";
     }
     public function sede_editado()
     {
@@ -196,7 +196,7 @@ class SedesController
 
         $sedes = new Sede();
         $data = $sedes->get_sedes();
-        require_once "Views/Vinculacion/Sedes.php";
+        require_once "Views/Vinculacion/sedes.php";
     }
 
     public function mostrar_busqueda()

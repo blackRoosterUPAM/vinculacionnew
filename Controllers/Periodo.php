@@ -13,7 +13,7 @@ class PeriodoController
         $periodo = new Periodo();
         $data = $periodo->get_periodos();
 
-        require_once "Views/Vinculacion/Periodo.php";
+        require_once "Views/Vinculacion/periodo.php";
     }
 
     public function periodo_editado($id)
@@ -23,7 +23,7 @@ class PeriodoController
 
         $data = $periodo->get_periodos();
 
-        require_once "Views/Vinculacion/Periodo.php";
+        require_once "Views/Vinculacion/periodo.php";
     }
 
     public function new_periodo()
@@ -34,7 +34,7 @@ class PeriodoController
         $periodo = new Periodo();
         $dato = $periodo->nuevo_periodo($period, $año);
         $data = $periodo->get_periodos();
-        require_once "Views/Vinculacion/Periodo.php";
+        require_once "Views/Vinculacion/periodo.php";
     }
     public function mostrar_busqueda()
     {

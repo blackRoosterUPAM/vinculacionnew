@@ -3,16 +3,16 @@
 	require_once "config/config.php";
 	require_once "core/routes.php";
 	require_once "config/database.php";
-	require_once "controllers/Alumnos.php";	
-	require_once "controllers/Sedes.php";
-	require_once "controllers/Usuarios.php";
-	require_once "controllers/Carrera.php";
-	require_once "controllers/Proceso.php";
-	require_once "controllers/Escolars.php";
-	require_once "controllers/Registro.php";
-	require_once "controllers/vinculacion.php";
-	require_once "controllers/Rcontraseña.php";
-	require_once "controllers/Estadisticos.php";
+	require_once "Controllers/Alumnos.php";	
+	require_once "Controllers/Sedes.php";
+	require_once "Controllers/Usuarios.php";
+	require_once "Controllers/Carrera.php";
+	require_once "Controllers/Proceso.php";
+	require_once "Controllers/Escolars.php";
+	require_once "Controllers/Registro.php";
+	require_once "Controllers/vinculacion.php";
+	require_once "Controllers/Rcontraseña.php";
+	require_once "Controllers/Estadisticos.php";
 
 	
 	//Mediante la url vamos a saber que controlador se usa

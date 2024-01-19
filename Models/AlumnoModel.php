@@ -46,7 +46,7 @@ class Alumno
 
 	public function get_alumno($id)
 	{
-		$sql = "SELECT * FROM alumnos as a INNER JOIN carrera as c on a.Carrera = c.IdCarrera WHERE Matricula = $id";
+		$sql = $sql = "SELECT * FROM alumnos as a INNER JOIN carrera as c on a.Carrera = c.IdCarrera INNER JOIN proceso as p ON a.idProceso = p.IdProceso WHERE Matricula = $id";
 		$resultado = $this->db->query($sql);
 		$row = $resultado->fetch_assoc();
 		return $row;
@@ -65,11 +65,80 @@ class Alumno
 		}
 		return $doc;
 	}
+	
+	public function get_estatusRVIN($id, $periodo, $proceso)
+	{
+		$sql = "SELECT * FROM docalumnoperiodo WHERE Matricula = $id AND IdPeriodo = $periodo AND IdProceso = $proceso AND IdDocumento = 1";
+		$resultado = $this->db->query($sql);
+		//$row = $resultado->fetch_assoc();
+		if ($row = $resultado->fetch_object()) {
+			//$doc = $row->FechaCreación;
+			$estatusRVIN = $row->EstatusPtc;
+		} else {
+			$estatusRVIN = "";
+		}
+		return $estatusRVIN;
+	}
+	
+	public function get_estatusAceptacion($id, $periodo, $proceso)
+	{
+		$sql = "SELECT * FROM docalumnoperiodo WHERE Matricula = $id AND IdPeriodo = $periodo AND IdProceso = $proceso AND IdDocumento = 2";
+		$resultado = $this->db->query($sql);
+		//$row = $resultado->fetch_assoc();
+		if ($row = $resultado->fetch_object()) {
+			//$doc = $row->FechaCreación;
+			$estatusAceptacion = $row->EstatusPtc;
+		} else {
+			$estatusAceptacion = "";
+		}
+		return $estatusAceptacion;
+	}
 
+	public function get_estatusEvaluacion($id, $periodo, $proceso)
+	{
+		$sql = "SELECT * FROM docalumnoperiodo WHERE Matricula = $id AND IdPeriodo = $periodo AND IdProceso = $proceso AND IdDocumento = 3";
+		$resultado = $this->db->query($sql);
+		//$row = $resultado->fetch_assoc();
+		if ($row = $resultado->fetch_object()) {
+			//$doc = $row->FechaCreación;
+			$estatusEvaluacion = $row->EstatusPtc;
+		} else {
+			$estatusEvaluacion = "";
+		}
+		return $estatusEvaluacion;
+	}
+
+	public function get_estatusLiberacion($id, $periodo, $proceso)
+	{
+		$sql = "SELECT * FROM docalumnoperiodo WHERE Matricula = $id AND IdPeriodo = $periodo AND IdProceso = $proceso AND IdDocumento = 4";
+		$resultado = $this->db->query($sql);
+		//$row = $resultado->fetch_assoc();
+		if ($row = $resultado->fetch_object()) {
+			//$doc = $row->FechaCreación;
+			$estatusLiberacion = $row->EstatusPtc;
+		} else {
+			$estatusLiberacion = "";
+		}
+		return $estatusLiberacion;
+	}
+
+	public function get_estatusPresentacion($id, $periodo, $proceso)
+	{
+		$sql = "SELECT * FROM docalumnoperiodo WHERE Matricula = $id AND IdPeriodo = $periodo AND IdProceso = $proceso AND IdDocumento = 5";
+		$resultado = $this->db->query($sql);
+		//$row = $resultado->fetch_assoc();
+		if ($row = $resultado->fetch_object()) {
+			//$doc = $row->FechaCreación;
+			$estatusPresentacion = $row->EstatusPtc;
+		} else {
+			$estatusPresentacion = "";
+		}
+		return $estatusPresentacion;
+	}
 
 	public function get_docsvinculacion($id, $periodo)
 	{
-		$sql = "SELECT * FROM docalumnoperiodo as dap INNER JOIN documentacion as do ON dap.IdDocumento = do.IdDocumento WHERE Matricula = $id AND idPeriodo = $periodo";
+		$sql = "SELECT * FROM docalumnoperiodo as dap INNER JOIN documentacion as do ON dap.IdDocumento = do.IdDocumento INNER JOIN periodo as p ON dap.IdPeriodo = p.IdPeriodo INNER JOIN proceso as pro ON dap.IdProceso = pro.IdProceso WHERE Matricula = $id AND dap.IdPeriodo = $periodo";
 
 		$resultado = $this->db->query($sql);
 		while ($row = $resultado->fetch_assoc()) {
@@ -242,7 +311,7 @@ class Alumno
 	//Lubu
 	//funcion para cambiar el proceso y perido del alumno
 	public function cambiarPP($id, $proceso, $periodo){
-		$sqlUpdate = "UPDATE alumnos SET idProceso= ?, idPeriodo= ? WHERE Matricula = ?";
+		$sqlUpdate = "UPDATE alumnos SET idProceso= ?, idPeriodo= ?, Proceso = 0  WHERE Matricula = ?";
         $stmtUpdate = $this->db->prepare($sqlUpdate);
         $stmtUpdate->bind_param("sss", $proceso, $periodo, $id);
         $updateSuccess = $stmtUpdate->execute();

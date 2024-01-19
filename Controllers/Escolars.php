@@ -32,7 +32,7 @@ class EscolarsController
         $resultAlumno = $alumno->get_estatus();
 
 
-        require_once('Views/Escolares/Carga.php');
+        require_once('Views/Escolares/carga.php');
     }
 
     //funcion que cambia el estado de activo de todos los alumnos
@@ -44,7 +44,7 @@ class EscolarsController
             exit();
         } else {
             // Manejo de errores si la operación no fue exitosa
-            echo "Error al cambiar el estado de los alumnos.";
+           // echo "Error al cambiar el estado de los alumnos.";
         }
     }
 
@@ -57,7 +57,7 @@ class EscolarsController
             exit();
         } else {
             // Manejo de errores si la operación no fue exitosa
-            echo "Error al cambiar el estado de los alumnos.";
+            //echo "Error al cambiar el estado de los alumnos.";
         }
     }
 
@@ -86,7 +86,7 @@ class EscolarsController
                 exit();
             } else {
                 // Manejo de errores si la operación no fue exitosa
-                echo "Error al cambiar el estado de los alumnos.";
+               // echo "Error al cambiar el estado de los alumnos.";
             }
         } else {
             // Si no se ha enviado el formulario, muestra el formulario de carga individual
@@ -101,7 +101,7 @@ class EscolarsController
 
             $periodo = new Periodo();
             $resultPeriodo = $periodo->get_periodos();
-            include 'Views/Escolares/Carga.php';
+            include 'Views/Escolares/carga.php';
         }
     }
 

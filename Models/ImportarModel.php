@@ -30,11 +30,11 @@ class ImportarModel
         $sql = "UPDATE alumnos SET Estatus = 0 WHERE Matricula > 0";
         $resultado = $this->mysqli->query($sql);
         if ($resultado) {
-            $message = "El estado de los alumnos ha sido cambiado de manera exitosa.";
+            //$message = "El estado de los alumnos ha sido cambiado de manera exitosa.";
             return true;
         } else {
             return false;
-            $message = "Error al cambiar el estado de los alumnos.";
+           // $message = "Error al cambiar el estado de los alumnos.";
         }
 
         // Redirige o muestra el mensaje según tu lógica
@@ -46,11 +46,11 @@ class ImportarModel
         $sql = "UPDATE alumnos SET Estatus = 1  WHERE Matricula > 0";
         $resultado = $this->mysqli->query($sql);
         if ($resultado) {
-            $message = "El estado de los alumnos ha sido cambiado de manera exitosa.";
+            //$message = "El estado de los alumnos ha sido cambiado de manera exitosa.";
             return true;
         } else {
             return false;
-            $message = "Error al cambiar el estado de los alumnos.";
+            //$message = "Error al cambiar el estado de los alumnos.";
         }
 
         // Redirige o muestra el mensaje según tu lógica
@@ -85,7 +85,7 @@ class ImportarModel
     public function importarDesdeExcel($archivo)
     {
         $inputFileName = $archivo['tmp_name']; // Ruta del archivo Excel subido
-        require_once 'config/CorreoUserContra.php'; //permite enviar el correo a los alumnos
+        require_once 'config/correoUserContra.php'; //permite enviar el correo a los alumnos
 
         try {
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFileName);
@@ -123,9 +123,9 @@ class ImportarModel
                 //Buscamos el id del periodo
                 $periodoId = $this->getPeriodo($periodo, $año);
                 if ($periodoId['IdPeriodo'] === null) {
-                    echo '<script>';
-                    echo 'alert("La carrera registrada en la fila ' . $row . ' no coincide con ninguna carrera en la base de datos. Matrícula: ' . $matricula . '");';
-                    echo '</script>';
+                    //echo '<script>';
+                   // echo 'alert("La carrera registrada en la fila ' . $row . ' no coincide con ninguna carrera en la base de datos. Matrícula: ' . $matricula . '");';
+                   // echo '</script>';
                     continue; // Omitir esta fila y continuar con la siguiente
                 }
 
@@ -134,9 +134,9 @@ class ImportarModel
                 $carreraId = $this->getCarreraId($carrera);
                 if ($carreraId === null) {
                     // La carrera no coincide con ninguna registrada en la base de datos
-                    echo '<script>';
-                    echo 'alert("La carrera registrada en la fila ' . $row . ' no coincide con ninguna carrera en la base de datos. Matrícula: ' . $matricula . '");';
-                    echo '</script>';
+                    //echo '<script>';
+                    //echo 'alert("La carrera registrada en la fila ' . $row . ' no coincide con ninguna carrera en la base de datos. Matrícula: ' . $matricula . '");';
+                    //echo '</script>';
                     continue; // Omitir esta fila y continuar con la siguiente
                 }
 
@@ -144,9 +144,9 @@ class ImportarModel
                 $procesoId = $this->getProcesoId($proceso);
                 if ($procesoId === null) {
                     // El proceso no coincide con ninguno registrado en la base de datos
-                    echo '<script>';
-                    echo 'alert("El proceso registrado en la fila ' . $row . ' no coincide con ningún proceso en la base de datos. Matrícula: ' . $matricula . '");';
-                    echo '</script>';
+                    //echo '<script>';
+                    //echo 'alert("El proceso registrado en la fila ' . $row . ' no coincide con ningún proceso en la base de datos. Matrícula: ' . $matricula . '");';
+                    //echo '</script>';
                     continue; // Omitir esta fila y continuar con la siguiente
                 }
 
@@ -216,8 +216,9 @@ class ImportarModel
             return true; // Éxito al importar los datos
         } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
             // Manejo de errores si ocurre alguna excepción al cargar el archivo Excel
-            echo '<script>alert("Error al cargar el archivo Excel. Redirigiendo al índice...");</script>';
-            echo '<script>window.location.href = "../index.php?c=escolars&a=index";</script>';
+           // echo '<script>alert("Error al cargar el archivo Excel. Redirigiendo al índice...");</script>';
+           // echo '<script>window.location.href = "../index.php?c=escolars&a=index";</script>';
+	header('Location: index.php?c=escolars&a=index');
             return false;
         }
     }
@@ -277,7 +278,7 @@ class ImportarModel
 
     public function insertarAlumnoIndividual($matricula, $nombre, $apellidoP, $apellidoM, $telefono, $correo, $carrera, $proceso, $periodo)
     {
-        require_once 'config/CorreoUserContra.php'; //permite enviar el correo a los alumnos
+        require_once 'config/correoUserContra.php'; //permite enviar el correo a los alumnos
 
         // Generar la contraseña a partir de las iniciales del nombre y los últimos dígitos de la matrícula
         $inicialesNombre = substr($nombre, 0, 2); // Tomar las primeras 2 letras del nombre
