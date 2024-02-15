@@ -151,6 +151,7 @@ class SedesController
 
     public function nueva_sede()
     {
+        // Obtener los datos del formulario
         $matricula = $_POST["matricula"];
         $nombre_sede = $_POST["nombre_sede"];
         $direccion = $_POST["direccion"];
@@ -161,18 +162,17 @@ class SedesController
         $nombre = $_POST["nombre"];
         $apellidop = $_POST["apellidop"];
         $apellidom = $_POST["apellidom"];
-
+    
         $logo = isset($_FILES["logo"]["tmp_name"]) ? $_FILES["logo"]["tmp_name"] : null;
-
-        // Obtiene el contenido binario de la imagen
-        $logoContenido = $logo ? file_get_contents($logo) : null;
-
+    
+        // Instanciar el modelo
         $sedes = new Sede();
-        $dato = $sedes->new_sede($matricula, $nombre_sede, $direccion, $correo, $telefono, $tiposede, $contraseña, $nombre, $apellidop, $apellidom, $logoContenido);
-
-        $sedes = new Sede();
-        $data = $sedes->get_sedes();
-        require_once "Views/Vinculacion/sedes.php";
+    
+        // Llamar al método para agregar una nueva sede
+        $response = $sedes->new_sede($matricula, $nombre_sede, $direccion, $correo, $telefono, $tiposede, $contraseña, $nombre, $apellidop, $apellidom, $logo);
+    
+        // Enviar la respuesta como JSON
+        echo json_encode($response);
     }
 
     public function edit_sede($id)
@@ -183,6 +183,7 @@ class SedesController
     }
     public function sede_editado()
     {
+        // Obtener los datos del formulario
         $id_sede = $_POST["id_sede"];
         $id = $_POST["identificador"];
         $nombresede = $_POST["nombre_sede"];
@@ -191,12 +192,19 @@ class SedesController
         $telefono = $_POST["telefono"];
         $tiposede = $_POST["tiposede"];
 
-        $sedes = new Sede();
-        $data = $sedes->modificar($id_sede, $id, $nombresede, $direccion, $correo, $telefono, $tiposede);
+        // Instanciar el modelo Sede
+        $sede = new Sede();
 
-        $sedes = new Sede();
-        $data = $sedes->get_sedes();
-        require_once "Views/Vinculacion/sedes.php";
+        // Llamar al método modificar del modelo para actualizar la sede
+        $resultado = $sede->modificar($id_sede, $id, $nombresede, $direccion, $correo, $telefono, $tiposede);
+
+        // Verificar si la actualización fue exitosa
+        if ($resultado['status'] === 'success') {
+            echo json_encode(array('status' => 'success', 'message' => 'Actualización correcta'));
+        } else {
+            // Si hubo un error en la actualización, mostrar mensaje de error
+            echo json_encode(array('status' => 'error', 'message' => 'Error en la actualización de datos: ' . $resultado['message']));
+        }
     }
 
     public function mostrar_busqueda()

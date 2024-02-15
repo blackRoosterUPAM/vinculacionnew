@@ -146,8 +146,9 @@ class PtcController
         }
     }
 
-    public function nuevo_ptc()
+public function nuevo_ptc()
     {
+        // Obtener los datos del formulario
         $matricula = $_POST["matricula"];
         $nombre_ptc = $_POST["nombre_ptc"];
         $apellidoPaterno = $_POST["ApellidoPaterno"];
@@ -156,16 +157,19 @@ class PtcController
         $carrera = $_POST["carrera"];
         $contraseña = $_POST["contraseña"];
 
-        if (empty($matricula) && empty($nombre_ptc) && empty($apellidoPaterno) && empty($apellidoMaterno) && empty($correoPtc) && empty($carrera) && empty($contraseña)) {
-            echo "Todos los campos están vacíos";
-        } else {
-            // Se realiza la insercion de datos en la tabla de ptc y usuarios
-            $ptc = new ptc();
-            $resultado = $ptc->insert_ptc($matricula, $nombre_ptc, $apellidoPaterno, $apellidoMaterno, $correoPtc, $carrera,$contraseña);
-
-            $carrera = new Carrera();
-            $result = $carrera->get_carreras();
-            include('Views/Vinculacion/ptc.php');
+        // Verificar si algún campo está vacío
+        if (empty($matricula) || empty($nombre_ptc) || empty($apellidoPaterno) || empty($apellidoMaterno) || empty($correoPtc) || empty($carrera) || empty($contraseña)) {
+            echo json_encode(array('status' => 'error', 'message' => 'Todos los campos deben ser completados'));
+            return;
         }
+
+        // Instanciar el modelo PTC
+        $ptc = new Ptc();
+
+        // Insertar el PTC y obtener el resultado
+        $resultado = $ptc->insert_ptc($matricula, $nombre_ptc, $apellidoPaterno, $apellidoMaterno, $correoPtc, $carrera, $contraseña);
+
+        // Retornar la respuesta como JSON
+        echo json_encode($resultado);
     }
 }

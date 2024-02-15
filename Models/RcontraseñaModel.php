@@ -59,26 +59,36 @@ class Contraseña
         }
     }
 
-    private function insertarCodigo($correo, $codigo)
+        private function insertarCodigo($correo, $codigo)
     {
-        // Obtener el IdUsuario asociado al correo electrónico
-        $query = mysqli_query($this->db, "SELECT IdUsuario FROM usuarios WHERE CorreoE = '$correo'");
-
-        if ($query) {
+        // Obtener el número de resultados para el correo electrónico dado
+        $query = mysqli_query($this->db, "SELECT COUNT(*) AS count FROM usuarios WHERE CorreoE = '$correo'");
+        $result = mysqli_fetch_assoc($query);
+        $count = $result["count"];
+    
+        if ($count == 1) {
+            // Obtener el IdUsuario asociado al correo electrónico
+            $query = mysqli_query($this->db, "SELECT IdUsuario FROM usuarios WHERE CorreoE = '$correo'");
             $usuario = mysqli_fetch_assoc($query);
             $idUsuario = $usuario["IdUsuario"];
-
-            // Insertar el código junto con el IdUsuario en la tabla codigos_recuperacion
-            $stmt = $this->db->prepare("INSERT INTO codigos_recuperacion (idUsuario, codigo) VALUES (?, ?)");
-            $stmt->bind_param("is", $idUsuario, $codigo);
-            $stmt->execute();
-
-            $stmt->close();
+    
+            // Eliminar el código existente, si lo hay, asociado al IdUsuario
+            $deleteStmt = $this->db->prepare("DELETE FROM codigos_recuperacion WHERE idUsuario = ?");
+            $deleteStmt->bind_param("i", $idUsuario);
+            $deleteStmt->execute();
+            $deleteStmt->close();
+    
+            // Insertar el nuevo código junto con el IdUsuario en la tabla codigos_recuperacion
+            $insertStmt = $this->db->prepare("INSERT INTO codigos_recuperacion (idUsuario, codigo) VALUES (?, ?)");
+            $insertStmt->bind_param("is", $idUsuario, $codigo);
+            $insertStmt->execute();
+            $insertStmt->close();
         } else {
-            // Manejar el error al ejecutar la consulta
-            echo "Error al obtener el IdUsuario: " . mysqli_error($this->db);
+            // Redirigir a index.php si el correo tiene más de un resultado o ninguno
+            header('location: index.php');
+            exit(); // Salir para evitar ejecución adicional del script
         }
-
+    
         $this->db->close();
     }
 

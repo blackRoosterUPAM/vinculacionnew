@@ -75,11 +75,11 @@ class UsuariosController
 
             }
             else {
-                header('location: index.php');
+header('Location: index.php?error=correo_contraseña_incorrectos');
             }
         } else {
             // Inicio de sesión fallido, redirigir al login _
-            header('location: index.php');
+header('Location: index.php?error=correo_contraseña_incorrectos');
         }
     }
 

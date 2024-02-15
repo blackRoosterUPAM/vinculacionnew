@@ -77,9 +77,27 @@ class Vacantes
             return $this->periodo;
       }
 
-      public function nueva_sede($idSede, $idCarrera, $idProceso, $idPeriodo, $perfil, $beneficios, $vacantes)
+     public function nueva_vacante($idSede, $idCarrera, $idProceso, $idPeriodo, $perfil, $beneficios, $vacantes)
       {
-            $query = mysqli_query($this->db, "INSERT INTO vacantes (IdSede, IdCarrera, IdProceso, IdPeriodo, Perfil, Beneficios, NumVacantes, NumPostulados,totalVacantes) VALUES ('$idSede', '$idCarrera', '$idProceso', '$idPeriodo', '$perfil', '$beneficios', '$vacantes', '$vacantes','$vacantes')");
+            // Inicializar la respuesta
+            $response = array();
+
+            // Insertar los datos en la base de datos
+            $query = mysqli_query($this->db, "INSERT INTO vacantes (IdSede, IdCarrera, IdProceso, IdPeriodo, Perfil, Beneficios, NumVacantes, NumPostulados, totalVacantes) 
+                                      VALUES ('$idSede', '$idCarrera', '$idProceso', '$idPeriodo', '$perfil', '$beneficios', '$vacantes', '$vacantes', '$vacantes')");
+
+            if ($query) {
+                  // Éxito en la inserción
+                  $response['status'] = 'success';
+                  $response['message'] = 'La vacante se ha creado exitosamente.';
+            } else {
+                  // Error en la inserción
+                  $response['status'] = 'error';
+                  $response['message'] = 'Hubo un error al crear la vacante. Por favor, inténtelo de nuevo.';
+            }
+
+            // Devolver la respuesta
+            return $response;
       }
 
       public function obtenerVacantesPorCarrera($idCarrera)

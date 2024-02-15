@@ -26,16 +26,16 @@ class PeriodoController
         require_once "Views/Vinculacion/periodo.php";
     }
 
-    public function new_periodo()
+public function new_periodo()
     {
-        $period = $_POST["periodo"];
-        $año = $_POST["año"];
+        $periodoValue = $_POST["periodo"]; // Cambia el nombre de la variable para evitar conflictos
+        $añoValue = $_POST["año"]; // Cambia el nombre de la variable para evitar conflictos
 
         $periodo = new Periodo();
-        $dato = $periodo->nuevo_periodo($period, $año);
-        $data = $periodo->get_periodos();
-        require_once "Views/Vinculacion/periodo.php";
+        $response = $periodo->nuevo_periodo($periodoValue, $añoValue); // Usa los nombres de variable corregidos
+        echo json_encode($response);
     }
+
     public function mostrar_busqueda()
     {
         // Obtener el dato de búsqueda desde la solicitud POST

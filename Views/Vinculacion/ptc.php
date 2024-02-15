@@ -63,7 +63,30 @@ License: For each use you must have a valid license purchased only from above li
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<style>
+		/* Estilos para el campo de contraseña */
+		.password-container {
+			position: relative;
+		}
 
+		.password-container input {
+			padding-right: 30px;
+			/* Espacio para el icono */
+			border: none;
+			/* Sin borde */
+			border-radius: 5px;
+			/* Bordes redondeados */
+		}
+
+		.password-container i {
+			position: absolute;
+			right: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+			cursor: pointer;
+		}
+	</style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -212,7 +235,14 @@ License: For each use you must have a valid license purchased only from above li
 												}
 											});
 										} else {
-											alert("Por favor, ingresa un texto de búsqueda antes de buscar.");
+		Swal.fire({
+												title: 'Error',
+												text: 'Por favor, ingresa un texto de búsqueda antes de buscar.',
+												icon: 'error'
+											}).then((result) => {
+												// Redireccionar después de mostrar el mensaje de error
+												window.location.href = 'index.php?c=carreras&a=index_';
+											});
 										}
 									});
 								</script>
@@ -263,8 +293,14 @@ License: For each use you must have a valid license purchased only from above li
 												if (selectedCarrera) {
 													window.location.href = "?c=ptc&a=exportar&id=" + encodeURIComponent(selectedCarrera);
 												} else {
-													alert('Por favor, seleccione una carrera antes de exportar.');
-												}
+Swal.fire({
+														title: 'Error',
+														text: 'Por favor, selecciona una carrera antes de exportar.',
+														icon: 'error'
+													}).then((result) => {
+														// Redireccionar después de mostrar el mensaje de error
+														window.location.href = 'index.php?c=carreras&a=index_';
+													});												}
 											});
 										</script>
 									</div>
@@ -310,7 +346,14 @@ License: For each use you must have a valid license purchased only from above li
 																}
 															});
 														} else {
-															alert("Por favor, selecciona una carrera antes de mostrar los datos.");
+Swal.fire({
+												title: 'Error',
+												text: 'Por favor, Selecciona una carrera.',
+												icon: 'error'
+											}).then((result) => {
+												// Redireccionar después de mostrar el mensaje de error
+												window.location.href = 'index.php?c=carreras&a=index_';
+											});
 														}
 													});
 												</script>
@@ -364,7 +407,7 @@ License: For each use you must have a valid license purchased only from above li
 						<!--begin::Content-->
 						<div id="kt_account_settings_profile_details" class="collapse show">
 							<!--begin::Form-->
-							<form id="kt_account_profile_details_form" class="form" action="?c=ptc&a=nuevo_ptc" method="post" enctype="multipart/form-data">
+							<form id="kt_new_ptc_form">
 								<!--begin::Card body-->
 								<div class="card-body border-top p-9">
 									<!--begin::Input group-->
@@ -501,7 +544,27 @@ License: For each use you must have a valid license purchased only from above li
 											<div class="row">
 												<!--begin::Col-->
 												<div class="col-lg-6 fv-row">
-													<input type="password" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+													<div class="password-container">
+														<input type="password" placeholder="Contraseña" name="contraseña" id="contraseña" class="form-control bg-transparent" require />
+														<i id="visibility-icon" class="fas fa-eye" onclick="toggleVisibility()"></i>
+													</div>
+
+													<!--end::Password-->
+
+													<script>
+														function toggleVisibility() {
+															var passwordInput = document.getElementById("contraseña");
+															var visibilityIcon = document.getElementById("visibility-icon");
+
+															if (passwordInput.type === "password") {
+																passwordInput.type = "text";
+																visibilityIcon.className = "fas fa-eye-slash";
+															} else {
+																passwordInput.type = "password";
+																visibilityIcon.className = "fas fa-eye";
+															}
+														}
+													</script>
 												</div>
 												<!--end::Col-->
 											</div>
@@ -520,6 +583,61 @@ License: For each use you must have a valid license purchased only from above li
 								</div>
 								<!--end::Actions-->
 							</form>
+<script>
+								$(document).ready(function() {
+									$('#kt_new_ptc_form').submit(function(event) {
+										event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
+										// Obtener los datos del formulario
+										var formData = new FormData(this);
+
+										// Enviar la solicitud AJAX al servidor
+										$.ajax({
+											type: 'POST',
+											url: '?c=ptc&a=nuevo_ptc',
+											data: formData,
+											dataType: 'json',
+											processData: false,
+											contentType: false,
+											success: function(response) {
+												if (response.status === 'success') {
+													// Mostrar mensaje de éxito con SweetAlert
+													Swal.fire({
+														title: 'Éxito',
+														text: response.message,
+														icon: 'success'
+													}).then((result) => {
+														// Redireccionar después de mostrar el mensaje de éxito
+														window.location.href = 'index.php?c=carreras&a=index_';
+													});
+												} else {
+													// Mostrar mensaje de error con SweetAlert
+													Swal.fire({
+														title: 'Error',
+														text: response.message,
+														icon: 'error'
+													}).then((result) => {
+														// Redireccionar después de mostrar el mensaje de error
+														window.location.href = 'index.php?c=carreras&a=index_';
+													});
+												}
+											},
+											error: function(xhr, status, error) {
+												// Mostrar mensaje de error en caso de falla de la solicitud AJAX
+												Swal.fire({
+													title: 'Error',
+													text: 'Hubo un error al procesar la solicitud. Por favor, inténtelo de nuevo más tarde.',
+													icon: 'error'
+												}).then((result) => {
+													// Redireccionar después de mostrar el mensaje de error de la solicitud AJAX
+													window.location.href = 'index.php?c=carreras&a=index_';
+												});
+											}
+										});
+
+									});
+								});
+							</script>
 							<!--end::Form-->
 						</div>
 						<!--end::Content-->

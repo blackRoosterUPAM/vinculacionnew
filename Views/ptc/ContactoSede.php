@@ -138,6 +138,14 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
                                         <!--begin::Navs-->
                                     </div>
                                 </div>
+				<!--begin::search-->
+                                <div class="d-flex align-items-center position-relative my-2">
+                                    <i class="ki-outline ki-magnifier fs-2 position-absolute ms-3"></i>
+                                    <input type="text" id="searchInput"
+                                        class="form-control form-control-solid w-250px ps-14"
+                                        placeholder="Búsqueda Específica" />
+                                </div><br>
+                                <!--end::search-->
                                 <!--begin::Referred users-->
                                 <div class="card">
                                     <!--begin::Header-->
@@ -212,6 +220,29 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 
     <!--begin::Javascript-->
     <script>
+    $(document).ready(function () {
+        $("#searchInput").on("keyup", function () {
+            var searchText = $(this).val().toLowerCase();
+
+            $("tbody tr").each(function () {
+                var rowText = $(this).text().toLowerCase();
+                var showRow = false;
+
+                // Verificar si el texto de búsqueda está presente en alguna celda de la fila
+                $("td", this).each(function () {
+                    if ($(this).text().toLowerCase().indexOf(searchText) > -1) {
+                        showRow = true;
+                        return false; // Salir del bucle si se encuentra una coincidencia en alguna celda
+                    }
+                });
+
+                // Mostrar u ocultar la fila según el resultado de la búsqueda
+                $(this).toggle(showRow);
+            });
+        });
+    });
+</script>
+    <script>
         var hostUrl = "assets/";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
@@ -233,8 +264,8 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
     <script src="assets/js/custom/utilities/modals/offer-a-deal/finance.js"></script>
     <script src="assets/js/custom/utilities/modals/offer-a-deal/complete.js"></script>
     <script src="assets/js/custom/utilities/modals/offer-a-deal/main.js"></script>
-    <script src="assets/js/custom/utilities/modals/users-search.js"></script>
-    <!--end::Custom Javascript-->
+    <script src="assets/js/custom/utilities/modals/users-search.js"></script><!--Filtro de busqueda-->    
+ <!--end::Custom Javascript-->
     <!--end::Javascript-->
 </body>
 <!--end::Body-->

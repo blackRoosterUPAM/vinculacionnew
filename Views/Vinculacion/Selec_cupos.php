@@ -60,6 +60,7 @@ License: For each use you must have a valid license purchased only from above li
     <script>
         // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
     </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -186,7 +187,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <!--begin::Content-->
                                     <div id="kt_account_settings_profile_details" class="collapse show">
                                         <!--begin::Form-->
-                                        <form action="?c=vacantes&a=new_vacante" method="post">
+					<form id="kt_new_vacante_form">
 
                                             <!--begin::Card body-->
                                             <div class="card-body border-top p-9">
@@ -369,6 +370,61 @@ License: For each use you must have a valid license purchased only from above li
                                             </div>
                                             <!--end::Actions-->
                                         </form>
+<script>
+                                            $(document).ready(function() {
+                                                $('#kt_new_vacante_form').submit(function(event) {
+                                                    event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
+                                                    // Obtener los datos del formulario
+                                                    var formData = new FormData(this);
+
+                                                    // Enviar la solicitud AJAX al servidor
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: '?c=vacantes&a=new_vacante',
+                                                        data: formData,
+                                                        dataType: 'json',
+                                                        processData: false,
+                                                        contentType: false,
+                                                        success: function(response) {
+                                                            if (response.status === 'success') {
+                                                                // Mostrar mensaje de éxito con SweetAlert
+                                                                Swal.fire({
+                                                                    title: 'Éxito',
+                                                                    text: response.message,
+                                                                    icon: 'success'
+                                                                }).then((result) => {
+                                                                    // Redireccionar después de mostrar el mensaje de éxito
+                                                                    window.location.href = 'index.php?c=vacantes&a=index_2';
+                                                                });
+                                                            } else {
+                                                                // Mostrar mensaje de error con SweetAlert
+                                                                Swal.fire({
+                                                                    title: 'Error',
+                                                                    text: response.message,
+                                                                    icon: 'error'
+                                                                }).then((result) => {
+                                                                    // Redireccionar después de mostrar el mensaje de error
+                                                                    window.location.href = 'index.php?c=vacantes&a=index_2';
+                                                                });
+                                                            }
+                                                        },
+                                                        error: function(xhr, status, error) {
+                                                            // Mostrar mensaje de error en caso de falla de la solicitud AJAX
+                                                            Swal.fire({
+                                                                title: 'Error',
+                                                                text: 'Hubo un error al procesar la solicitud. Por favor, inténtelo de nuevo más tarde.',
+                                                                icon: 'error'
+                                                            }).then((result) => {
+                                                                // Redireccionar después de mostrar el mensaje de error de la solicitud AJAX
+                                                                window.location.href = 'index.php?c=vacantes&a=index_2';
+                                                            });
+                                                        }
+                                                    });
+
+                                                });
+                                            });
+                                        </script>
                                         <!--end::Form-->
                                     </div>
                                     <!--end::Content-->

@@ -127,7 +127,14 @@
 												}
 											});
 										} else {
-											alert("Por favor, ingresa un texto de búsqueda antes de buscar.");
+Swal.fire({
+												title: 'Error',
+												text: 'Por favor, ingresa un texto de búsqueda antes de buscar.',
+												icon: 'error'
+											}).then((result) => {
+												// Redireccionar después de mostrar el mensaje de error
+												window.location.href = 'index.php?c=estad&a=index';
+											});
 										}
 									});
 								</script>
@@ -235,7 +242,7 @@
                         <!--begin::Content-->
                         <div id="kt_account_settings_profile_details" class="collapse show">
                             <!--begin::Form-->
-                            <form id="kt_account_profile_details_form" class="form" action="?c=estad&a=nuevo_usuario" method="post" enctype="multipart/form-data">
+			    <form id="kt_account_profile_details_form">
                                 <!--begin::Card body-->
                                 <div class="card-body border-top p-9">
                                     <!--begin::Input group-->
@@ -398,6 +405,60 @@
                                 </div>
                                 <!--end::Actions-->
                             </form>
+<script>
+                                $(document).ready(function() {
+                                    $('#kt_account_profile_details_form').submit(function(event) {
+                                        event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
+                                        // Obtener los datos del formulario
+                                        var formData = new FormData(this);
+
+                                        // Enviar la solicitud AJAX al servidor
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '?c=estad&a=nuevo_usuario',
+                                            data: formData,
+                                            dataType: 'json',
+                                            processData: false,
+                                            contentType: false,
+                                            success: function(response) {
+                                                // Mostrar mensaje de éxito o error según la respuesta del servidor
+                                                if (response.status === 'success') {
+                                                    Swal.fire({
+                                                        title: 'Éxito',
+                                                        text: response.message,
+                                                        icon: 'success'
+                                                    }).then((result) => {
+                                                        // Redireccionar o realizar otras acciones después del éxito
+                                                        window.location.href = 'index.php?c=estad&a=index';
+                                                    });
+                                                } else {
+                                                    Swal.fire({
+                                                        title: 'Error',
+                                                        text: response.message,
+                                                        icon: 'error'
+                                                    }).then((result) => {
+                                                        // Redireccionar o realizar otras acciones después del éxito
+                                                        window.location.href = 'index.php?c=estad&a=index';
+                                                    });
+                                                }
+                                            },
+                                            error: function(xhr, status, error) {
+                                                // Mostrar mensaje de error en caso de error de la solicitud AJAX
+                                                Swal.fire({
+                                                    title: 'Error',
+                                                    text: 'Hubo un error al procesar la solicitud. Por favor, inténtelo de nuevo más tarde.',
+                                                    icon: 'error'
+                                                }).then((result) => {
+                                                    // Redireccionar o realizar otras acciones después del éxito
+                                                    window.location.href = 'index.php?c=estad&a=index';
+                                                });
+                                            }
+                                        });
+
+                                    });
+                                });
+                            </script>
                             <!--end::Form-->
                         </div>
                         <!--end::Content-->

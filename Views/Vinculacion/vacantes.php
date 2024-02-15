@@ -209,7 +209,14 @@ License: For each use you must have a valid license purchased only from above li
                                                 }
                                             });
                                         } else {
-                                            alert("Por favor, ingresa un texto de búsqueda antes de buscar.");
+Swal.fire({
+												title: 'Error',
+												text: 'Por favor, ingresa un texto de búsqueda antes de buscar.',
+												icon: 'error'
+											}).then((result) => {
+												// Redireccionar después de mostrar el mensaje de error
+												window.location.href = 'index.php?c=vacantes&a=index_2';
+											});
                                         }
                                     });
                                 </script>
@@ -268,7 +275,14 @@ License: For each use you must have a valid license purchased only from above li
 													if (selectedCarrera) {
 														window.location.href = "?c=alumno&a=exportarVacantes&id=" + selectedCarrera;
 													} else {
-														alert('Por favor, seleccione una carrera antes de exportar.');
+Swal.fire({
+														title: 'Error',
+														text: 'Por favor, seleccione una carrera antes de exportar.',
+														icon: 'error'
+													}).then((result) => {
+														// Redireccionar después de mostrar el mensaje de error
+														window.location.href = 'index.php?c=vacantes&a=index_2';
+													});
 													}
 												});
 											</script>
@@ -320,7 +334,14 @@ License: For each use you must have a valid license purchased only from above li
 																}
 															});
 														} else {
-															alert("Por favor, selecciona una carrera antes de mostrar los datos.");
+											Swal.fire({
+																title: 'Error',
+																text: 'Selecciona una carrera',
+																icon: 'error'
+															}).then((result) => {
+																// Redireccionar después de mostrar el mensaje de error
+																window.location.href = 'index.php?c=vacantes&a=index_2';
+															});
 														}
 													});
 												</script>

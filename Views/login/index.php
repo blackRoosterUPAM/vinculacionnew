@@ -1,61 +1,21 @@
 <!DOCTYPE html>
-
-<!--
-
-Author: Keenthemes
-
-Product Name: Metronic
-
-Product Version: 8.2.0
-
-Purchase: https://1.envato.market/EA4JP
-
-Website: http://www.keenthemes.com
-
-Contact: support@keenthemes.com
-
-Follow: www.twitter.com/keenthemes
-
-Dribbble: www.dribbble.com/keenthemes
-
-Like: www.facebook.com/keenthemes
-
-License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
-
--->
-
 <html lang="en">
-
 <!--begin::Head-->
 
-
-
 <head>
-
 	<base href="" />
-
 	<title>UPAM Vinculación</title>
-
 	<meta charset="utf-8" />
-
 	<meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
-
 	<meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
-
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-
 	<meta property="og:locale" content="en_US" />
-
 	<meta property="og:type" content="article" />
-
 	<meta property="og:title" content="Metronic - Bootstrap Admin Template, HTML, VueJS, React, Angular. Laravel, Asp.Net Core, Ruby on Rails, Spring Boot, Blazor, Django, Express.js, Node.js, Flask Admin Dashboard Theme & Template" />
-
 	<meta property="og:url" content="https://keenthemes.com/metronic" />
-
 	<meta property="og:site_name" content="Keenthemes | Metronic" />
-
 	<style>
-		body::-webkit-scrollbar{
+		body::-webkit-scrollbar {
 			-webkit-appearance: none;
 		}
 
@@ -64,7 +24,7 @@ License: For each use you must have a valid license purchased only from above li
 		}
 
 		body::-webkit-scrollbar-button:increment,
-		body::-webkit-scrollbar-button{
+		body::-webkit-scrollbar-button {
 			display: none;
 		}
 
@@ -82,39 +42,42 @@ License: For each use you must have a valid license purchased only from above li
 			border-radius: 10px;
 		}
 	</style>
-
 	<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-
 	<link rel="shortcut icon" href="assets/media/logos/upam.ico" />
-
 	<!--begin::Fonts(mandatory for all pages)-->
-
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-
 	<!--end::Fonts-->
-
 	<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-
 	<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-
 	<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 
-	<!--end::Global Stylesheets Bundle-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<style>
+		/* Estilos para el campo de contraseña */
+		.password-container {
+			position: relative;
+		}
 
-	<script>
-		// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
-	</script>
+		.password-container input {
+			padding-right: 30px;
+			/* Espacio para el icono */
+			border: none;
+			/* Sin borde */
+			border-radius: 5px;
+			/* Bordes redondeados */
+		}
 
+		.password-container i {
+			position: absolute;
+			right: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+			cursor: pointer;
+		}
+	</style>
 </head>
 
-<!--end::Head-->
-
-<!--begin::Body-->
-
-
-
 <body id="kt_body" class="app-blank">
-
 	<!--begin::Theme mode setup on page load-->
 
 	<script>
@@ -177,76 +140,56 @@ License: For each use you must have a valid license purchased only from above li
 
 						<!--begin::Form-->
 
-						<form action="index.php?c=usuarios&a=iniciarSesion" method="post">
-							<!--begin::Heading-->
+<form action="index.php?c=usuarios&a=iniciarSesion" method="post">
 							<div class="text-center mb-11">
-								<!--begin::Title-->
 								<h1 class="text-dark fw-bolder mb-3">Iniciar Sesión</h1>
-								<!--end::Title-->
 							</div>
-
-							<!--end::Login options-->
-
-							<!--begin::Input group=-->
 
 							<div class="fv-row mb-8">
-
-								<!--begin::Email-->
-
 								<input type="text" placeholder="Correo" name="correo" class="form-control bg-transparent" />
-
-								<!--end::Email-->
-
 							</div>
-
-							<!--end::Input group=-->
 
 							<div class="fv-row mb-3">
-
-								<!--begin::Password-->
-
-								<input type="password" placeholder="Contraseña" name="contraseña" class="form-control bg-transparent" />
-
-								<!--end::Password-->
-
-							</div>
-
-							<!--end::Input group=-->
-
-							<!--begin::Wrapper-->
-
-							<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-
-								<div></div>
-
-								<!--begin::Link-->
-								<div class="d-flex my-4">
-									<a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal" style="color: #002e79 !important;">¿Has olvidado tu contraseña?</a>
+								<div class="password-container">
+									<input type="password" placeholder="Contraseña" name="contraseña" id="contraseña" class="form-control bg-transparent" />
+									<i id="visibility-icon" class="fas fa-eye" onclick="toggleVisibility()"></i>
 								</div>
-
-								<!--end::Link-->
-
 							</div>
 
-							<!--end::Wrapper-->
-
-							<!--begin::Submit button-->
+							<div class="d-flex my-4">
+								<a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal" style="color: #002e79 !important;">¿Has olvidado tu contraseña?</a>
+							</div>
 
 							<div class="d-grid mb-10">
-
 								<button type="submit" id="kt_sign_in_submit" class="btn btn-primary" style="background-color: #002e79 !important;">
-
-									<!--begin::Indicator label-->
-
 									<span class="indicator-label">Iniciar Sesión</span>
-
-									<!--end::Indicator label-->
-
 								</button>
-
 							</div>
-
 						</form>
+
+						<?php
+						// Verificar si hay un error y mostrar el mensaje correspondiente
+						if (isset($_GET['error']) && $_GET['error'] === 'correo_contraseña_incorrectos') {
+							echo '<div class="alert alert-danger" role="alert">Correo o Contraseña incorrectos</div>';
+						}
+						?>
+
+						<!-- Scripts -->
+						<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+						<script>
+							function toggleVisibility() {
+								var passwordInput = document.getElementById("contraseña");
+								var visibilityIcon = document.getElementById("visibility-icon");
+
+								if (passwordInput.type === "password") {
+									passwordInput.type = "text";
+									visibilityIcon.className = "fas fa-eye-slash";
+								} else {
+									passwordInput.type = "password";
+									visibilityIcon.className = "fas fa-eye";
+								}
+							}
+						</script>
 
 						<!--end::Form-->
 

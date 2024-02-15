@@ -135,6 +135,26 @@
                                             <input type="submit" value="Subir Archivo" class="btn btn-primary">
                                         </form>
                                     </div>
+				<!--begin::search-->
+                                    <div class="d-flex align-items-center position-relative my-2">
+                                        <i class="ki-outline ki-magnifier fs-2 position-absolute ms-3"></i>
+                                        <input type="text" id="searchInput"
+                                            class="form-control form-control-solid w-250px ps-14"
+                                            placeholder="Búsqueda Específica" />
+                                        <!--begin::btns-activardesactivar--->
+                                        <div class="d-flex">
+                                            <a href="?c=escolars&a=statusA" id="activarDesactivarTodos"
+                                                class="btn btn-sm btn-primary me-3 ms-20">
+                                                Activar Todos
+                                            </a>
+                                            <a href="?c=escolars&a=statusI" id="activarDesactivarTodos"
+                                                class="btn btn-sm btn-primary me-3 ms-1">
+                                                Desactivar Todos
+                                            </a>
+                                        </div>
+                                        <!--end::btns-activardesactivar--->
+                                    </div><br>
+                                    <!--end::search-->
                                     <!--begin::Table-->
                                     <!--LRGA03-->
                                     <div class="table table-responsive">
@@ -292,14 +312,6 @@
                                         </table>
                                     </div>
                                     <!--end::Table-->
-                                    <div>
-                                        <a href="?c=escolars&a=statusA" id="activarDesactivarTodos" class="btn btn-sm btn-primary me-3">
-                                            Activar Todos
-                                        </a>
-                                        <a href="?c=escolars&a=statusI" id="activarDesactivarTodos" class="btn btn-sm btn-primary me-3">
-                                            Desactivar Todos
-                                        </a>
-                                    </div>
                                 </div>
                                 <!--LRGA03-->
                             </div>
@@ -681,6 +693,31 @@
             });
         </script>
         </script>
+	    <!--begin::search JavaScript-->
+    <script>
+    $(document).ready(function() {
+        $("#searchInput").on("keyup", function() {
+            var searchText = $(this).val().toLowerCase();
+
+            $("tbody tr").each(function() {
+                var rowText = $(this).text().toLowerCase();
+                var showRow = false;
+
+                // Verificar si el texto de búsqueda está presente en alguna celda de la fila
+                $("td", this).each(function() {
+                    if ($(this).text().toLowerCase().indexOf(searchText) > -1) {
+                        showRow = true;
+                        return false; // Salir del bucle si se encuentra una coincidencia en alguna celda
+                    }
+                });
+
+                // Mostrar u ocultar la fila según el resultado de la búsqueda
+                $(this).toggle(showRow);
+            });
+        });
+    });
+    </script>
+    <!--end::search JavaScript-->
         <!--end::Custom Javascript-->
         <!--end::Javascript-->
         <!-- scrip para modificar alumno -->

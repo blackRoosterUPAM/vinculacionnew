@@ -99,10 +99,9 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="d-flex flex-column flex-column-fluid">
                             <!--begin::Content-->
                             <div id="kt_app_content" class="app-content">
-                                <form action="index.php?c=rcontraseña&a=actualizar_contraseña" method="post">
+                              <form id="actualizarContraseñaForm">
                                     <!-- Campo oculto para el idUsuario -->
                                     <input type="hidden" name="idUsuario" value="<?php echo $idUsuario; ?>">
-
 
                                     <!-- Nuevos campos para la contraseña -->
                                     <div class="col-lg-8">
@@ -111,7 +110,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <!--begin::Col-->
                                             <div class="col-lg-6 fv-row" style="margin-left:50%;">
                                                 <label style="font-size: 140%;" for="nueva_contraseña">Nueva Contraseña:</label>
-                                                <input type="password" name="nueva_contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                <input type="password" name="nueva_contraseña" id="nueva_contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
                                             </div>
                                             <!--end::Col-->
                                         </div>
@@ -123,18 +122,78 @@ License: For each use you must have a valid license purchased only from above li
                                         <div class="row">
                                             <!--begin::Col-->
                                             <div class="col-lg-6 fv-row" style="margin-left:50%;">
-                                                <label style="font-size: 140%;" for="nueva_contraseña">Confirmar Contraseña:</label>
-                                                <input type="password" name="confirmar_contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                <label style="font-size: 140%;" for="confirmar_contraseña">Confirmar Contraseña:</label>
+                                                <input type="password" name="confirmar_contraseña" id="confirmar_contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
                                             </div>
                                             <!--end::Col-->
                                         </div>
                                         <!--end::Row-->
                                     </div>
                                     <br>
-                                    <div class="d-flex justify-content-between align-items-start flex-wrap mb-2"  style="margin-left:45%;">
-                                        <button class="btn btn-sm btn-primary me-3" type="submit">Actualizar Contraseña</button>
+                                    <div class="d-flex justify-content-between align-items-start flex-wrap mb-2" style="margin-left:45%;">
+                                        <button id="actualizarContraseñaBtn" class="btn btn-sm btn-primary me-3" type="button">Actualizar Contraseña</button>
                                     </div>
                                 </form>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#actualizarContraseñaBtn').click(function() {
+                                            var nuevaContraseña = $('#nueva_contraseña').val().trim();
+                                            var confirmarContraseña = $('#confirmar_contraseña').val().trim();
+
+                                            // Verificar si las contraseñas coinciden
+                                            if (nuevaContraseña !== confirmarContraseña) {
+                                                // Las contraseñas no coinciden, muestra una alerta de error
+                                                Swal.fire({
+                                                    title: 'Error',
+                                                    text: 'Las contraseñas no coinciden. Por favor, inténtelo de nuevo.',
+                                                    icon: 'error'
+                                                });
+                                                return; // Detiene la ejecución
+                                            }
+
+                                            var formData = $('#actualizarContraseñaForm').serialize(); // Serializa los datos del formulario
+
+                                            // Envía la solicitud AJAX para actualizar la contraseña
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: 'index.php?c=rcontraseña&a=actualizar_contraseña',
+                                                data: formData,
+                                                dataType: 'json',
+                                                success: function(response) {
+                                                    if (response.status === 'success') {
+                                                        // La actualización de la contraseña fue exitosa
+                                                        Swal.fire({
+                                                            title: 'Éxito',
+                                                            text: '¡Actualización de contraseña exitosa!',
+                                                            icon: 'success'
+                                                        }).then((result) => {
+                                                            // Redirige a index.php después de hacer clic en OK en la alerta
+                                                            window.location.href = 'index.php';
+                                                        });
+                                                    } else {
+                                                        // La actualización de la contraseña no fue exitosa
+                                                        Swal.fire({
+                                                            title: 'Error',
+                                                            text: response.message,
+                                                            icon: 'error'
+                                                        });
+                                                    }
+                                                },
+                                                error: function(xhr, status, error) {
+                                                    // Ocurrió un error en la solicitud AJAX
+                                                    console.error('Error en la solicitud AJAX: ' + error);
+                                                    // Muestra una alerta de error genérica
+                                                    Swal.fire({
+                                                        title: 'Error',
+                                                        text: 'Hubo un error al actualizar la contraseña. Por favor, inténtelo de nuevo más tarde.',
+                                                        icon: 'error'
+                                                    });
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
                             </div>
                             <!--end::Content-->
                         </div>

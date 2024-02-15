@@ -210,7 +210,14 @@ License: For each use you must have a valid license purchased only from above li
                                                 }
                                             });
                                         } else {
-                                            alert("Por favor, ingresa un texto de búsqueda antes de buscar.");
+Swal.fire({
+                                                title: 'Error',
+                                                text: 'Por favor, ingresa un texto de búsqueda antes de buscar.',
+                                                icon: 'error'
+                                            }).then((result) => {
+                                                // Redireccionar después de mostrar el mensaje de error
+                                                window.location.href = 'index.php?c=sedes&a=show_sede';
+                                            });
                                         }
                                     });
                                 </script>
@@ -352,7 +359,7 @@ License: For each use you must have a valid license purchased only from above li
                         <!--begin::Content-->
                         <div id="kt_account_settings_profile_details" class="collapse show">
                             <!--begin::Form-->
-                            <form id="kt_account_profile_details_form" class="form" action="?c=sedes&a=nueva_sede" method="post" enctype="multipart/form-data">
+                            <form id="kt_account_profile_details_form">
                                 <!--begin::Card body-->
                                 <div class="card-body border-top p-9">
                                     <!--begin::Input group-->
@@ -647,6 +654,62 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--end::Actions-->
                             </form>
                             <!--end::Form-->
+<script src="ruta/a/jquery.js"></script>
+                            <script src="ruta/a/sweetalert.min.js"></script>
+                            <script>
+                                $(document).ready(function() {
+                                    $('#kt_account_profile_details_form').submit(function(event) {
+                                        event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
+                                        // Obtener los datos del formulario
+                                        var formData = new FormData(this);
+
+                                        // Enviar la solicitud AJAX al servidor
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '?c=sedes&a=nueva_sede',
+                                            data: formData,
+                                            dataType: 'json',
+                                            processData: false,
+                                            contentType: false,
+                                            success: function(response) {
+                                                if (response.status === 'success') {
+                                                    // Mostrar mensaje de éxito con SweetAlert
+                                                    Swal.fire({
+                                                        title: 'Éxito',
+                                                        text: response.message,
+                                                        icon: 'success'
+                                                    }).then((result) => {
+                                                        // Redireccionar después de mostrar el mensaje de éxito
+                                                        window.location.href = 'index.php?c=sedes&a=show_sede';
+                                                    });
+                                                } else {
+                                                    // Mostrar mensaje de error con SweetAlert
+                                                    Swal.fire({
+                                                        title: 'Error',
+                                                        text: response.message,
+                                                        icon: 'error'
+                                                    }).then((result) => {
+                                                        // Redireccionar después de mostrar el mensaje de error
+                                                        window.location.href = 'index.php?c=sedes&a=show_sede';
+                                                    });
+                                                }
+                                            },
+                                            error: function(xhr, status, error) {
+                                                // Mostrar mensaje de error en caso de falla de la solicitud AJAX
+                                                Swal.fire({
+                                                    title: 'Error',
+                                                    text: 'Hubo un error al procesar la solicitud. Por favor, inténtelo de nuevo más tarde.',
+                                                    icon: 'error'
+                                                }).then((result) => {
+                                                    // Redireccionar después de mostrar el mensaje de error de la solicitud AJAX
+                                                    window.location.href = 'index.php?c=sedes&a=show_sede';
+                                                });
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
                         </div>
                         <!--end::Content-->
                     </div>

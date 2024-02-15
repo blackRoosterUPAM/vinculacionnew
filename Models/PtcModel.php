@@ -201,49 +201,41 @@ class ptc{
 		return json_encode($alumnos);
 	}
 
-    public function insert_ptc($matricula, $nombre_ptc, $apellidoPaterno, $apellidoMaterno, $correoPtc, $carrera, $contraseña)
-	{
-		try {
-			// Verifica si ya existe un ptc con la misma matrícula
-			$matriculaExists = mysqli_query($this->db, "SELECT idPtc FROM ptc WHERE idPtc = $matricula");
+public function insert_ptc($matricula, $nombre_ptc, $apellidoPaterno, $apellidoMaterno, $correoPtc, $carrera, $contraseña)
+    {
+        try {
+            // Verificar si ya existe un PTC con la misma matrícula
+            $matriculaExists = mysqli_query($this->db, "SELECT idPtc FROM ptc WHERE idPtc = '$matricula'");
 
-			if (mysqli_num_rows($matriculaExists) > 0) {
-				// La matrícula ya existe, muestra una alerta de JavaScript
-				echo "<script>alert('La matrícula ya existe.');</script>";
-				return; // Termina la función sin realizar la inserción
-			}
+            if (mysqli_num_rows($matriculaExists) > 0) {
+                return array('status' => 'error', 'message' => 'La matrícula ya existe.');
+            }
 
-			// Continúa con la inserción si la matrícula no existe
-			$query = mysqli_query($this->db, "INSERT INTO ptc (idPtc, nombrePtc, APaternoPtc, AMaternoPtc, correo, IdCarrera) VALUES ('$matricula','$nombre_ptc', '$apellidoPaterno', '$apellidoMaterno', '$correoPtc', $carrera)");
+            // Insertar el PTC en la tabla PTC
+            $query = mysqli_query($this->db, "INSERT INTO ptc (idPtc, nombrePtc, APaternoPtc, AMaternoPtc, correo, IdCarrera) VALUES ('$matricula','$nombre_ptc', '$apellidoPaterno', '$apellidoMaterno', '$correoPtc', '$carrera')");
 
-			if (!$query) {
-				// Muestra el mensaje de error de MySQL
-				echo "Error MySQL: " . mysqli_error($this->db);
-			}
+            if (!$query) {
+                return array('status' => 'error', 'message' => 'Error al insertar el PTC en la tabla PTC: ' . mysqli_error($this->db));
+            }
 
-			if ($query) {
-				$query1 = mysqli_query($this->db, "SELECT idPtc FROM ptc WHERE correo = '$correoPtc'");
-				$sede = mysqli_fetch_array($query1);
-				$idPtc = $sede["idPtc"];
+            // Obtener el ID del PTC insertado
+            $idPtc = mysqli_insert_id($this->db);
 
-				$con_MD5 = md5($contraseña);
+            // Hashear la contraseña antes de almacenarla en la base de datos
+            $contraseña_hasheada = md5($contraseña);
 
-				$query2 = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES ('$idPtc', '$correoPtc', '$con_MD5', 7, '$nombre_ptc', '$apellidoPaterno', '$apellidoMaterno')");
+            // Insertar el usuario en la tabla usuarios
+            $query2 = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES ('$idPtc', '$correoPtc', '$contraseña_hasheada', 7, '$nombre_ptc', '$apellidoPaterno', '$apellidoMaterno')");
 
-				if ($query2) {
-					// Procesar si la segunda consulta fue exitosa
-				}
-			} else {
-				// Manejar el error, por ejemplo, imprimir el error SQL
-				echo mysqli_error($this->db);
-			}
-		} catch (mysqli_sql_exception $exception) {
-			// Manejar la excepción específica de MySQL
-			echo "Error al procesar la consulta: " . $exception->getMessage();
-
-			// Puedes mostrar un mensaje específico relacionado con la imagen aquí
-			echo "<script>alert('Error al procesar el usuario.');</script>";
-		}
-	}
+            if ($query2) {
+                return array('status' => 'success', 'message' => 'El PTC y su usuario se han registrado exitosamente.');
+            } else {
+                return array('status' => 'error', 'message' => 'Error al insertar el usuario en la tabla usuarios: ' . mysqli_error($this->db));
+            }
+        } catch (mysqli_sql_exception $exception) {
+            // Manejar la excepción específica de MySQL
+            return array('status' => 'error', 'message' => 'Error al procesar la consulta: ' . $exception->getMessage());
+        }
+    }
 }
 ?>

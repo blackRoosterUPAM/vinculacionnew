@@ -73,23 +73,22 @@ class RcontraseñaController
 
         // Validar que las contraseñas coincidan
         if ($nuevaContraseña === $confirmarContraseña) {
-
             // Lógica para actualizar la contraseña en la base de datos
             $modelo = new Contraseña();
             $resultado = $modelo->actualizarContraseña($idUsuario, $nuevaContraseña);
 
             if ($resultado) {
-                // Contraseña actualizada con éxito, redirigir con un mensaje de éxito
-                header("Location: index.php?mensaje=Contraseña actualizada con éxito");
+                // Contraseña actualizada con éxito
+                echo json_encode(array("status" => "success"));
                 exit();
             } else {
                 // Hubo un error al actualizar la contraseña
-                header("Location: index.php?mensaje=Error al actualizar la contraseña. Por favor, inténtelo de nuevo");
+                echo json_encode(array("status" => "error", "message" => "No se pudo actualizar la contraseña."));
                 exit();
             }
         } else {
             // Las contraseñas no coinciden
-            header("Location: index.php?mensaje=Las contraseñas no coinciden. Por favor, inténtelo de nuevo");
+            echo json_encode(array("status" => "error", "message" => "Las contraseñas no coinciden."));
             exit();
         }
     }

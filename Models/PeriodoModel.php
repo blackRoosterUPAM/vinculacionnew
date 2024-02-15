@@ -33,10 +33,15 @@ class Periodo
 		}
 	}
 
-	public function nuevo_periodo($period, $año)
+public function nuevo_periodo($periodo, $año)
 	{
-		$sql = "INSERT INTO periodo (IdPeriodo, Meses, Año, estatus) VALUE (5, '$period', '$año', 0)";
-		$resultado = $this->db->query($sql);
+		$query = mysqli_query($this->db, "INSERT INTO periodo (Meses, Año, estatus) VALUES ('$periodo', '$año', 0)");
+
+		if ($query) {
+			return array('status' => 'success', 'message' => 'El periodo se ha registrado exitosamente.');
+		} else {
+			return array('status' => 'error', 'message' => 'No se pudo realizar el registro del periodo.');
+		}
 	}
 
 	public function obtenerPeriodos()

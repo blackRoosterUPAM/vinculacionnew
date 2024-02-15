@@ -221,7 +221,14 @@ License: For each use you must have a valid license purchased only from above li
 												if (selectedCarrera) {
 													window.location.href = "?c=alumno&a=exportar&id=" + selectedCarrera;
 												} else {
-													alert('Por favor, seleccione una carrera antes de exportar.');
+												Swal.fire({
+														title: 'Error',
+														text: 'Por favor, seleccione una carrera antes de exportar.',
+														icon: 'error'
+													}).then((result) => {
+														// Redireccionar después de mostrar el mensaje de error
+														window.location.href = 'index.php?c=carreras&a=index';
+													});
 												}
 											});
 										</script>
@@ -270,7 +277,14 @@ License: For each use you must have a valid license purchased only from above li
 																}
 															});
 														} else {
-															alert("Por favor, selecciona una carrera antes de mostrar los datos.");
+Swal.fire({
+																title: 'Error',
+																text: 'No hay datos',
+																icon: 'error'
+															}).then((result) => {
+																// Redireccionar después de mostrar el mensaje de error
+																window.location.href = 'index.php?c=carreras&a=index';
+															});
 														}
 													});
 												</script>

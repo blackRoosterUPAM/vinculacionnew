@@ -22,7 +22,7 @@ class EstadController
         require_once "Views/Estadisticos/index.php";
     }
 
-    public function nuevo_usuario()
+   public function nuevo_usuario()
     {
         $matricula = $_POST["matricula"];
         $correo = $_POST["correo"];
@@ -32,16 +32,18 @@ class EstadController
         $apellidop = $_POST["apellidoP"];
         $apellidom = $_POST["apellidoM"];
 
-        $new_usuario = new UsuarioModel();
-        $nuevo_usuario = $new_usuario->new_usuario($matricula, $correo, $contraseña, $idRol, $nombre, $apellidop, $apellidom);
+        // Instanciar el modelo Usuario
+        $usuarioModel = new UsuarioModel();
 
-        $usuario = new UsuarioModel();
-        $usuarios = $usuario->obtener_usuarios();
+        // Llamar a la función new_usuario del modelo para agregar un nuevo usuario
+        $response = $usuarioModel->new_usuario($matricula, $correo, $contraseña, $idRol, $nombre, $apellidop, $apellidom);
 
-        $rol = new RolModel();
-        $roles = $rol->obtener_rol();
-
-        require_once "Views/Estadisticos/index.php";
+        // Verificar el estado de la respuesta y enviar la respuesta adecuada al cliente
+        if ($response['status'] === 'success') {
+            echo json_encode(array('status' => 'success', 'message' => $response['message']));
+        } else {
+            echo json_encode(array('status' => 'error', 'message' => $response['message']));
+        }
     }
 
     public function edit_usuario($id)
@@ -54,8 +56,9 @@ class EstadController
         require_once "Views/Estadisticos/editUsuario.php";
     }
 
-    public function usuario_editado()
+public function usuario_editado()
     {
+        // Obtener los datos del formulario
         $matriculaReal = $_POST["idReal"];
         $matricula = $_POST["matricula"];
         $correo = $_POST["correo"];
@@ -63,20 +66,20 @@ class EstadController
         $nombre = $_POST["nombre"];
         $apellidop = $_POST["apellidop"];
         $apellidom = $_POST["apellidom"];
-
         $idRol2 = $_POST["tipo_rol"];
 
-        $usuario = new UsuarioModel();
-        $data = $usuario->actualizacion_usuarios($matriculaReal, $matricula, $correo, $idRol, $nombre, $apellidop, $apellidom, $idRol2);
+        // Instanciar el modelo Usuario
+        $usuarioModel = new UsuarioModel();
 
+        // Llamar a la función actualizacion_usuarios del modelo para actualizar el usuario
+        $response = $usuarioModel->actualizacion_usuarios($matriculaReal, $matricula, $correo, $idRol, $nombre, $apellidop, $apellidom, $idRol2);
 
-        $usuario = new UsuarioModel();
-        $usuarios = $usuario->obtener_usuarios();
-
-        $rol = new RolModel();
-        $roles = $rol->obtener_rol();
-
-        require_once "Views/Estadisticos/index.php";
+        // Verificar el estado de la respuesta y enviar la respuesta adecuada al cliente
+        if ($response['status'] === 'success') {
+            echo json_encode(array('status' => 'success', 'message' => $response['message']));
+        } else {
+            echo json_encode(array('status' => 'error', 'message' => $response['message']));
+        }
     }
 
     public function eli_usuario($id)

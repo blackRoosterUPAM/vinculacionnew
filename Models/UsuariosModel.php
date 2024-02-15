@@ -38,21 +38,21 @@ class UsuarioModel
     public function new_usuario($matricula, $correo, $contraseña, $idRol, $nombre, $apellidop, $apellidom)
     {
         if (empty($matricula) || empty($correo) || empty($contraseña) || empty($idRol) || empty($nombre) || empty($apellidop) || empty($apellidom)) {
-            echo "<script>alert('Llena correctamente todos los campos');</script>";
+            return array('status' => 'error', 'message' => 'Llena correctamente todos los campos');
         } else {
             // Verificar si la matrícula ya existe
             $matriculaExistente = $this->verificarMatriculaExistente($matricula);
 
             if ($matriculaExistente) {
-                echo "<script>alert('La matrícula ya existe');</script>";
+                return array('status' => 'error', 'message' => 'La matrícula ya existe');
             } else {
                 $con_MD5 = md5($contraseña);
                 $query = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES ('$matricula', '$correo', '$con_MD5', $idRol, '$nombre', '$apellidop', '$apellidom')");
 
                 if ($query) {
-                    echo "<script>alert('Usuario registrado correctamente');</script>";
+                    return array('status' => 'success', 'message' => 'Usuario registrado correctamente');
                 } else {
-                    echo "<script>alert('Hubo un problema al insertar al usuario');</script>";
+                    return array('status' => 'error', 'message' => 'Hubo un problema al insertar al usuario');
                 }
             }
         }
@@ -89,7 +89,7 @@ class UsuarioModel
     public function actualizacion_usuarios($matriculaReal, $matricula, $correo, $idRol, $nombre, $apellidop, $apellidom, $idRol2)
     {
         if (empty($matricula) || empty($correo) || empty($idRol) || empty($nombre) || empty($apellidop) || empty($apellidom)) {
-            echo "<script>alert('No debe dejar campos vacíos');</script>";
+            return array('status' => 'error', 'message' => 'No debe dejar campos vacíos');
         } else {
             // Obtener idRol
             $id_Rol = $this->obtenerIdRol($idRol);
@@ -100,13 +100,13 @@ class UsuarioModel
 
                 // Prepara la consulta SQL para actualizar los datos en la tabla "usuarios"
                 $sql = "UPDATE usuarios 
-                    SET IdUsuario=?, 
-                    CorreoE=?, 
-                    idRol=?, 
-                    NombreU=?, 
-                    APaternoU=?, 
-                    AMaternoU=? 
-                    WHERE IdUsuario=?";
+                SET IdUsuario=?, 
+                CorreoE=?, 
+                idRol=?, 
+                NombreU=?, 
+                APaternoU=?, 
+                AMaternoU=? 
+                WHERE IdUsuario=?";
 
                 // Prepara la sentencia
                 $stmt = $this->db->prepare($sql);
@@ -121,9 +121,9 @@ class UsuarioModel
                 $stmt->close();
 
                 if ($resultado) {
-                    echo "<script>alert('Usuario actualizado con éxito');</script>";
+                    return array('status' => 'success', 'message' => 'Usuario actualizado con éxito');
                 } else {
-                    echo "<script>alert('El usuario no se pudo actualizar');</script>";
+                    return array('status' => 'error', 'message' => 'El usuario no se pudo actualizar');
                 }
             }
         }

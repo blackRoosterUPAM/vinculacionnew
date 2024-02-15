@@ -137,6 +137,14 @@
                                             <!--begin::Navs-->
                                         </div>
                                     </div>
+				    <!--begin::search-->
+                                    <div class="d-flex align-items-center position-relative my-2">
+                                        <i class="ki-outline ki-magnifier fs-2 position-absolute ms-3"></i>
+                                        <input type="text" id="searchInput"
+                                            class="form-control form-control-solid w-250px ps-14"
+                                            placeholder="Búsqueda Específica" />
+                                    </div><br>
+                                    <!--end::search-->
                                     <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     </div>
                                     <div class="table-responsive ">
@@ -347,9 +355,31 @@
             });
         });
     </script>
+        <!--begin::search JavaScript-->
+    <script>
+    $(document).ready(function() {
+        $("#searchInput").on("keyup", function() {
+            var searchText = $(this).val().toLowerCase();
 
+            $("tbody tr").each(function() {
+                var rowText = $(this).text().toLowerCase();
+                var showRow = false;
 
+                // Verificar si el texto de búsqueda está presente en alguna celda de la fila
+                $("td", this).each(function() {
+                    if ($(this).text().toLowerCase().indexOf(searchText) > -1) {
+                        showRow = true;
+                        return false; // Salir del bucle si se encuentra una coincidencia en alguna celda
+                    }
+                });
 
+                // Mostrar u ocultar la fila según el resultado de la búsqueda
+                $(this).toggle(showRow);
+            });
+        });
+    });
+    </script>
+    <!--end::search JavaScript-->
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 </body>
