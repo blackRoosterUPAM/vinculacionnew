@@ -271,8 +271,8 @@
 	<script>
 		var hostUrl = "assets/";
 	</script>
-	<!-- Asegúrate de incluir SweetAlert2 antes de tu script -->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- Asegúrate de incluir SweetAlert2 antes de tu script
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- Funcion cuando se descarta un alumno -->
 	<!-- Script de prueba -->
@@ -418,63 +418,6 @@
 			});
 		});
 	</script>
-	<!-- Script que manda correo de cita y modifica que esta por confirmar si es aceptado o nel -->
-	<!-- <script>
-		$(document).ready(function() {
-			// Agregar un evento al formulario "generarCita" cuando se envíe
-			$("#generarCita").submit(function(event) {
-
-				event.preventDefault(); // Prevenir el envío normal del formulario
-				var form = document.querySelector("#generarCita");				
-				console.log(formData);
-				// Realizar la solicitud AJAX a "index.php?c=sedes&a=pendiente"
-				$.ajax({
-					type: "POST",
-					url: "index.php?c=sedes&a=pendiente",
-					data: {
-						matricula: <?= $data["alumno"]["Matricula"] ?>
-					},
-					success: function(response) {
-						// Manejar la respuesta de la primera solicitud aquí
-						console.log("Se modifico");
-
-						var formData = $("#generarCita").serialize();
-
-						console.log(formData);
-						// Luego, enviar el correo y la matrícula a envio.php
-						$.ajax({
-							type: "POST",
-							url: "config/correoSede.php",
-							data: formData,
-							success: function(response) {
-								// Manejar la respuesta del servidor para el formulario aquí
-								const fechaInput = form.querySelector('[name="fecha"]');
-
-								// Aplica el estilo para ocultar el campo
-								fechaInput.style.display = 'none';
-								Swal.fire({
-									title: 'Éxito',
-									text: '¡Envío exitoso!',
-									icon: 'success'
-								}).then((result) => {
-									// Recargar la página después de hacer clic en OK en la alerta
-									location.href = "index.php?c=sedes&a=index";
-								});
-							},
-							error: function() {
-								// Manejar el error para el formulario aquí, por ejemplo, mostrar un mensaje de error
-								console.log("Error al enviar el formulario.");
-							}
-						});
-					},
-					error: function() {
-						// Manejar el error de la primera solicitud aquí, si es necesario
-						console.log("Error en la primera solicitud.");
-					}
-				});
-			});
-		});
-	</script> -->
 
 	<!-- Script para la fecha -->
 	<script>

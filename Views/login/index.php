@@ -140,9 +140,29 @@
 
 						<!--begin::Form-->
 
-<form action="index.php?c=usuarios&a=iniciarSesion" method="post">
+						<form action="index.php?c=usuarios&a=iniciarSesion" method="post">
 							<div class="text-center mb-11">
 								<h1 class="text-dark fw-bolder mb-3">Iniciar Sesión</h1>
+								<div class="btn btn-info " data-bs-toggle="modal" data-bs-target="#pdfModal">
+									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M8 15A7 7 0 1 1 8 1A7 7 0 0 1 8 15ZM8 13A5 5 0 1 0 8 3A5 5 0 0 0 8 13Z" fill="currentColor" />
+										<path d="M12 8C12 9.65685 11.6569 11 11 11C10.3431 11 9.79785 10.6569 9.41421 10H6.58579C6.20215 10.6569 5.65685 11 5 11C4.34315 11 3.79785 10.6569 3.41421 10H2.58579C2.20215 10.6569 1.65685 11 1 11V13C1 13.5523 1.44769 14 2 14H14C14.5523 14 15 13.5523 15 13V11C14.3431 11 13.7978 10.6569 13.4142 10H12.5858C12.2022 10.6569 11.6569 11 11 11Z" fill="currentColor" />
+									</svg>
+									Ayuda
+								</div>
+								<div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="pdfModalLabel">Manual de usuarios</h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<iframe src="documentos/manual.pdf" width="100%" height="600px"></iframe>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 
 							<div class="fv-row mb-8">
