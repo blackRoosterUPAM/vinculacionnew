@@ -240,7 +240,7 @@ License: For each use you must have a valid license purchased only from above li
                                                         <div class="row">
                                                             <!--begin::Col-->
                                                             <div class="col-lg-6 fv-row">
-                                                                <input type="text" name="direccion" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["Dirección"] ?>" required />
+                                                                <input type="text" name="direccion" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="<?php echo $data["Direccion"] ?>" required />
                                                             </div>
                                                             <!--end::Col-->
                                                         </div>

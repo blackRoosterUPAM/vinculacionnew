@@ -155,10 +155,10 @@ public function nuevo_ptc()
         $apellidoMaterno = $_POST["ApellidoMaterno"];
         $correoPtc = $_POST["correo"];
         $carrera = $_POST["carrera"];
-        $contraseña = $_POST["contraseña"];
+        $contrasena = $_POST["contrasena"];
 
         // Verificar si algún campo está vacío
-        if (empty($matricula) || empty($nombre_ptc) || empty($apellidoPaterno) || empty($apellidoMaterno) || empty($correoPtc) || empty($carrera) || empty($contraseña)) {
+        if (empty($matricula) || empty($nombre_ptc) || empty($apellidoPaterno) || empty($apellidoMaterno) || empty($correoPtc) || empty($carrera) || empty($contrasena)) {
             echo json_encode(array('status' => 'error', 'message' => 'Todos los campos deben ser completados'));
             return;
         }
@@ -167,7 +167,7 @@ public function nuevo_ptc()
         $ptc = new Ptc();
 
         // Insertar el PTC y obtener el resultado
-        $resultado = $ptc->insert_ptc($matricula, $nombre_ptc, $apellidoPaterno, $apellidoMaterno, $correoPtc, $carrera, $contraseña);
+        $resultado = $ptc->insert_ptc($matricula, $nombre_ptc, $apellidoPaterno, $apellidoMaterno, $correoPtc, $carrera, $contrasena);
 
         // Retornar la respuesta como JSON
         echo json_encode($resultado);

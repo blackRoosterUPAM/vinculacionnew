@@ -261,10 +261,10 @@ Swal.fire({
                                                         foreach ($data as $row) {
                                                             $id = $row["IdPeriodo"];
                                                             $meses = $row["Meses"];
-                                                            $año = $row["Año"];
+                                                            $anio = $row["anio"];
                                                             echo "<tr>";
                                                             echo "<td class=" . "ps-9" . ">" . $row["Meses"] . "</td>";
-                                                            echo "<td class=" . "ps-0" . ">" . $año . "</td>";
+                                                            echo "<td class=" . "ps-0" . ">" . $anio . "</td>";
                                                             echo "<td style=" . "margin-left: 10px;" . "><a href=" . "?c=periodo&a=periodo_editado&id=$id" . ">Eliminar</a></td>";
                                                             echo "</tr>";
                                                         }
@@ -358,7 +358,7 @@ Swal.fire({
                                             <div class="row">
                                                 <!--begin::Col-->
                                                 <div class="col-lg-6 fv-row">
-                                                    <input type="text" name="año" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                    <input type="text" name="anio" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
                                                 </div>
                                                 <!--end::Col-->
                                             </div>

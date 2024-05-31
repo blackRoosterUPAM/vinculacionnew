@@ -16,7 +16,7 @@ class UsuariosController
     public function iniciarSesion()
     {
         $correo = $_POST['correo'];
-        $contrasena = $_POST['contraseña'];
+        $contrasena = $_POST['contrasena'];
         $model = new UsuarioModel();
         $usuario = $model->validarUsuario($correo, $contrasena);
 
@@ -59,7 +59,7 @@ class UsuariosController
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de vinculación
                 header('location: director/index.php');
-            } elseif ($nombreRol == 'PTC') {
+            } elseif ($nombreRol == 'PTC' ) {
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 $_SESSION['correo_ptc'] = $correo; // Almacena el correo del PTC en la sesión
@@ -67,7 +67,8 @@ class UsuariosController
                 $_SESSION['name'] = $name;
                 // Redirigir a la página de PTC
                 header('location: index.php?c=ptc&a=index');
-            } elseif ($nombreRol == "Graficas") {
+            } elseif ($nombreRol == "Graficas" || $nombreRol == 'SuperAdmin') {
+                //Redirar la página de super admin y estadisticos 
                 session_start();
                 $_SESSION['id_usuario'] = $id; // Donde $id es el ID del usuario obtenido
                 $_SESSION['name'] = 'Graficas';                
@@ -75,11 +76,11 @@ class UsuariosController
 
             }
             else {
-header('Location: index.php?error=correo_contraseña_incorrectos');
+header('Location: index.php?error=correo_contrasena_incorrectos');
             }
         } else {
             // Inicio de sesión fallido, redirigir al login _
-header('Location: index.php?error=correo_contraseña_incorrectos');
+header('Location: index.php?error=correo_contrasena_incorrectos');
         }
     }
 

@@ -29,10 +29,10 @@ class PeriodoController
 public function new_periodo()
     {
         $periodoValue = $_POST["periodo"]; // Cambia el nombre de la variable para evitar conflictos
-        $añoValue = $_POST["año"]; // Cambia el nombre de la variable para evitar conflictos
+        $anioValue = $_POST["anio"]; // Cambia el nombre de la variable para evitar conflictos
 
         $periodo = new Periodo();
-        $response = $periodo->nuevo_periodo($periodoValue, $añoValue); // Usa los nombres de variable corregidos
+        $response = $periodo->nuevo_periodo($periodoValue, $anioValue); // Usa los nombres de variable corregidos
         echo json_encode($response);
     }
 

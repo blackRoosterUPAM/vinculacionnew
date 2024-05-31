@@ -33,9 +33,9 @@ class Periodo
 		}
 	}
 
-public function nuevo_periodo($periodo, $año)
+public function nuevo_periodo($periodo, $anio)
 	{
-		$query = mysqli_query($this->db, "INSERT INTO periodo (Meses, Año, estatus) VALUES ('$periodo', '$año', 0)");
+		$query = mysqli_query($this->db, "INSERT INTO periodo (Meses, anio, estatus) VALUES ('$periodo', '$anio', 0)");
 
 		if ($query) {
 			return array('status' => 'success', 'message' => 'El periodo se ha registrado exitosamente.');
@@ -48,7 +48,7 @@ public function nuevo_periodo($periodo, $año)
 	{
 		$periodos = array();
 
-		$query = "SELECT Meses, Año FROM periodo";
+		$query = "SELECT Meses, anio FROM periodo";
 
 		$result = mysqli_query($this->db, $query);
 
@@ -56,7 +56,7 @@ public function nuevo_periodo($periodo, $año)
 			while ($row = mysqli_fetch_assoc($result)) {
 				$periodos[] = array(
 					"Meses" => $row["Meses"],
-					"Año" => $row["Año"]
+					"anio" => $row["anio"]
 				);
 			}
 			// Devolver periodos como JSON
@@ -78,7 +78,7 @@ public function nuevo_periodo($periodo, $año)
 
 		// Crear condiciones para cada palabra clave
 		foreach ($palabrasClave as $palabra) {
-			$condiciones[] = "LOWER(CONCAT(Meses, Año)) LIKE '%$palabra%'";
+			$condiciones[] = "LOWER(CONCAT(Meses, anio)) LIKE '%$palabra%'";
 		}
 
 		// Unir condiciones con operador OR
@@ -93,7 +93,7 @@ public function nuevo_periodo($periodo, $año)
 				while ($row = $query->fetch_assoc()) {
 					echo "<tr>";
 					echo "<td class='ps-9'>" . htmlentities($row["Meses"]) . "</td>";
-					echo "<td class='ps-0'>" . htmlentities($row["Año"]) . "</td>";
+					echo "<td class='ps-0'>" . htmlentities($row["anio"]) . "</td>";
 					if($row['estatus'] == '0'){
 						echo "<td style=" . "margin-left: 10px;" . "><a href=" . "?c=periodo&a=periodo_editado&id=" . $row["IdPeriodo"] . ">Eliminar</a></td>";
 						echo "</tr>";

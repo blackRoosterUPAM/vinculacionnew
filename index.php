@@ -11,7 +11,7 @@
 	require_once "Controllers/Escolars.php";
 	require_once "Controllers/Registro.php";
 	require_once "Controllers/vinculacion.php";
-	require_once "Controllers/Rcontraseña.php";
+	require_once "Controllers/Rcontrasena.php";
 	require_once "Controllers/Estadisticos.php";
 
 	

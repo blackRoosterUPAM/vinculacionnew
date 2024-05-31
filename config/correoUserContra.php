@@ -28,8 +28,8 @@ function enviarCorreo($correoDestinatario, $contrasena)
         $mail->Port = 587;
         $mail->SMTPSecure = 'tls';
         $mail->SMTPAuth = true;
-        $mail->Username = 'ctrlescolar.software@upamozoc.edu.mx';  // Tu dirección de correo
-        $mail->Password = 'GallosNegros#2023';        // Tu contraseña
+        $mail->Username = 'ctrlescolar.software@upamozoc.edu.mx'; 
+        $mail->Password = 'GallosNegros#2023';
 
         $mail->setFrom('ctrlescolar.software@upamozoc.edu.mx', 'INFORMACIÓN DE LOGUEO');
         $mail->addAddress($correoDestinatario);

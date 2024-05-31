@@ -23,8 +23,8 @@ try {
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
-    $mail->Username = 'sedes.software@upamozoc.edu.mx';  // Tu dirección de correo
-    $mail->Password = 'GallosNegros&2023';        // Tu contraseña
+    $mail->Username = 'sedes.software@upamozoc.edu.mx';  
+    $mail->Password = 'GallosNegros&2023';  
 
     // Datos de envío --> esperar correo 
     // Correo para el alumno

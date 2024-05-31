@@ -287,7 +287,7 @@ Swal.fire({
                                                             echo "</td>";
                                                             echo "<td class='ps-9'>" . $row["IdSede"] . "</td>";
                                                             echo "<td class='ps-0'>" . $row["NombreSede"] . "</td>";
-                                                            echo "<td style='margin-left: 10px;'>" . $row["Dirección"] . "</td>";
+                                                            echo "<td style='margin-left: 10px;'>" . $row["Direccion"] . "</td>";
                                                             echo "<td style='margin-left: 10px;'>" . $row["CorreoContacto"] . "</td>";
                                                             echo "<td style='margin-left: 10px;'>" . $row["Telefono"] . "</td>";
                                                             echo "<td style='margin-left: 10px;'>" . $row["tiposede"] . "</td>";
@@ -494,7 +494,7 @@ Swal.fire({
                                     <!--begin::Input group-->
                                     <div class="row mb-6" style="margin-left:250px;">
                                         <!--begin::Label-->
-                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Contraseña</label>
+                                        <label class="col-lg-4 col-form-label required fw-semibold fs-6">Contrasena</label>
                                         <!--end::Label-->
                                         <!--begin::Col-->
                                         <div class="col-lg-8">
@@ -502,7 +502,7 @@ Swal.fire({
                                             <div class="row">
                                                 <!--begin::Col-->
                                                 <div class="col-lg-6 fv-row">
-                                                    <input type="password" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                    <input type="password" name="contrasena" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
                                                 </div>
                                                 <!--end::Col-->
                                             </div>

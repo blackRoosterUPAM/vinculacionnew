@@ -24,7 +24,7 @@ class ptc{
 
     //funcion que procesa las solicitudes
     public function getSolicitudes($correoPtc) {
-        $sql = "SELECT da.IdDocumento, da.Matricula, CONCAT(a.NombreA, ' ', a.ApellidoP, ' ', a.ApellidoM) AS fullName, pr.NombrePE AS nombreProceso, d.NombreDoc AS nombreDocumento, da.DocumentoPDF AS doc, da.EstatusPtc, CONCAT(COALESCE(pa.Meses, ''), ' ', COALESCE(pa.Año, '')) AS periodo FROM docalumnoperiodo AS da INNER JOIN alumnos AS a ON a.Matricula = da.Matricula LEFT JOIN documentacion AS d ON d.IdDocumento = da.IdDocumento LEFT JOIN periodo AS pa ON pa.IdPeriodo = a.idPeriodo LEFT JOIN proceso AS pr ON pr.IdProceso = da.IdProceso INNER JOIN ptc AS ptc ON ptc.idCarrera = a.Carrera WHERE ptc.Correo = ?";
+        $sql = "SELECT da.IdDocumento, da.Matricula, CONCAT(a.NombreA, ' ', a.ApellidoP, ' ', a.ApellidoM) AS fullName, pr.NombrePE AS nombreProceso, d.NombreDoc AS nombreDocumento, da.DocumentoPDF AS doc, da.EstatusPtc, CONCAT(COALESCE(pa.Meses, ''), ' ', COALESCE(pa.anio, '')) AS periodo FROM docalumnoperiodo AS da INNER JOIN alumnos AS a ON a.Matricula = da.Matricula LEFT JOIN documentacion AS d ON d.IdDocumento = da.IdDocumento LEFT JOIN periodo AS pa ON pa.IdPeriodo = a.idPeriodo LEFT JOIN proceso AS pr ON pr.IdProceso = da.IdProceso INNER JOIN ptc AS ptc ON ptc.idCarrera = a.Carrera WHERE ptc.Correo = ?";
         
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("s", $correoPtc);
@@ -201,7 +201,7 @@ class ptc{
 		return json_encode($alumnos);
 	}
 
-public function insert_ptc($matricula, $nombre_ptc, $apellidoPaterno, $apellidoMaterno, $correoPtc, $carrera, $contraseña)
+public function insert_ptc($matricula, $nombre_ptc, $apellidoPaterno, $apellidoMaterno, $correoPtc, $carrera, $contrasena)
     {
         try {
             // Verificar si ya existe un PTC con la misma matrícula
@@ -221,11 +221,11 @@ public function insert_ptc($matricula, $nombre_ptc, $apellidoPaterno, $apellidoM
             // Obtener el ID del PTC insertado
             $idPtc = mysqli_insert_id($this->db);
 
-            // Hashear la contraseña antes de almacenarla en la base de datos
-            $contraseña_hasheada = md5($contraseña);
+            // Hashear el password antes de almacenarla en la base de datos
+            $contrasena_hasheada = md5($contrasena);
 
             // Insertar el usuario en la tabla usuarios
-            $query2 = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES ('$idPtc', '$correoPtc', '$contraseña_hasheada', 7, '$nombre_ptc', '$apellidoPaterno', '$apellidoMaterno')");
+            $query2 = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contrasena, IdRol, NombreU, APaternoU, AMaternoU) VALUES ('$idPtc', '$correoPtc', '$contrasena_hasheada', 7, '$nombre_ptc', '$apellidoPaterno', '$apellidoMaterno')");
 
             if ($query2) {
                 return array('status' => 'success', 'message' => 'El PTC y su usuario se han registrado exitosamente.');

@@ -57,16 +57,16 @@ class ImportarModel
     }
 
 
-    public function getPeriodo($mes, $año)
+    public function getPeriodo($mes, $anio)
     {
-        $sql = "SELECT * FROM periodo WHERE Meses LIKE ? AND Año = ? AND estatus = 1 limit 1";
+        $sql = "SELECT * FROM periodo WHERE Meses LIKE ? AND anio = ? AND estatus = 1 limit 1";
 
         // Utiliza una consulta preparada para evitar SQL injection
         $stmt = $this->mysqli->prepare($sql);
 
         // Modifica el patrón de vinculación de los parámetros
         $mes = '%' . $mes . '%';  // Agrega los signos de porcentaje aquí para que se incluyan en la cadena LIKE
-        $stmt->bind_param("ss", $mes, $año);
+        $stmt->bind_param("ss", $mes, $anio);
 
         // Ejecuta la consulta
         $stmt->execute();
@@ -108,20 +108,20 @@ class ImportarModel
                 $carrera = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
                 $proceso = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
                 $periodo = trim($worksheet->getCellByColumnAndRow(9, $row)->getValue());
-                $año = trim($worksheet->getCellByColumnAndRow(10, $row)->getValue());
+                $anio = trim($worksheet->getCellByColumnAndRow(10, $row)->getValue());
 
                 // Convierte las carreras y procesos a minúsculas
                 $carrera = strtolower($carrera);
                 $proceso = strtolower($proceso);
 
                 // Validación para evitar campos vacíos
-                if (empty($matricula) || empty($nombre) || empty($apellidoP) || empty($apellidoM) || empty($telefono) || empty($correo) || empty($carrera) || empty($proceso) || empty($periodo) || empty($año)) {
+                if (empty($matricula) || empty($nombre) || empty($apellidoP) || empty($apellidoM) || empty($telefono) || empty($correo) || empty($carrera) || empty($proceso) || empty($periodo) || empty($anio)) {
                     // Si alguno de los campos está vacío, omite esta fila y continúa con la siguiente
                     continue;
                 }
 
                 //Buscamos el id del periodo
-                $periodoId = $this->getPeriodo($periodo, $año);
+                $periodoId = $this->getPeriodo($periodo, $anio);
                 if ($periodoId['IdPeriodo'] === null) {
                     //echo '<script>';
                    // echo 'alert("La carrera registrada en la fila ' . $row . ' no coincide con ninguna carrera en la base de datos. Matrícula: ' . $matricula . '");';
@@ -150,13 +150,13 @@ class ImportarModel
                     continue; // Omitir esta fila y continuar con la siguiente
                 }
 
-                // Generar la contraseña a partir de las iniciales del nombre y los últimos dígitos de la matrícula
+                // Generar el password a partir de las iniciales del nombre y los últimos dígitos de la matrícula
                 $inicialesNombre = substr($nombre, 0, 2); // Tomar las primeras 2 letras del nombre
                 $ultimosDigitosMatricula = substr($matricula, -4); // Tomar los últimos 4 dígitos de la matrícula
 
                 $password = $inicialesNombre . $ultimosDigitosMatricula;
 
-                // Encriptar la contraseña usando MD5
+                // Encriptar el password usando MD5
                 $passwordHash = md5($password);
 
                 // Obtener el ID del rol "Alumno"
@@ -181,7 +181,7 @@ class ImportarModel
                 $result = $this->mysqli->query($checkUserSql);
                 if ($result->num_rows == 0) {
                     // Si el usuario no existe, entonces inserta el nuevo usuario
-                    $usuariosSql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES $usuario";
+                    $usuariosSql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contrasena, IdRol, NombreU, APaternoU, AMaternoU) VALUES $usuario";
                     $resultado = $this->mysqli->query($usuariosSql);
                     if ($resultado === TRUE) {
                         
@@ -280,12 +280,12 @@ class ImportarModel
     {
         require_once 'config/correoUserContra.php'; //permite enviar el correo a los alumnos
 
-        // Generar la contraseña a partir de las iniciales del nombre y los últimos dígitos de la matrícula
+        // Generar el password a partir de las iniciales del nombre y los últimos dígitos de la matrícula
         $inicialesNombre = substr($nombre, 0, 2); // Tomar las primeras 2 letras del nombre
         $ultimosDigitosMatricula = substr($matricula, -4); // Tomar los últimos 2 dígitos de la matrícula
         $password = $inicialesNombre . $ultimosDigitosMatricula;
 
-        $passwordHash = md5($password); // Encriptar la contraseña usando MD5
+        $passwordHash = md5($password); // Encriptar el password usando MD5
 
         $idRol = 4; // IdRol del estudiante
 
@@ -298,7 +298,7 @@ class ImportarModel
             return false;
         } else {
             // Realizar la inserción en la tabla de usuarios
-            $usuarioSql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) 
+            $usuarioSql = "INSERT INTO usuarios (IdUsuario, CorreoE, Contrasena, IdRol, NombreU, APaternoU, AMaternoU) 
     VALUES ('$matricula', '$correo', '$passwordHash', '$idRol', '$nombre', '$apellidoP', '$apellidoM')";
 
             if ($this->mysqli->query($usuarioSql)) {

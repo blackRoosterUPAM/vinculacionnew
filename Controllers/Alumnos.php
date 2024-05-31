@@ -66,7 +66,7 @@ class AlumnoController
 		$nombreProceso = $alumno["NombrePE"];
 		$cv_docs = $Alumno->get_alumnodocs($id_alumno);
 		if (!empty($cv_docs)) {
-			$fechaCreacion = $cv_docs->FechaCreación;
+			$fechaCreacion = $cv_docs->FechaCreacion;
 			$estatusCV = "Subido";
 		} else {
 			$fechaCreacion = "--";
@@ -207,7 +207,7 @@ class AlumnoController
 		$Id_Sede = $sede["IdSede"];
 		$Id_Carrera = $sede["IdCarrera"];
 		$nombreSede = $sede["NombreSede"];
-		$direccion = $sede["Dirección"];
+		$direccion = $sede["Direccion"];
 		$correo = $sede["CorreoContacto"];
 		$telefono = $sede["Telefono"];
 		$tipoSede = $sede["tiposede"];
@@ -215,7 +215,7 @@ class AlumnoController
 		$beneficios = $sede["Beneficios"];
 		$vacantes = $sede["NumVacantes"];
 		$proceso = $sede["NombrePE"];
-		$periodo = $sede["Meses"] . " " . $sede["Año"];
+		$periodo = $sede["Meses"] . " " . $sede["aio"];
 
 		// Verifica si la variable de sesión 'contador' está definida
 		if (!isset($_SESSION['contador'])) {
@@ -426,7 +426,7 @@ class AlumnoController
 	
 			$sheet->setCellValue('A1', 'Matricula');
 			$sheet->setCellValue('B1', 'Nombre sede');
-			$sheet->setCellValue('C1', 'Dirección');
+			$sheet->setCellValue('C1', 'Direccion');
 			$sheet->setCellValue('D1', 'Correo');
 			$sheet->setCellValue('E1', 'Telefono');
 			$sheet->setCellValue('F1', 'Tipo de sede');
@@ -435,7 +435,7 @@ class AlumnoController
 			foreach ($sede as $sed) {
 				$sheet->setCellValue('A' . $row, $sed['Matricula']);
 				$sheet->setCellValue('B' . $row, $sed['Nombre sede']);
-				$sheet->setCellValue('C' . $row, $sed['Dirección']);
+				$sheet->setCellValue('C' . $row, $sed['Direccion']);
 				$sheet->setCellValue('D' . $row, $sed['Correo']);
 				$sheet->setCellValue('E' . $row, $sed['Telefono']);
 				$sheet->setCellValue('F' . $row, $sed['Tipo de sede']);
@@ -466,12 +466,12 @@ class AlumnoController
 			$sheet = $spreadsheet->getActiveSheet();
 	
 			$sheet->setCellValue('A1', 'Meses');
-			$sheet->setCellValue('B1', 'Año');
+			$sheet->setCellValue('B1', 'anio');
 	
 			$row = 2;
 			foreach ($periodos as $periodo) {
 				$sheet->setCellValue('A' . $row, $periodo['Meses']);
-				$sheet->setCellValue('B' . $row, $periodo['Año']);
+				$sheet->setCellValue('B' . $row, $periodo['anio']);
 				$row++;
 			}
 	

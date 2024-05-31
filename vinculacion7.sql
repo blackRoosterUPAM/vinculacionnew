@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `alumnodocs` (
   `Matricula` int(11) NOT NULL,
   `CV` longblob DEFAULT NULL,
-  `FechaCreación` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `FechaCreacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -153,7 +153,7 @@ CREATE TABLE `documentacion` (
 CREATE TABLE `periodo` (
   `IdPeriodo` int(11) NOT NULL,
   `Meses` varchar(25) NOT NULL,
-  `Año` int(11) NOT NULL,
+  `anio` int(11) NOT NULL,
   `estatus` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -161,7 +161,7 @@ CREATE TABLE `periodo` (
 -- Volcado de datos para la tabla `periodo`
 --
 
-INSERT INTO `periodo` (`IdPeriodo`, `Meses`, `Año`, `estatus`) VALUES
+INSERT INTO `periodo` (`IdPeriodo`, `Meses`, `anio`, `estatus`) VALUES
 (1, 'Enero-Abril', 2023, 1),
 (2, 'Mayo-Agosto', 2023, 1),
 (3, 'Septiembre-Diciembre', 2023, 0),
@@ -194,12 +194,12 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pliberación`
+-- Estructura de tabla para la tabla `pliberacion`
 --
 
-CREATE TABLE `pliberación` (
+CREATE TABLE `pliberacion` (
   `IdProceso` int(11) NOT NULL,
-  `IdValidación` int(11) NOT NULL,
+  `IdValidacion` int(11) NOT NULL,
   `Estatus` tinyint(1) NOT NULL,
   `Matricula` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -277,7 +277,7 @@ INSERT INTO `roles` (`idRol`, `nombreRol`) VALUES
 CREATE TABLE `sede` (
   `IdSede` int(11) NOT NULL,
   `NombreSede` varchar(50) NOT NULL,
-  `Dirección` varchar(50) NOT NULL,
+  `Direccion` varchar(50) NOT NULL,
   `CorreoContacto` varchar(25) NOT NULL,
   `Telefono` bigint(20) NOT NULL,
   `tiposede` varchar(10) NOT NULL,
@@ -293,7 +293,7 @@ CREATE TABLE `sede` (
 CREATE TABLE `usuarios` (
   `IdUsuario` int(11) NOT NULL,
   `CorreoE` varchar(255) NOT NULL,
-  `Contraseña` varchar(255) DEFAULT NULL,
+  `Contrasena` varchar(255) DEFAULT NULL,
   `idRol` int(11) NOT NULL,
   `NombreU` varchar(255) NOT NULL,
   `APaternoU` varchar(255) NOT NULL,
@@ -304,7 +304,7 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`IdUsuario`, `CorreoE`, `Contraseña`, `idRol`, `NombreU`, `APaternoU`, `AMaternoU`) VALUES
+INSERT INTO `usuarios` (`IdUsuario`, `CorreoE`, `Contrasena`, `idRol`, `NombreU`, `APaternoU`, `AMaternoU`) VALUES
 (9001, 'vinculacion@upamozoc.edu.mx', '6ebe76c9fb411be97b3b0d48b791a7c9', 3, 'Vinculacion', 'Vinculacion', 'Viculacion'),
 (9002, 'superadmin@upamozoc.edu.mx', '6ebe76c9fb411be97b3b0d48b791a7c9', 1, 'Super', 'Admin', 'istrador'),
 (9003, 'director@upamozoc.edu.mx', '6ebe76c9fb411be97b3b0d48b791a7c9', 6, 'Director', 'Director', 'Director'),
@@ -394,11 +394,11 @@ ALTER TABLE `periodo`
   ADD PRIMARY KEY (`IdPeriodo`);
 
 --
--- Indices de la tabla `pliberación`
+-- Indices de la tabla `pliberacion`
 --
-ALTER TABLE `pliberación`
+ALTER TABLE `pliberacion`
   ADD KEY `Matricula` (`Matricula`),
-  ADD KEY `IdValidación` (`IdValidación`),
+  ADD KEY `IdValidaciopn` (`IdValidacion`),
   ADD KEY `IdProceso` (`IdProceso`);
 
 --
@@ -515,12 +515,12 @@ ALTER TABLE `docalumnoperiodo`
   ADD CONSTRAINT `docalumnoperiodo_ibfk_4` FOREIGN KEY (`IdPeriodo`) REFERENCES `periodo` (`IdPeriodo`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `pliberación`
+-- Filtros para la tabla `pliberacion`
 --
-ALTER TABLE `pliberación`
-  ADD CONSTRAINT `pliberación_ibfk_1` FOREIGN KEY (`Matricula`) REFERENCES `alumnos` (`Matricula`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `pliberación_ibfk_2` FOREIGN KEY (`IdValidación`) REFERENCES `docalumnoperiodo` (`IdValidacion`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `pliberación_ibfk_3` FOREIGN KEY (`IdProceso`) REFERENCES `proceso` (`IdProceso`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `pliberacion`
+  ADD CONSTRAINT `pliberacion_ibfk_1` FOREIGN KEY (`Matricula`) REFERENCES `alumnos` (`Matricula`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pliberacion_ibfk_2` FOREIGN KEY (`IdValidacion`) REFERENCES `docalumnoperiodo` (`IdValidacion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pliberacion_ibfk_3` FOREIGN KEY (`IdProceso`) REFERENCES `proceso` (`IdProceso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `ptc`

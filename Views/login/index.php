@@ -53,7 +53,7 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<style>
-		/* Estilos para el campo de contraseña */
+		/* Estilos para el campo de passwrod */
 		.password-container {
 			position: relative;
 		}
@@ -171,7 +171,7 @@
 
 							<div class="fv-row mb-3">
 								<div class="password-container">
-									<input type="password" placeholder="Contraseña" name="contraseña" id="contraseña" class="form-control bg-transparent" />
+									<input type="password" placeholder="Contrasena" name="contrasena" id="contrasena" class="form-control bg-transparent" />
 									<i id="visibility-icon" class="fas fa-eye" onclick="toggleVisibility()"></i>
 								</div>
 							</div>
@@ -189,7 +189,7 @@
 
 						<?php
 						// Verificar si hay un error y mostrar el mensaje correspondiente
-						if (isset($_GET['error']) && $_GET['error'] === 'correo_contraseña_incorrectos') {
+						if (isset($_GET['error']) && $_GET['error'] === 'correo_contrasena_incorrectos') {
 							echo '<div class="alert alert-danger" role="alert">Correo o Contraseña incorrectos</div>';
 						}
 						?>
@@ -198,7 +198,7 @@
 						<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 						<script>
 							function toggleVisibility() {
-								var passwordInput = document.getElementById("contraseña");
+								var passwordInput = document.getElementById("contrasena");
 								var visibilityIcon = document.getElementById("visibility-icon");
 
 								if (passwordInput.type === "password") {
@@ -245,7 +245,7 @@
 									<!--begin::Content-->
 									<div id="kt_account_settings_profile_details" class="collapse show">
 										<!--begin::Form-->
-										<form id="kt_account_profile_details_form" class="form" action="?c=rcontraseña&a=index" method="post" onsubmit="return validarCorreo()">
+										<form id="kt_account_profile_details_form" class="form" action="?c=rcontrasena&a=index" method="post" onsubmit="return validarCorreo()">
 											<!--begin::Card body-->
 											<div class="card-body border-top p-9">
 												<!--begin::Input group-->

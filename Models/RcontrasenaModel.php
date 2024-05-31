@@ -5,17 +5,17 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 
-class Contraseña
+class Contrasena
 {
 
     private $db;
-    private $contraseña;
+    private $contrasena;
     private $docs;
 
     public function __construct()
     {
         $this->db = Conectar::conexion();
-        $this->contraseña = array();
+        $this->contrasena = array();
         $this->docs = array();
     }
 
@@ -117,18 +117,18 @@ class Contraseña
         return $result->num_rows > 0;
     }
 
-    public function actualizarContraseña($idUsuario, $nuevaContraseña)
+    public function actualizarContrasena($idUsuario, $nuevaContrasena)
 {
-    // Hashear la nueva contraseña con MD5 (o utiliza un método más seguro si es posible)
-    $hashNuevaContraseña = md5($nuevaContraseña);
+    // Hashear el passworda con MD5 (o utiliza un método más seguro si es posible)
+    $hashNuevaContrasena = md5($nuevaContrasena);
 
     // Iniciar la transacción
     $this->db->begin_transaction();
 
     try {
-        // Actualizar la contraseña en la tabla de usuarios
-        $stmt1 = $this->db->prepare("UPDATE usuarios SET Contraseña = ? WHERE IdUsuario = ?");
-        $stmt1->bind_param("si", $hashNuevaContraseña, $idUsuario);
+        // Actualizar el password en la tabla de usuarios
+        $stmt1 = $this->db->prepare("UPDATE usuarios SET Contrasena = ? WHERE IdUsuario = ?");
+        $stmt1->bind_param("si", $hashNuevaContrasena, $idUsuario);
         $resultado1 = $stmt1->execute();
         $stmt1->close();
 

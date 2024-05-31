@@ -114,7 +114,7 @@ License: For each use you must have a valid license purchased only from above li
                                 }
                                 ?>
 
-                                <form action="index.php?c=rcontraseña&a=cambio_contraseña" method="post">
+                                <form action="index.php?c=rcontrasena&a=cambio_contrasena" method="post">
                                     <label style="font-size: 140%;" for="codigo">Ingrese el código recibido en su correo:</label>
                                     <br><br>
                                     <div class="col-lg-8">

@@ -18,8 +18,8 @@ $mail = new PHPMailer(true);
             $mail->SMTPAuth = true;
             $mail->Username = 'ctrlescolar.software@upamozoc.edu.mx';
             $mail->Password = 'GallosNegros#2023';
-            //$mail->Username = 'e.velazquezl@upam.edu.mx';  // Tu dirección de correo
-            //$mail->Password = 'antonio123';        // Tu contraseña
+            //$mail->Username = 'e.velazquezl@upam.edu.mx'; 
+            //$mail->Password = 'antonio123'; 
 
             $mail->setFrom('ctrlescolar.software@upamozoc.edu.mx', ' DATOS DE ACCESO ');
             $mail->addAddress($correoDestinatario);

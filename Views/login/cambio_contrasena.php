@@ -99,18 +99,18 @@ License: For each use you must have a valid license purchased only from above li
                         <div class="d-flex flex-column flex-column-fluid">
                             <!--begin::Content-->
                             <div id="kt_app_content" class="app-content">
-                              <form id="actualizarContraseñaForm">
+                              <form id="actualizarContrasenaForm">
                                     <!-- Campo oculto para el idUsuario -->
                                     <input type="hidden" name="idUsuario" value="<?php echo $idUsuario; ?>">
 
-                                    <!-- Nuevos campos para la contraseña -->
+                                    <!-- Nuevos campos para el password -->
                                     <div class="col-lg-8">
                                         <!--begin::Row-->
                                         <div class="row">
                                             <!--begin::Col-->
                                             <div class="col-lg-6 fv-row" style="margin-left:50%;">
-                                                <label style="font-size: 140%;" for="nueva_contraseña">Nueva Contraseña:</label>
-                                                <input type="password" name="nueva_contraseña" id="nueva_contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                <label style="font-size: 140%;" for="nueva_contrasena">Nueva Contraseña:</label>
+                                                <input type="password" name="nueva_contrasena" id="nueva_contrasena" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
                                             </div>
                                             <!--end::Col-->
                                         </div>
@@ -122,8 +122,8 @@ License: For each use you must have a valid license purchased only from above li
                                         <div class="row">
                                             <!--begin::Col-->
                                             <div class="col-lg-6 fv-row" style="margin-left:50%;">
-                                                <label style="font-size: 140%;" for="confirmar_contraseña">Confirmar Contraseña:</label>
-                                                <input type="password" name="confirmar_contraseña" id="confirmar_contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                <label style="font-size: 140%;" for="confirmar_contrasena">Confirmar Contraseña:</label>
+                                                <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
                                             </div>
                                             <!--end::Col-->
                                         </div>
@@ -131,38 +131,38 @@ License: For each use you must have a valid license purchased only from above li
                                     </div>
                                     <br>
                                     <div class="d-flex justify-content-between align-items-start flex-wrap mb-2" style="margin-left:45%;">
-                                        <button id="actualizarContraseñaBtn" class="btn btn-sm btn-primary me-3" type="button">Actualizar Contraseña</button>
+                                        <button id="actualizarContrasenaBtn" class="btn btn-sm btn-primary me-3" type="button">Actualizar Contraseña</button>
                                     </div>
                                 </form>
 
                                 <script>
                                     $(document).ready(function() {
-                                        $('#actualizarContraseñaBtn').click(function() {
-                                            var nuevaContraseña = $('#nueva_contraseña').val().trim();
-                                            var confirmarContraseña = $('#confirmar_contraseña').val().trim();
+                                        $('#actualizarContrasenaBtn').click(function() {
+                                            var nuevaContrasena = $('#nueva_contrasena').val().trim();
+                                            var confirmarContrasena = $('#confirmar_contrasena').val().trim();
 
-                                            // Verificar si las contraseñas coinciden
-                                            if (nuevaContraseña !== confirmarContraseña) {
-                                                // Las contraseñas no coinciden, muestra una alerta de error
+                                            // Verificar si los passwords coinciden
+                                            if (nuevaContrasena !== confirmarContrasena) {
+                                                // Los passwords no coinciden, muestra una alerta de error
                                                 Swal.fire({
                                                     title: 'Error',
-                                                    text: 'Las contraseñas no coinciden. Por favor, inténtelo de nuevo.',
+                                                    text: 'Las contrasenas no coinciden. Por favor, inténtelo de nuevo.',
                                                     icon: 'error'
                                                 });
                                                 return; // Detiene la ejecución
                                             }
 
-                                            var formData = $('#actualizarContraseñaForm').serialize(); // Serializa los datos del formulario
+                                            var formData = $('#actualizarContrasenaForm').serialize(); // Serializa los datos del formulario
 
-                                            // Envía la solicitud AJAX para actualizar la contraseña
+                                            // Envía la solicitud AJAX para actualizar el password
                                             $.ajax({
                                                 type: 'POST',
-                                                url: 'index.php?c=rcontraseña&a=actualizar_contraseña',
+                                                url: 'index.php?c=rcontrasena&a=actualizar_contrasena',
                                                 data: formData,
                                                 dataType: 'json',
                                                 success: function(response) {
                                                     if (response.status === 'success') {
-                                                        // La actualización de la contraseña fue exitosa
+                                                        // La actualización del password fue exitosa
                                                         Swal.fire({
                                                             title: 'Éxito',
                                                             text: '¡Actualización de contraseña exitosa!',
@@ -172,7 +172,7 @@ License: For each use you must have a valid license purchased only from above li
                                                             window.location.href = 'index.php';
                                                         });
                                                     } else {
-                                                        // La actualización de la contraseña no fue exitosa
+                                                        // La actualización de  password no fue exitosa
                                                         Swal.fire({
                                                             title: 'Error',
                                                             text: response.message,
@@ -380,7 +380,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="row">
                                                 <!--begin::Col-->
                                                 <div class="col-lg-6 fv-row">
-                                                    <input type="password" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                    <input type="password" name="contrasena" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
                                                 </div>
                                                 <!--end::Col-->
                                             </div>

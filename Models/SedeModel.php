@@ -46,7 +46,7 @@ class Sede
 			$sql = "UPDATE sede 
                 SET IdSede=?, 
                     NombreSede=?, 
-                    Dirección=?, 
+                    Direccion=?, 
                     CorreoContacto=?, 
                     Telefono=?, 
                     tiposede=? 
@@ -95,7 +95,7 @@ class Sede
 		}
 	}
 
-	public function new_sede($matricula, $nombre_sede, $direccion, $correo, $telefono, $tiposede, $contraseña, $nombre, $apellidop, $apellidom, $logo)
+	public function new_sede($matricula, $nombre_sede, $direccion, $correo, $telefono, $tiposede, $contrasena, $nombre, $apellidop, $apellidom, $logo)
 	{
 		// Inicializar la respuesta
 		$response = array();
@@ -117,19 +117,19 @@ class Sede
 				}
 
 				// Realizar la inserción en la tabla sede
-				$query = mysqli_query($this->db, "INSERT INTO sede (IdSede, NombreSede, Dirección, CorreoContacto, Telefono, tiposede, logo) 
+				$query = mysqli_query($this->db, "INSERT INTO sede (IdSede, NombreSede, Direccion, CorreoContacto, Telefono, tiposede, logo) 
                                                VALUES ('$matricula', '$nombre_sede', '$direccion', '$correo', '$telefono', '$tiposede', '$logoContenido')");
 
 				if ($query) {
 					// Obtener el ID de la sede insertada
 					$id_sede = mysqli_insert_id($this->db);
 
-					// Hashear la contraseña antes de almacenarla en la base de datos
-					$contraseña_hasheada = md5($contraseña);
+					// Hashear el password antes de almacenarla en la base de datos
+					$contrasena_hasheada = md5($contrasena);
 
 					// Realizar la inserción en la tabla usuarios
-					$query2 = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) 
-                                                    VALUES ('$id_sede', '$correo', '$contraseña_hasheada', 5, '$nombre', '$apellidop', '$apellidom')");
+					$query2 = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contrasena, IdRol, NombreU, APaternoU, AMaternoU) 
+                                                    VALUES ('$id_sede', '$correo', '$contrasena_hasheada', 5, '$nombre', '$apellidop', '$apellidom')");
 
 					if ($query2) {
 						// Éxito en la inserción de la sede y el usuario
@@ -191,7 +191,7 @@ class Sede
 				$vacantes[] = array(
 					"Matricula" => $row["IdSede"],
 					"Nombre sede" => $row["NombreSede"],
-					"Dirección" => $row["Dirección"],
+					"Direccion" => $row["Direccion"],
 					"Correo" => $row["CorreoContacto"],
 					"Telefono" => $row["Telefono"],
 					"Tipo de sede" => $row["tiposede"]
@@ -216,7 +216,7 @@ class Sede
 
 		// Crear condiciones para cada palabra clave
 		foreach ($palabrasClave as $palabra) {
-			$condiciones[] = "LOWER(CONCAT(IdSede,NombreSede, Dirección, CorreoContacto, Telefono, tiposede)) LIKE '%$palabra%'";
+			$condiciones[] = "LOWER(CONCAT(IdSede,NombreSede, Direccion, CorreoContacto, Telefono, tiposede)) LIKE '%$palabra%'";
 		}
 
 		// Unir condiciones con operador OR
@@ -244,7 +244,7 @@ class Sede
 					echo "</td>";
 					echo "<td class='ps-9'>" . htmlentities($row["IdSede"]) . "</td>";
 					echo "<td class='ps-0'>" . htmlentities($row["NombreSede"]) . "</td>";
-					echo "<td style='margin-left: 10px;'>" . htmlentities($row["Dirección"]) . "</td>";
+					echo "<td style='margin-left: 10px;'>" . htmlentities($row["Direccion"]) . "</td>";
 					echo "<td style='margin-left: 10px;'>" . htmlentities($row["CorreoContacto"]) . "</td>";
 					echo "<td style='margin-left: 10px;'>" . htmlentities($row["Telefono"]) . "</td>";
 					echo "<td style='margin-left: 10px;'>" . htmlentities($row["tiposede"]) . "</td>";

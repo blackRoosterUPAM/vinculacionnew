@@ -65,7 +65,7 @@ License: For each use you must have a valid license purchased only from above li
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<style>
-		/* Estilos para el campo de contraseña */
+		/* Estilos para el campo de password */
 		.password-container {
 			position: relative;
 		}
@@ -545,7 +545,7 @@ Swal.fire({
 												<!--begin::Col-->
 												<div class="col-lg-6 fv-row">
 													<div class="password-container">
-														<input type="password" placeholder="Contraseña" name="contraseña" id="contraseña" class="form-control bg-transparent" require />
+														<input type="password" placeholder="Contrasena" name="contrasena" id="contrasena" class="form-control bg-transparent" require />
 														<i id="visibility-icon" class="fas fa-eye" onclick="toggleVisibility()"></i>
 													</div>
 
@@ -553,7 +553,7 @@ Swal.fire({
 
 													<script>
 														function toggleVisibility() {
-															var passwordInput = document.getElementById("contraseña");
+															var passwordInput = document.getElementById("contrasena");
 															var visibilityIcon = document.getElementById("visibility-icon");
 
 															if (passwordInput.type === "password") {

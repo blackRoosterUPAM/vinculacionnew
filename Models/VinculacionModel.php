@@ -22,7 +22,7 @@ class Vinculacion
 
     public function getSolicitudes()
     {
-        $sql = "SELECT da.IdDocumento, da.Matricula,CONCAT( a.NombreA,' ', a.ApellidoP, ' ', a.ApellidoM) as fullName, pr.NombrePE as nombreProceso , d.NombreDoc as nombreDocumento, da.DocumentoPDF as doc, da.EstatusPtc, da.EstatusVinc, CONCAT(p.Meses,' ', p.Año) as periodo FROM docalumnoperiodo as da INNER JOIN alumnos as a on a.Matricula =da.Matricula INNER JOIN documentacion as d on d.IdDocumento = da.IdDocumento INNER JOIN periodo as p on p.IdPeriodo = da.IdProceso INNER JOIN proceso as pr on pr.IdProceso = da.IdProceso";
+        $sql = "SELECT da.IdDocumento, da.Matricula,CONCAT( a.NombreA,' ', a.ApellidoP, ' ', a.ApellidoM) as fullName, pr.NombrePE as nombreProceso , d.NombreDoc as nombreDocumento, da.DocumentoPDF as doc, da.EstatusPtc, da.EstatusVinc, CONCAT(p.Meses,' ', p.anio) as periodo FROM docalumnoperiodo as da INNER JOIN alumnos as a on a.Matricula =da.Matricula INNER JOIN documentacion as d on d.IdDocumento = da.IdDocumento INNER JOIN periodo as p on p.IdPeriodo = da.IdProceso INNER JOIN proceso as pr on pr.IdProceso = da.IdProceso";
 
         $resultado = $this->db->query($sql);
         $solicitudes = [];

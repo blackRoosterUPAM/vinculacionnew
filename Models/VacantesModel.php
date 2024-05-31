@@ -36,16 +36,16 @@ class Vacantes
                   $sede = mysqli_fetch_array($query3);
                   $nombre_proceso = $sede["NombrePE"];
 
-                  $query4 = mysqli_query($this->db, "SELECT Meses, Año FROM periodo WHERE IdPeriodo = $id_periodo");
+                  $query4 = mysqli_query($this->db, "SELECT Meses, anio FROM periodo WHERE IdPeriodo = $id_periodo");
                   $sede = mysqli_fetch_array($query4);
                   $nombre_mes = $sede["Meses"];
-                  $nombre_año = $sede["Año"];
+                  $nombre_anio = $sede["anio"];
 
                   echo "<tr>";
                   echo "<td class=" . "ps-9" . ">" . $nombre_sede . "</td>";
                   echo "<td class=" . "ps-0" . ">" . $nombre_carrera . "</td>";
                   echo "<td style=" . "margin-left: 10px;" . ">" . $nombre_proceso . "</td>";
-                  echo "<td style=" . "margin-left: 10px;" . ">" . $nombre_mes . " " . $nombre_año . "</td>";
+                  echo "<td style=" . "margin-left: 10px;" . ">" . $nombre_mes . " " . $nombre_anio . "</td>";
                   echo "<td style=" . "margin-left: 10px;" . ">" . $row["Perfil"] . "</td>";
                   echo "<td style=" . "margin-left: 10px;" . ">" . $row["Beneficios"] . "</td>";
                   echo "<td style=" . "margin-left: 10px;" . ">" . $row["NumVacantes"] . "</td>";
@@ -108,7 +108,7 @@ class Vacantes
             $idCarrera = (int)$idCarrera;
 
             $query = "SELECT v.IdSede, v.IdCarrera, v.IdProceso, v.IdPeriodo, v.Perfil, v.Beneficios, v.NumVacantes, v.NumPostulados, v.totalVacantes,
-              c.NombreSede, car.nombreCarrera as NombreCarrera, p.NombrePE as NombreProceso, per.Meses, per.Año
+              c.NombreSede, car.nombreCarrera as NombreCarrera, p.NombrePE as NombreProceso, per.Meses, per.anio
               FROM vacantes v
               INNER JOIN sede c ON v.IdSede = c.IdSede
               INNER JOIN carrera car ON v.IdCarrera = car.IdCarrera
@@ -124,7 +124,7 @@ class Vacantes
                               "Sede" => $row["NombreSede"],
                               "Carrera" => $row["NombreCarrera"],
                               "Proceso" => $row["NombreProceso"],
-                              "Periodo" => $row["Meses"] . " " . $row["Año"],
+                              "Periodo" => $row["Meses"] . " " . $row["anio"],
                               "Perfil" => $row["Perfil"],
                               "Beneficios" => $row["Beneficios"],
                               "Numero de vacantes" => $row["NumVacantes"],
@@ -151,7 +151,7 @@ class Vacantes
 
             // Crear condiciones para cada palabra clave
             foreach ($palabrasClave as $palabra) {
-                  $condiciones[] = "LOWER(CONCAT(Perfil, Beneficios, NumVacantes, NumPostulados, totalVacantes, Meses, Año)) LIKE '%$palabra%'";
+                  $condiciones[] = "LOWER(CONCAT(Perfil, Beneficios, NumVacantes, NumPostulados, totalVacantes, Meses, anio)) LIKE '%$palabra%'";
             }
 
             // Unir condiciones con operador OR
@@ -175,7 +175,7 @@ class Vacantes
                         echo "<td class='ps-9'>" . htmlentities($row["NombreSede"]) . "</td>";
                         echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreCarrera"]) . "</td>";
                         echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreProceso"]) . "</td>";
-                        echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["Año"]) . "</td>";
+                        echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["anio"]) . "</td>";
                         echo "<td style='margin-left: 10px;'>" . htmlentities($row["Perfil"]) . "</td>";
                         echo "<td style='margin-left: 10px;'>" . htmlentities($row["Beneficios"]) . "</td>";
                         echo "<td style='margin-left: 10px;'>" . htmlentities($row["NumVacantes"]) . "</td>";
@@ -187,7 +187,7 @@ class Vacantes
                   $querySede = mysqli_query($this->db, "SELECT * FROM sede WHERE NombreSede = '$datoBusqueda'");
                   $queryCarrera = mysqli_query($this->db, "SELECT * FROM carrera WHERE nombreCarrera = '$datoBusqueda'");
                   $queryProceso = mysqli_query($this->db, "SELECT * FROM proceso WHERE NombrePE = '$datoBusqueda'");
-                  $queryPeriodo = mysqli_query($this->db, "SELECT * FROM periodo WHERE Meses = '$datoBusqueda' OR Año = '$datoBusqueda'");
+                  $queryPeriodo = mysqli_query($this->db, "SELECT * FROM periodo WHERE Meses = '$datoBusqueda' OR anio = '$datoBusqueda'");
 
                   // Verificar resultados en la tabla sede
                   if ($querySede && $querySede->num_rows > 0) {
@@ -210,7 +210,7 @@ class Vacantes
                                     echo "<td class='ps-9'>" . htmlentities($row["NombreSede"]) . "</td>";
                                     echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreCarrera"]) . "</td>";
                                     echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreProceso"]) . "</td>";
-                                    echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["Año"]) . "</td>";
+                                    echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["anio"]) . "</td>";
                                     echo "<td style='margin-left: 10px;'>" . htmlentities($row["Perfil"]) . "</td>";
                                     echo "<td style='margin-left: 10px;'>" . htmlentities($row["Beneficios"]) . "</td>";
                                     echo "<td style='margin-left: 10px;'>" . htmlentities($row["NumVacantes"]) . "</td>";
@@ -242,7 +242,7 @@ class Vacantes
                                           echo "<td class='ps-9'>" . htmlentities($row["NombreSede"]) . "</td>";
                                           echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreCarrera"]) . "</td>";
                                           echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreProceso"]) . "</td>";
-                                          echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["Año"]) . "</td>";
+                                          echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["anio"]) . "</td>";
                                           echo "<td style='margin-left: 10px;'>" . htmlentities($row["Perfil"]) . "</td>";
                                           echo "<td style='margin-left: 10px;'>" . htmlentities($row["Beneficios"]) . "</td>";
                                           echo "<td style='margin-left: 10px;'>" . htmlentities($row["NumVacantes"]) . "</td>";
@@ -274,7 +274,7 @@ class Vacantes
                                                 echo "<td class='ps-9'>" . htmlentities($row["NombreSede"]) . "</td>";
                                                 echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreCarrera"]) . "</td>";
                                                 echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreProceso"]) . "</td>";
-                                                echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["Año"]) . "</td>";
+                                                echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["anio"]) . "</td>";
                                                 echo "<td style='margin-left: 10px;'>" . htmlentities($row["Perfil"]) . "</td>";
                                                 echo "<td style='margin-left: 10px;'>" . htmlentities($row["Beneficios"]) . "</td>";
                                                 echo "<td style='margin-left: 10px;'>" . htmlentities($row["NumVacantes"]) . "</td>";
@@ -288,7 +288,7 @@ class Vacantes
                                     if ($queryPeriodo && $queryPeriodo->num_rows > 0) {
                                           $periodo = mysqli_fetch_array($queryPeriodo);
                                           $meses = $periodo["Meses"];
-                                          $ano = $periodo["Año"];
+                                          $ano = $periodo["anio"];
 
                                           // Realizar la consulta para obtener los datos de búsqueda con INNER JOIN
                                           $query = mysqli_query($this->db, "SELECT vacantes.*, sede.*, carrera.NombrePE as NombreCarrera, proceso.NombrePE as NombreProceso, periodo.*
@@ -297,7 +297,7 @@ class Vacantes
                                               INNER JOIN carrera ON vacantes.IdCarrera = carrera.IdCarrera
                                               INNER JOIN proceso ON vacantes.IdProceso = proceso.IdProceso
                                               INNER JOIN periodo ON vacantes.IdPeriodo = periodo.IdPeriodo
-                                              WHERE periodo.Meses = '$meses' AND periodo.Año = '$ano'");
+                                              WHERE periodo.Meses = '$meses' AND periodo.anio = '$ano'");
 
                                           // Verificar si se encontraron resultados en la tabla vacantes
                                           if ($query && $query->num_rows > 0) {
@@ -308,7 +308,7 @@ class Vacantes
                                                       echo "<td class='ps-9'>" . htmlentities($row["NombreSede"]) . "</td>";
                                                       echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreCarrera"]) . "</td>";
                                                       echo "<td style='margin-left: 10px;'>" . htmlentities($row["NombreProceso"]) . "</td>";
-                                                      echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["Año"]) . "</td>";
+                                                      echo "<td style='margin-left: 10px;'>" . htmlentities($row["Meses"] . " " . $row["anio"]) . "</td>";
                                                       echo "<td style='margin-left: 10px;'>" . htmlentities($row["Perfil"]) . "</td>";
                                                       echo "<td style='margin-left: 10px;'>" . htmlentities($row["Beneficios"]) . "</td>";
                                                       echo "<td style='margin-left: 10px;'>" . htmlentities($row["NumVacantes"]) . "</td>";

@@ -158,7 +158,7 @@ class SedesController
         $correo = $_POST["correo"];
         $telefono = $_POST["telefono"];
         $tiposede = $_POST["tiposede"];
-        $contraseña = $_POST["contraseña"];
+        $contrasena = $_POST["contrasena"];
         $nombre = $_POST["nombre"];
         $apellidop = $_POST["apellidop"];
         $apellidom = $_POST["apellidom"];
@@ -169,7 +169,7 @@ class SedesController
         $sedes = new Sede();
     
         // Llamar al método para agregar una nueva sede
-        $response = $sedes->new_sede($matricula, $nombre_sede, $direccion, $correo, $telefono, $tiposede, $contraseña, $nombre, $apellidop, $apellidom, $logo);
+        $response = $sedes->new_sede($matricula, $nombre_sede, $direccion, $correo, $telefono, $tiposede, $contrasena, $nombre, $apellidop, $apellidom, $logo);
     
         // Enviar la respuesta como JSON
         echo json_encode($response);

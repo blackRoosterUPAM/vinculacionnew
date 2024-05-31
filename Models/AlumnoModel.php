@@ -58,7 +58,7 @@ class Alumno
 		$resultado = $this->db->query($sql);
 		//$row = $resultado->fetch_assoc();
 		if ($row = $resultado->fetch_object()) {
-			//$doc = $row->FechaCreación;
+			//$doc = $row->FechaCreacion;
 			$doc = $row;
 		} else {
 			$doc = "";
@@ -72,7 +72,7 @@ class Alumno
 		$resultado = $this->db->query($sql);
 		//$row = $resultado->fetch_assoc();
 		if ($row = $resultado->fetch_object()) {
-			//$doc = $row->FechaCreación;
+			//$doc = $row->FechaCreacióo;
 			$estatusRVIN = $row->EstatusPtc;
 		} else {
 			$estatusRVIN = "";
@@ -86,7 +86,7 @@ class Alumno
 		$resultado = $this->db->query($sql);
 		//$row = $resultado->fetch_assoc();
 		if ($row = $resultado->fetch_object()) {
-			//$doc = $row->FechaCreación;
+			//$doc = $row->FechaCreacion;
 			$estatusAceptacion = $row->EstatusPtc;
 		} else {
 			$estatusAceptacion = "";
@@ -100,7 +100,7 @@ class Alumno
 		$resultado = $this->db->query($sql);
 		//$row = $resultado->fetch_assoc();
 		if ($row = $resultado->fetch_object()) {
-			//$doc = $row->FechaCreación;
+			//$doc = $row->FechaCreacion;
 			$estatusEvaluacion = $row->EstatusPtc;
 		} else {
 			$estatusEvaluacion = "";
@@ -114,7 +114,7 @@ class Alumno
 		$resultado = $this->db->query($sql);
 		//$row = $resultado->fetch_assoc();
 		if ($row = $resultado->fetch_object()) {
-			//$doc = $row->FechaCreación;
+			//$doc = $row->FechaCreacion;
 			$estatusLiberacion = $row->EstatusPtc;
 		} else {
 			$estatusLiberacion = "";
@@ -128,7 +128,7 @@ class Alumno
 		$resultado = $this->db->query($sql);
 		//$row = $resultado->fetch_assoc();
 		if ($row = $resultado->fetch_object()) {
-			//$doc = $row->FechaCreación;
+			//$doc = $row->FechaCreacion;
 			$estatusPresentacion = $row->EstatusPtc;
 		} else {
 			$estatusPresentacion = "";

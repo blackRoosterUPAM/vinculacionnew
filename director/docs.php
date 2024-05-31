@@ -173,9 +173,9 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 												<?php
 
 												$sql = "select plib.Estatus, plib.Matricula,pr.NombrePE,dap.EstatusPtc,dap.EstatusVinc,al.NombreA,al.ApellidoP,al.ApellidoM 
-												from pliberación as plib
+												from pliberacion as plib
 												INNER JOIN proceso as pr on plib.IdProceso = pr.IdProceso
-												INNER JOIN docalumnoperiodo as dap on plib.IdValidación = dap.IdValidacion
+												INNER JOIN docalumnoperiodo as dap on plib.IdValidacion = dap.IdValidacion
 												INNER JOIN alumnos as al on plib.Matricula = al.Matricula;";
 												$result = $conn->query($sql);
 

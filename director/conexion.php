@@ -2,7 +2,7 @@
 $servername = "localhost";
 $database = "vinculacion";
 $username = "root";
-$password = "galloUPAM2023.";
+$password = "Toor2019.";
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $database);
 // Check connection
@@ -11,3 +11,4 @@ if (!$conn) {
 }
 ;
 ?>
+<!-- Esto no se debe hacer--- se debe llamar a la principal pero bueno prosigo  -->

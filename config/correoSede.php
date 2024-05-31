@@ -37,8 +37,8 @@ try {
     $mail->Port = 587;
     $mail->SMTPSecure = 'tls';
     $mail->SMTPAuth = true;
-    $mail->Username = 'sedes.software@upamozoc.edu.mx';  // Tu dirección de correo
-    $mail->Password = 'GallosNegros&2023';        // Tu contraseña
+    $mail->Username = 'sedes.software@upamozoc.edu.mx';  
+    $mail->Password = 'GallosNegros&2023';        
     //Datos de envio-->esperar correo 
     //Correo para el alumno
     //Pasar el correo de las sedes
@@ -78,9 +78,9 @@ try {
     $mail->setFrom('sedes.software@upamozoc.edu.mx', $sede);
     
     $mail->addReplyTo('sedes.software@upamozoc.edu.mx', $correoSede);
-    // Enviar correo a la dirección 'vinculacion@p.com'
+    // Enviar correo a la direccion 'vinculacion@p.com'
     $mail->addAddress('b.rodriguezt@upam.edu.mx');
-    // Cambiar el mensaje para la dirección 'vinculacion@p.com'
+    // Cambiar el mensaje para la direccióo 'vinculacion@p.com'
     //Agregar un switch-case tambien
     $mail->Subject = "Respuesta a postulación del alumno";
     $mail->Body = "Información del alumno:\n\n"

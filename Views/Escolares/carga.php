@@ -210,7 +210,7 @@
                                                                                     <select class="form-select" id="idPeriodo" name="idPeriodop">';
                                                     foreach ($resultPeriodo as $p) {
                                                         if ($p['estatus'] == 0) {
-                                                            echo '<option value="' . $p['IdPeriodo'] . '">' . $p['Meses'] . ' ' . $p['Año'] . '</option>';
+                                                            echo '<option value="' . $p['IdPeriodo'] . '">' . $p['Meses'] . ' ' . $p['anio'] . '</option>';
                                                         }
                                                     }
                                                     echo '
@@ -553,7 +553,7 @@
                                                     <option value="">Seleccione un periodo...</option>
                                                     <?php foreach ($resultPeriodo as $periodo) : ?>
                                                         <option value="<?php echo $periodo['IdPeriodo']; ?>">
-                                                            <?php echo $periodo['Meses'] . ' ' . $periodo['Año']; ?>
+                                                            <?php echo $periodo['Meses'] . ' ' . $periodo['anio']; ?>
                                                         </option>
                                                     <?php endforeach; ?>
                                                 </select>

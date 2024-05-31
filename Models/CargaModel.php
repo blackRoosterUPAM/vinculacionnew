@@ -10,7 +10,7 @@ class Escolares{
     }
 
     public function get_escolares() {
-        $sql = "SELECT alumnos.*, carrera.nombreCarrera as Carrera, proceso.NombrePE as Proceso, CONCAT(periodo.Meses,' ', periodo.Año) as Periodo
+        $sql = "SELECT alumnos.*, carrera.nombreCarrera as Carrera, proceso.NombrePE as Proceso, CONCAT(periodo.Meses,' ', periodo.anio) as Periodo
         FROM alumnos
         LEFT JOIN carrera ON alumnos.Carrera = carrera.IdCarrera
         LEFT JOIN proceso ON alumnos.IdProceso = proceso.IdProceso

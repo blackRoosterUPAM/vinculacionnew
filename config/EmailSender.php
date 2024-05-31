@@ -18,7 +18,7 @@ class EmailSender
         $this->mail->Host = 'smtp.gmail.com'; // Ajusta el servidor SMTP de Gmail
         $this->mail->SMTPAuth = true;
         $this->mail->Username = 'l.guadalupea@upam.edu.mx'; // Ajusta tu correo electrónico
-        $this->mail->Password = 'LuisAntonio'; // Ajusta tu contraseña
+        $this->mail->Password = 'LuisAntonio';
         $this->mail->SMTPSecure = 'tls';
         $this->mail->Port = 587;
         $this->mail->setFrom('l.guadalupea@upam.edu.mx', 'Pruebas'); // Ajusta tu nombre y correo electrónico

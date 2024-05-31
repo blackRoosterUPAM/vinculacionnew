@@ -388,7 +388,7 @@ Swal.fire({
                                             <div class="row">
                                                 <!--begin::Col-->
                                                 <div class="col-lg-6 fv-row">
-                                                    <input type="password" name="contraseña" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
+                                                    <input type="password" name="contrasena" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" required />
                                                 </div>
                                                 <!--end::Col-->
                                             </div>

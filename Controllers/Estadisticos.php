@@ -26,7 +26,7 @@ class EstadController
     {
         $matricula = $_POST["matricula"];
         $correo = $_POST["correo"];
-        $contraseña = $_POST["contraseña"];
+        $contrasena = $_POST["contrasena"];
         $idRol = $_POST["rol"];
         $nombre = $_POST["nombre"];
         $apellidop = $_POST["apellidoP"];
@@ -36,7 +36,7 @@ class EstadController
         $usuarioModel = new UsuarioModel();
 
         // Llamar a la función new_usuario del modelo para agregar un nuevo usuario
-        $response = $usuarioModel->new_usuario($matricula, $correo, $contraseña, $idRol, $nombre, $apellidop, $apellidom);
+        $response = $usuarioModel->new_usuario($matricula, $correo, $contrasena, $idRol, $nombre, $apellidop, $apellidom);
 
         // Verificar el estado de la respuesta y enviar la respuesta adecuada al cliente
         if ($response['status'] === 'success') {

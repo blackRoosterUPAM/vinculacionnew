@@ -195,7 +195,7 @@ License: For each use you must have a valid license purchased only from above li
 															<div class="badge badge-light-success"><?php echo $s["NumVacantes"]; ?></div>
 														</td>
 														<td>
-															<div class="badge badge-light"><?php echo $s["Dirección"]; ?></div>
+															<div class="badge badge-light"><?php echo $s["Direccion"]; ?></div>
 														</td>
 														<td><?php echo $s["CorreoContacto"]; ?></td>
 														<td><?php echo $s["Telefono"]; ?></td>

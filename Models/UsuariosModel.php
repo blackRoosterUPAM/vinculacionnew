@@ -15,7 +15,7 @@ class UsuarioModel
     {
         $contrasena = md5($contrasena);
 
-        $query = "SELECT * FROM usuarios inner join roles on usuarios.idRol = roles.idRol WHERE CorreoE = '$correo' AND Contraseña = '$contrasena'";
+        $query = "SELECT * FROM usuarios inner join roles on usuarios.idRol = roles.idRol WHERE CorreoE = '$correo' AND Contrasena = '$contrasena'";
         $resultado = mysqli_query($this->db, $query);
 
         if (mysqli_num_rows($resultado) > 0) {
@@ -35,9 +35,9 @@ class UsuarioModel
         return $this->usuario;
     }
 
-    public function new_usuario($matricula, $correo, $contraseña, $idRol, $nombre, $apellidop, $apellidom)
+    public function new_usuario($matricula, $correo, $contrasena, $idRol, $nombre, $apellidop, $apellidom)
     {
-        if (empty($matricula) || empty($correo) || empty($contraseña) || empty($idRol) || empty($nombre) || empty($apellidop) || empty($apellidom)) {
+        if (empty($matricula) || empty($correo) || empty($contrasena) || empty($idRol) || empty($nombre) || empty($apellidop) || empty($apellidom)) {
             return array('status' => 'error', 'message' => 'Llena correctamente todos los campos');
         } else {
             // Verificar si la matrícula ya existe
@@ -46,8 +46,8 @@ class UsuarioModel
             if ($matriculaExistente) {
                 return array('status' => 'error', 'message' => 'La matrícula ya existe');
             } else {
-                $con_MD5 = md5($contraseña);
-                $query = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contraseña, IdRol, NombreU, APaternoU, AMaternoU) VALUES ('$matricula', '$correo', '$con_MD5', $idRol, '$nombre', '$apellidop', '$apellidom')");
+                $con_MD5 = md5($contrasena);
+                $query = mysqli_query($this->db, "INSERT INTO usuarios (IdUsuario, CorreoE, Contrasena, IdRol, NombreU, APaternoU, AMaternoU) VALUES ('$matricula', '$correo', '$con_MD5', $idRol, '$nombre', '$apellidop', '$apellidom')");
 
                 if ($query) {
                     return array('status' => 'success', 'message' => 'Usuario registrado correctamente');

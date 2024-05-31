@@ -289,7 +289,7 @@ License: For each use you must have a valid license purchased only from above li
                                                             <option value="">Seleccione un periodo...</option>
                                                             <?php
                                                             foreach ($peri as $row) {
-                                                                echo "<option" . " value=" . $row["IdPeriodo"] . ">" . $row["Meses"] . " " . $row["Año"] . "</option>";
+                                                                echo "<option" . " value=" . $row["IdPeriodo"] . ">" . $row["Meses"] . " " . $row["anio"] . "</option>";
                                                             }
                                                             ?>
                                                         </select>

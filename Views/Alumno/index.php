@@ -647,7 +647,7 @@ License: For each use you must have a valid license purchased only from above li
                                                                             ?>
                                                                     </td>
 								    <td>
-                                                                        <a href="#" class="text-gray-800 text-hover-primary mb-1"><?php echo $d["Meses"]." ".$d["Año"]; ?></a>
+                                                                        <a href="#" class="text-gray-800 text-hover-primary mb-1"><?php echo $d["Meses"]." ".$d["anio"]; ?></a>
                                                                     </td>
                                                                     <td>
                                                                         <a href="#" class="text-gray-800 text-hover-primary mb-1"><?php echo $d["NombrePE"]; ?></a>

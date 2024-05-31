@@ -179,7 +179,7 @@ if (isset($_SESSION['id_usuario']) || isset($_SESSION['name'])) {
 														echo "<tr>
 															  <td align='center'>" . $row["IdSede"] . "</td>";
 														echo "<td align='center'>" . $row["NombreSede"] . "</td>";
-														echo "<td align='center'>" . $row["Dirección"] . "</td>";
+														echo "<td align='center'>" . $row["Direccion"] . "</td>";
 														echo "<td align='center'>" . $row["CorreoContacto"] . "</td>";
 														echo "<td align='center'>" . $row["Telefono"] . "</td>";
 														echo "<td align='center'>"  .$row["tiposede"]."</td>";
